@@ -11,9 +11,9 @@
 	<div id=logo><img></div>
 	<a>ログイン</a>
 	<form id="login_form" action="/webapp/LoginServlet" method="post">
-	<input type="text" name="id" placeholder="メールアドレス"><br>
-	<input type="password" name="pw" placeholder="パスワード"><br>
-	<input type="submit" name="login" value="ログイン">
+		<input type="text" name="mailaddress" placeholder="メールアドレス"><br>
+		<input type="password" name="loginPW" placeholder="パスワード"><br>
+		<input type="submit" name="login" value="ログイン">
 	</form>
 	 <a>新規登録は</a><a href="idpw.jsp">こちら</a>
 </body>
