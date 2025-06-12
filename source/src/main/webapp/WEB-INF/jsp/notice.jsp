@@ -27,7 +27,7 @@
             <div name="headcount">人数</div>
             <div name="price">￥</div>
             <div name="time">着</div>
-            <div name="registrationDate">登録時刻</div>
+            <div name="registrationDate">登録日時</div>
             <div name="route">経路</div>
             <input type="submit" value="承認" name="approval">
             <input type="submit" value="却下" name="rejected">
