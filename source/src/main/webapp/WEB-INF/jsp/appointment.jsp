@@ -6,14 +6,14 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="/webapp/css/appointment.css">
         <script src="/webapp/js/appointment.js" defer></script>
-		<title>シェアタク</title>
+		<title>予約確認 | シェアタク</title>
 	</head>
 	<body>
 		<header>
 			<div>
 				<img src=""> <!-- ロゴ -->
 			</div>
-			<h2>×</h2>
+			<button>×</button>
 		</header>
 		
 		<main>
