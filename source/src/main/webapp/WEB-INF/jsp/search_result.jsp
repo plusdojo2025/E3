@@ -19,7 +19,7 @@
 			<input type="checkbox" name="partner_gender" value="woman">
 			<input type="checkbox" name="smoking" value="no_smoking">
 			<input type="checkbox" name="talking" value="no_talking">
-			<input type="submit" name="search" value="検索"> <!-- 勝手に追加してます -->
+			<input type="submit" name="search" value="検索"> <!-- 勝手に追加してます！！！！ -->
 		</form>
 	</div>
 	<div> <!-- 検索結果 -->
