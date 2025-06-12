@@ -1,0 +1,157 @@
+テーブル作成SQL文
+
+/*ID・パスワード*/
+CREATE TABLE `idpw` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`pass` VARCHAR(20) NOT NULL DEFAULT '0' COLLATE 'utf8mb4_0900_ai_ci',
+	`email` VARCHAR(320) NOT NULL DEFAULT '0' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+
+/*ユーザー情報登録/
+CREATE TABLE `user` (
+	`id` INT NOT NULL DEFAULT '0' COMMENT 'ユーザー個別ID',
+	`name` VARCHAR(100) NOT NULL DEFAULT '0' COLLATE 'utf8mb4_0900_ai_ci',
+	`nickname` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`gender` INT NOT NULL COMMENT '0:男性 1:女性',
+	`address_latitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '自宅住所緯度',
+	`address_longitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '自宅住所経度',
+	`talking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:会話無し',
+	`smoking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:非喫煙',
+	`partner_gender` INT NOT NULL DEFAULT '0' COMMENT '0:男性のみ 1:女性のみ 2:指定なし',
+	`address` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '自宅住所(デモ用)' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+
+/*申請情報*/
+CREATE TABLE `request` (
+	`request_id` INT NOT NULL AUTO_INCREMENT,
+	`id` INT NOT NULL DEFAULT '0' COMMENT '申請者自身の個別id',
+	`partner_id` INT NOT NULL DEFAULT '0' COMMENT '申請相手のid',
+	`stand_by_id` INT NOT NULL DEFAULT '0' COMMENT '待機情報id',
+	`current_latitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '現在地緯度',
+	`current_longitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '現在地経度',
+	`drop_off_latitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '降車位置緯度',
+	`drop_off_longitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '降車位置経度',
+	`headcount` INT NOT NULL DEFAULT '0' COMMENT '乗車人数',
+	`status` INT NOT NULL DEFAULT '0' COMMENT '申請状態(0:申請中 1:承認状態 2:却下状態)',
+	`talking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:会話無し',
+	`smoking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:非喫煙',
+	`partner_gender` INT NOT NULL DEFAULT '0' COMMENT '0:男性のみ 1:女性のみ 2:指定なし',
+	`registration_date` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '登録日時' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`request_id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+
+/*待機情報*/
+CREATE TABLE `standbyuser` (
+	`stand_by_id` INT NOT NULL AUTO_INCREMENT COMMENT '待機登録id',
+	`id` INT NOT NULL DEFAULT '0' COMMENT 'ユーザーの個別ID',
+	`date` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '希望日時' COLLATE 'utf8mb4_0900_ai_ci',
+	`current_latitude` DECIMAL(20,2) NOT NULL DEFAULT '0' COMMENT '現在地緯度',
+	`current_logitude` DECIMAL(20,2) NOT NULL DEFAULT '0' COMMENT '現在地経度',
+	`drop_off_latitude` DECIMAL(20,2) NOT NULL DEFAULT '0' COMMENT '降車位置緯度',
+	`drop_off_longitude` DECIMAL(20,2) NOT NULL DEFAULT '0' COMMENT '降車位置経度',
+	`headcount` INT NOT NULL DEFAULT '0' COMMENT '乗車人数',
+	`flag` INT NOT NULL DEFAULT '0' COMMENT '待機状態(0:非待機状態 1:待機状態)',
+	`registration_date` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '登録日時' COLLATE 'utf8mb4_0900_ai_ci',
+	`talking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:会話無し',
+	`smoking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:非喫煙',
+	`partner_gender` INT NOT NULL DEFAULT '0' COMMENT '0:男性のみ  1:女性のみ 2:指定なし',
+	PRIMARY KEY (`stand_by_id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+
+/*タクシー会社情報*/
+CREATE TABLE `taxi` (
+	`taxinumber` INT NOT NULL AUTO_INCREMENT COMMENT '会社番号',
+	`company` VARCHAR(32) NOT NULL DEFAULT '0' COMMENT 'タクシー会社名' COLLATE 'utf8mb4_0900_ai_ci',
+	`phone` VARCHAR(20) NOT NULL DEFAULT '0' COMMENT '電話番号' COLLATE 'utf8mb4_0900_ai_ci',
+	`taxi_address_latitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '会社住所緯度',
+	`taxi_address_longitude` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '会社住所経度',
+	`price` INT NOT NULL DEFAULT '0' COMMENT '距離単価',
+	`taxi_address` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '会社住所(デモ用)' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`taxinumber`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+
+/*チャット管理*/
+CREATE TABLE `chat` (
+	`id` INT NOT NULL AUTO_INCREMENT COMMENT 'チャット文のid',
+	`room_id` INT NOT NULL DEFAULT '0' COMMENT '申請idを引用',
+	`sender_id` INT NOT NULL DEFAULT '0' COMMENT '送信者id',
+	`chat_text` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT 'テキスト本文' COLLATE 'utf8mb4_0900_ai_ci',
+	`chat_date` VARCHAR(100) NOT NULL DEFAULT '0' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+
+/*デモ用申請情報*/
+CREATE TABLE `requestdemo` (
+	`request_id` INT NOT NULL AUTO_INCREMENT,
+	`id` INT NOT NULL DEFAULT '0' COMMENT '申請者自身の個別id',
+	`partner_id` INT NOT NULL DEFAULT '0' COMMENT '申請相手のid',
+	`stand_by_id` INT NOT NULL DEFAULT '0' COMMENT '待機情報id',
+	`current_address` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '現在地住所' COLLATE 'utf8mb4_0900_ai_ci',
+	`drop_off_address` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '降車位置住所' COLLATE 'utf8mb4_0900_ai_ci',
+	`headcount` INT NOT NULL DEFAULT '0' COMMENT '乗車人数',
+	`status` INT NOT NULL DEFAULT '0' COMMENT '申請状態(0:申請中 1:承認状態 2:却下状態)',
+	`talking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:会話無し',
+	`smoking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:非喫煙',
+	`partner_gender` INT NOT NULL DEFAULT '0' COMMENT '0:男性のみ 1:女性のみ 2:指定なし',
+	`registration_date` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '登録日時' COLLATE 'utf8mb4_0900_ai_ci',
+	`map_pass` VARCHAR(260) NOT NULL DEFAULT '0' COMMENT 'デモ用の地図画像のパスを格納' COLLATE 'utf8mb4_0900_ai_ci',
+	`distance` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '走行距離' COLLATE 'utf8mb4_0900_ai_ci',
+	`required_time` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '単位:分' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`request_id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+ROW_FORMAT=DYNAMIC
+;
+
+
+/*デモ用待機情報*/
+CREATE TABLE `standbyuserdemo` (
+	`stand_by_id` INT NOT NULL AUTO_INCREMENT COMMENT '待機登録id',
+	`id` INT NOT NULL DEFAULT '0' COMMENT 'ユーザーの個別ID',
+	`date` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '希望日時' COLLATE 'utf8mb4_0900_ai_ci',
+	`current_address` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '現在地住所(デモ用)' COLLATE 'utf8mb4_0900_ai_ci',
+	`drop_off_address` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '降車位置住所(デモ用)' COLLATE 'utf8mb4_0900_ai_ci',
+	`headcount` INT NOT NULL DEFAULT '0' COMMENT '乗車人数',
+	`flag` INT NOT NULL DEFAULT '0' COMMENT '待機状態(0:非待機状態 1:待機状態)',
+	`registration_date` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '登録日時' COLLATE 'utf8mb4_0900_ai_ci',
+	`talking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:会話無し',
+	`smoking` INT NOT NULL DEFAULT '0' COMMENT '0:チェック無し 1:非喫煙',
+	`partner_gender` INT NOT NULL DEFAULT '0' COMMENT '0:男性のみ  1:女性のみ 2:指定なし',
+	`map_pass` VARCHAR(260) NOT NULL DEFAULT '0' COMMENT 'デモ用地図画像パス' COLLATE 'utf8mb4_0900_ai_ci',
+	`distance` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '走行距離' COLLATE 'utf8mb4_0900_ai_ci',
+	`required_time` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '単位:分' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`stand_by_id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+ROW_FORMAT=DYNAMIC
+;
+
+
