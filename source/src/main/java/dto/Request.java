@@ -95,4 +95,40 @@ public class Request implements Serializable {
 	public void setRegistration_date(String registration_date) {
 		this.registration_date = registration_date;
 	}
+	
+	public Request(int request_id, int id, double current_latitude, double current_longitude, double drop_off_latitude,
+			double drop_off_longitude, int headcount, int status, int partner_id, int talking, int smoking,
+			int partner_gender, String registration_date) {
+		this.request_id = request_id;
+		this.id = id;
+		this.current_latitude = current_latitude;
+		this.current_longitude = current_longitude;
+		this.drop_off_latitude = drop_off_latitude;
+		this.drop_off_longitude = drop_off_longitude;
+		this.headcount = headcount;
+		this.status = status;
+		this.partner_id = partner_id;
+		this.talking = talking;
+		this.smoking = smoking;
+		this.partner_gender = partner_gender;
+		this.registration_date = registration_date;
+	}
+	
+	public Request() {
+		this.request_id = 0;
+		this.id = 0;
+		this.current_latitude = 0;
+		this.current_longitude = 0;
+		this.drop_off_latitude = 0;
+		this.drop_off_longitude = 0;
+		this.headcount = 0;
+		this.status = 0;
+		this.partner_id = 0;
+		this.talking = 0;
+		this.smoking = 0;
+		this.partner_gender = 0;
+		this.registration_date = "";
+	}
+	
+	
 }
