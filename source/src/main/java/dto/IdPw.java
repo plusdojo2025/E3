@@ -1,6 +1,8 @@
 package dto;
 
-public class IdPw {
+import java.io.Serializable;
+
+public class IdPw implements Serializable {
 	private int id; //ID
 	private String pass; // パスワード
 	private String email; // メールアドレス
