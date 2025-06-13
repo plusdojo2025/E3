@@ -40,6 +40,22 @@ public class Chat implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public Chat(String chatText, int roomId, int senderId, String chatDate, int id) {
+		super();
+		this.chatText = chatText;
+		this.roomId = roomId;
+		this.senderId = senderId;
+		this.chatDate = chatDate;
+		this.id = id;
+	}
  
+	public Chat (){
+		super();
+		this.chatText = "";
+		this.roomId = 0;
+		this.senderId = 0;
+		this.chatDate = "";
+		this.id = 0;
+	}
 
 }
