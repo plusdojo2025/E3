@@ -1,6 +1,8 @@
 package dto;
 
-public class Taxi {
+import java.io.Serializable;
+
+public class Taxi implements Serializable {
 	private int taxinumber;
 	private String company;
 	private String phone;
