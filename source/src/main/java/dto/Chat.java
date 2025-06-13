@@ -1,6 +1,8 @@
 package dto;
 
-public class Chat {
+import java.io.Serializable;
+
+public class Chat implements Serializable {
     private String chatText;    // テキスト本文
     private int roomId;         // ルームID
     private int senderId;       // 送信者ID
