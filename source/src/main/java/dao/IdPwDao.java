@@ -26,8 +26,8 @@ public class IdPwDao {
 				// INSERT文を準備する
 				String sql = "insert into IdPw values(0, ?, ?);";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
-				pStmt.setString(1, idpw.getEmail());
-				pStmt.setString(2, idpw.getPass());
+				pStmt.setString(1, idpw.getPass());
+				pStmt.setString(2, idpw.getEmail());
 								
 				if (pStmt.executeUpdate() == 1) {
 					insertResult = true;
