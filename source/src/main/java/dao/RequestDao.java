@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.Request;
+import dto.RequestJoin;
 import dto.User;
 
 public class RequestDao {
@@ -114,9 +115,10 @@ public class RequestDao {
 		return updateResult;
 	}
 	
-	public List<Request> searchRequestMe(Request req) {
+	
+	public List<RequestJoin> searchRequestMe(RequestJoin reqj) {
 		Connection conn = null;
-		List<Request> reqList = new ArrayList<Request>();
+		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
 		
 		try {
 			// JDBCドライバを読み込む
@@ -128,31 +130,34 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select name, nickname, gender, address_latitude, address_longitude, partner_gender, smoking, talking from User where id = ?;";
+			String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date  from Request join User on Request.id = User.id where partner_id = ? and status = 0;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, id);
+			pStmt.setInt(1, 7);
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				reqj.setNickname(rs.getString("nickname"));
+				reqj.setGender(rs.getInt("gender"));
+				reqj.setHeadcount(rs.getInt("headcount"));
+				reqj.setCurrent_latitude(rs.getDouble("current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("current_longitude"));
+				reqj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
+				reqj.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
+				reqj.setRegistration_date(rs.getString("registration"));
+				
+				reqjList.add(reqj);
+			}
 
 			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
-			rs.next();
-			user.setName(rs.getString("name")); 
-			user.setNickname(rs.getString("nickname")); 
-			user.setGender(rs.getInt("gender")); 
-			user.setAddress_latitude(rs.getDouble("address_latitude")); 
-			user.setAddress_longitude(rs.getDouble("address_longitude")); 
-			user.setPartner_gender(rs.getInt("partner_gender")); 
-			user.setSmoking(rs.getInt("smoking")); 
-			user.setTalking(rs.getInt("talking")); 
-				
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			user = null;
+			reqjList = null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			user = null;
+			reqjList = null;
 		} finally {
 			// データベースを切断
 			if (conn != null) {
@@ -160,10 +165,161 @@ public class RequestDao {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					user = null;
+					reqjList = null;
 				}
 			}
 		}
-		return user;
+		return reqjList;
+	}
+	
+	
+	public List<RequestJoin> searchMyApprove(RequestJoin reqj) {
+		Connection conn = null;
+		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "select nickname, StandByUser.current_latitude, StandByUser.current_longitude, Request.current_latitude, Request.current_longitude from Request join User on Request.id= User.id join StandByUser on Request.stand_by_id = StandByUser.stand_by_id where partner_id = ? and status = 1;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, );
+
+			// SELECT文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				reqj.setNickname(rs.getString("nickname"));
+				reqj.setPrtnr_current_latitude(rs.getDouble("StandByUser.current_latitude"));
+				reqj.setPrtnr_current_longitude(rs.getDouble("StandByUser.current_longitude"));
+				reqj.setCurrent_latitude(rs.getDouble("Request.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("Request.current_longitude"));
+				
+				reqjList.add(reqj);
+			}
+
+			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					reqjList = null;
+				}
+			}
+		}
+		return reqjList;
+	}
+	
+	
+	public List<RequestJoin> searchApproved(RequestJoin reqj) {
+		Connection conn = null;
+		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "select nickname, StandByUser.current_latitude, StandByUser.current_longitude, Request.current_latitude, Request.current_longitude from Request join User on Request.id= User.id join StandByUser on Request.stand_by_id = StandByUser.stand_by_id where id = ? and status = 1;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, );
+
+			// SELECT文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				reqj.setNickname(rs.getString("nickname"));
+				reqj.setPrtnr_current_latitude(rs.getDouble("StandByUser.current_latitude"));
+				reqj.setPrtnr_current_longitude(rs.getDouble("StandByUser.current_longitude"));
+				reqj.setCurrent_latitude(rs.getDouble("Request.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("Request.current_longitude"));
+				
+				reqjList.add(reqj);
+			}
+			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					reqjList = null;
+				}
+			}
+		}
+		return reqjList;
+	}
+	
+	
+	public boolean deleteRequest(Request req) {
+		boolean deleteResult = false;
+		Connection conn = null;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "delete from Request where status = 2;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+			// SQL文を実行する
+			if (pStmt.executeUpdate() >= 0) {
+				deleteResult = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+		
+				}
+			}
+		}
+		
+		return deleteResult;
 	}
 }
