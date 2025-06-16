@@ -132,7 +132,7 @@ public class RequestDao {
 			// SELECT文を準備する
 			String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date  from Request join User on Request.id = User.id where partner_id = ? and status = 0;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, 7);
+			pStmt.setInt(1, );
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
