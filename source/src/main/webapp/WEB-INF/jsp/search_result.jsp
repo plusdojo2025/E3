@@ -14,7 +14,7 @@
 		× <!-- 閉じるボタン -->
 	</div>
 	<div> <!-- 絞り込み -->
-		<form>
+		<form method="GET" action="/E3/SearchResultServlet">
 			<input type="checkbox" name="partner_gender" value="man">
 			<input type="checkbox" name="partner_gender" value="woman">
 			<input type="checkbox" name="smoking" value="no_smoking">
@@ -27,7 +27,7 @@
 		料金　到着予定時刻 <!-- データベースから -->
 	</div>
 	<div> <!-- モーダル -->
-		<form>
+		<form method="GET" action="/E3/SearchResultServlet">
 			ニックネーム<br> <!-- データベースから -->
 			性別　人数<br> <!-- データベースから -->
 			料金　到着予定時刻<br> <!-- データベースから -->
