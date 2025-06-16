@@ -282,6 +282,7 @@ public class RequestDao {
 	
 	public boolean deleteRequest(Request req) {
 		boolean deleteResult = false;
+		int deleteCount = 0;
 		Connection conn = null;
 
 		try {
@@ -292,13 +293,19 @@ public class RequestDao {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
-
+			
+			String countSql = "select count(*) from Request where status = 2;";
+			PreparedStatement cPStmt = conn.prepareStatement(countSql);
 			// SELECT文を準備する
 			String sql = "delete from Request where status = 2;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
+			ResultSet rs = cPStmt.executeQuery();
+			rs.next();
+			deleteCount = rs.getInt("count(*)");
+			
 			// SQL文を実行する
-			if (pStmt.executeUpdate() >= 0) {
+			if (pStmt.executeUpdate() == deleteCount) {
 				deleteResult = true;
 			}
 			
