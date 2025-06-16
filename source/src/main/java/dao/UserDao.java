@@ -64,7 +64,7 @@ public class UserDao {
 	}
 	
 	//ログインできるときはtrueを返しますよ。
-	public User loginCheck(int id) {
+	public User searchUser(int id) {
 		Connection conn = null;
 		User user = new User();
 
@@ -114,8 +114,77 @@ public class UserDao {
 				}
 			}
 		}
+		return user;
+	}
+	
+	//ログインできるときはtrueを返しますよ。
+	public boolean updateUser(User user) {
+		Connection conn = null;
+		boolean result = false;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "update User set name = ?, nickname = ?, gender = ?, address_latitude = ?, address_longitude = ?, partner_gender = ?, smoking = ?,talking = ?where id;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+		
+			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			if (user.getName() != null) {
+				pStmt.setString(1, user.getName());
+			} else {
+				pStmt.setString(1, "null");
+			}
+			
+			if (user.getNickname() != null) {
+				pStmt.setString(2, user.getNickname());
+			} else {
+				pStmt.setString(2, "null");
+			}
+		
+			pStmt.setInt(3, user.getGender());
+		
+			pStmt.setDouble(4, user.getAddress_latitude());
+		
+			pStmt.setDouble(5, user.getAddress_longitude());
+		
+			pStmt.setInt(6, user.getPartner_gender());
+		
+			pStmt.setInt(7, user.getSmoking());
+
+			pStmt.setInt(8, user.getTalking());
+			
+			// SQL文を実行する
+			if (pStmt.executeUpdate() == 1) {
+				result = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+		
+				}
+			}
+		}
 
 		// 結果を返す
-		return user;
+		return result;
 	}
 }
