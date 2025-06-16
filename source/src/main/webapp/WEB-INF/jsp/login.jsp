@@ -10,7 +10,7 @@
 <body>
 	<div id=logo><img></div>
 	<a>ログイン</a>
-	<form id="login_form" action="/webapp/LoginServlet" method="post">
+	<form id="login_form" action="/E3/LoginServlet" method="post">
 		<input type="text" name="mailaddress" placeholder="メールアドレス"><br>
 		<input type="password" name="loginPW" placeholder="パスワード"><br>
 		<input type="submit" name="login" value="ログイン">
