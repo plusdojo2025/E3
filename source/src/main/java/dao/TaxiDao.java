@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import dto.StandByUser;
 import dto.Taxi;
+
 
 public class TaxiDao {
 	// メアドとパスワードを登録します。
@@ -59,6 +61,46 @@ public class TaxiDao {
  			return insertResult;
 }
 
+			//ログインできるときはtrueを返しますよ。
+			public boolean SearchTaxiCompany(StandByUser search) {
+				Connection conn = null;
+				boolean loginResult = false;
+
+				try {		
+					// JDBCドライバを読み込む
+					Class.forName("com.mysql.cj.jdbc.Driver");
+
+					// データベースに接続する
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+							+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+							"root", "password");
+
+					// SELECT文を準備する
+					String sql = "select taxiCompany, callTaxi, (6371 * acos(cos(radians(?)) * cos(radians(taxi_address_latitude)) * cos(radians(taxi_address_longitude) - radians(?)) + sin(radians(?)) * sin(radians(taxi_address_latitude)))) AS distance FROM Taxi ORDER BY distance LIMIT 3";
+					PreparedStatement pStmt = conn.prepareStatement(sql);
+					pStmt.setDouble(1, search.getCurrent_latitude());
+			        pStmt.setDouble(2, search.getCurrent_longitude());
+			        pStmt.setDouble(3, search.getCurrent_latitude());
+			
+				} catch (SQLException e) {
+					e.printStackTrace();
+					
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+					
+				} finally {
+					// データベースを切断
+					if (conn != null) {
+						try {
+							conn.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+				
+						}
+					}
+				}  
+			}
+					
 	//ログインできるときはtrueを返しますよ。
 	public boolean loginCheck(Taxi taxi) {
 		Connection conn = null;
@@ -135,7 +177,9 @@ public class TaxiDao {
 				}
 			}
 		}
-			
+	
+		
+		
 		// 結果を返す
 		return loginResult;
 	}
