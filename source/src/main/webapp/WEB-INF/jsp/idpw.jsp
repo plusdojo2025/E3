@@ -10,7 +10,7 @@
 <body>
     <div id=logo><img></div>
     <a>新規登録</a>
-    <form action="/webapp/IdPwServlet" method="post">
+    <form action="/E3/IdPwServlet" method="post">
         <input type="text" name="mailaddress" placeholder="メールアドレス"><br>
         <input type="password" name="loginPW" placeholder="パスワード"><br>
         <input type="password" name="loginPW2" placeholder="パスワード再入力"><br>

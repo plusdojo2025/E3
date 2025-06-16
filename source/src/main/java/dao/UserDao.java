@@ -24,9 +24,9 @@ public class UserDao {
 					"root", "password");
 
 			// INSERT文を準備する
-			String sql = "insert into User values(?, ?, ?, ?, ?, ?, ?, ?, ?, );";
+			String sql = "insert into User values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, );
+			pStmt.setInt(1, user.getId());
 			pStmt.setString(2, user.getName());
 			pStmt.setString(3, user.getNickname());
 			pStmt.setInt(4, user.getGender());
@@ -35,11 +35,12 @@ public class UserDao {
 			pStmt.setInt(7, user.getTalking());
 			pStmt.setInt(8, user.getSmoking());
 			pStmt.setInt(9, user.getPartner_gender());
+			pStmt.setString(10, user.getAddress());
 							
+			//SQL文を実行
 			if (pStmt.executeUpdate() == 1) {
 				insertResult = true;
 			}
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,7 +119,7 @@ public class UserDao {
 	}
 	
 	//ログインできるときはtrueを返しますよ。
-	public boolean updateUser(User user) {
+	public boolean updateUser(User user, int id) {
 		Connection conn = null;
 		boolean result = false;
 
@@ -132,7 +133,7 @@ public class UserDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "update User set name = ?, nickname = ?, gender = ?, address_latitude = ?, address_longitude = ?, partner_gender = ?, smoking = ?,talking = ?where id;";
+			String sql = "update User set name = ?, nickname = ?, gender = ?, address_latitude = ?, address_longitude = ?, partner_gender = ?, smoking = ?,talking = ?where id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 		
@@ -160,6 +161,8 @@ public class UserDao {
 			pStmt.setInt(7, user.getSmoking());
 
 			pStmt.setInt(8, user.getTalking());
+
+			pStmt.setInt(9, id);
 			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {

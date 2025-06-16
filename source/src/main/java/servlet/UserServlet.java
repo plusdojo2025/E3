@@ -8,6 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.UserDao;
+import dto.User;
 
 /**
  * Servlet implementation class UserServlet
@@ -38,7 +42,35 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
 
+		HttpSession session = request.getSession();
+		
+		request.setCharacterEncoding("UTF-8");
+		//デバッグ用
+		System.out.println(session.getAttribute("id"));
+		
+		//セッションスコープに格納したidの値を取得
+		int id = (int)session.getAttribute("id");
+		String name = request.getParameter("name");
+		String nickname = request.getParameter("nickname");
+		int gender = 0;
+		double latitude = 0.0;
+		double longitude = 0.0;
+		int talking = 0;
+		int smoking = 0;
+		int partner_gender = 0;
+		String address = request.getParameter("address");
+		
+		UserDao idpw =  new UserDao();
+		
+		if(idpw.insertUser(new User( 
+				name,  nickname,  gender,  
+				latitude,  longitude,  talking,  
+				smoking,  partner_gender,  id,  
+				address))){// 登録成功
+			response.sendRedirect("/E3/HomeSearchServlet");
+		}else{ // 登録失敗
+			response.sendRedirect("/E3/UserServlet");
+		}
+	}
 }
