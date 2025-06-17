@@ -33,12 +33,12 @@
 			料金　到着予定時刻<br> <!-- データベースから -->
 			登録時刻<br> <!-- データベースから -->
 			<img src=""> <!-- 経路地図 --> <!-- データベースから -->
-			<input type="submit" name="request" value="申請">
+			<input type="submit" name="reqSta" value="申請">
 		</form>
 	</div>
 	<div>
 		<form>
-			<input type="submit" name="stand" value="待機登録">
+			<input type="submit" name="reqSta" value="待機登録">
 		</form>
 	</div>
 </body>
