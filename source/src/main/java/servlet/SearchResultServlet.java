@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.RequestDao;
 import dao.StandByUserDao;
@@ -56,10 +57,11 @@ public class SearchResultServlet extends HttpServlet {
 //			return;
 //		}
 		
+		HttpSession session = request.getSession();
 		request.setCharacterEncoding("UTF-8");
 		
 		//StandByUser用
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = (int)session.getAttribute("id");
 		String dDate = request.getParameter("desired_date"); 
 		double cLat = Double.parseDouble(request.getParameter("current_latitude"));
 		double cLon = Double.parseDouble(request.getParameter("current_longitude")); 
@@ -78,8 +80,9 @@ public class SearchResultServlet extends HttpServlet {
 			StandByUserDao sDao = new StandByUserDao();
 			StandByUser SBUser = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, talking, smoking, prtnrGen);
 			sDao.insertStandByUser(SBUser);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home_search.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("/E3/HomeSearchServlet.java");
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home_search.jsp");
+//			dispatcher.forward(request, response);
 		}
 		else if(request.getParameter("reqSta").equals("申請")) {
 			RequestDao rDao = new RequestDao();
