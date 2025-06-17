@@ -51,10 +51,9 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("id", resultId.getId());
 				// メニューサーブレットにリダイレクトする
 				response.sendRedirect("/E3/HomeSearchServlet");
-			} /* else { // ログイン失敗
-			// リクエストスコープに、タイトル、メッセージ、戻り先を格納する
-			request.setAttribute("result", new Result("ログイン失敗！", "IDまたはPWに間違いがあります。", "/E3/LoginServlet"));
-			} */
+			}  else { // ログイン失敗
+			response.sendRedirect("/E3/LoginServlet");
+			} 
 
 	}
 }

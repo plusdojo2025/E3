@@ -15,6 +15,6 @@
 		<input type="password" name="loginPW" placeholder="パスワード"><br>
 		<input type="submit" name="login" value="ログイン">
 	</form>
-	 <a>新規登録は</a><a href="idpw.jsp">こちら</a>
+	 <a>新規登録は</a><a href="/E3/IdPwServlet">こちら</a>
 </body>
 </html>
