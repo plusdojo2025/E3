@@ -5,8 +5,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/E3/css/appointment.css">
-        <script src="/E3/js/appointment.js" defer></script>
+		<link rel="stylesheet" href="<c:url value='/css/my_request.css' />">
+        <script src="<c:url value='/css/my_request.js' />" defer></script>
 		<title>待機情報確認 | シェアタク</title>
 	</head>
 	<body>

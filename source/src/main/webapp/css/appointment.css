@@ -1,1 +1,5 @@
 @charset "UTF-8";
+/* タクシー会社名とタクシー電話番号を1行で表示 */
+p[name="taxiCompany"], p[name="callTaxi"] {
+	display: inline;
+}
