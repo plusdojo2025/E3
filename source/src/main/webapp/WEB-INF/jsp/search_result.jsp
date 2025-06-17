@@ -27,7 +27,7 @@
 		料金　到着予定時刻 <!-- データベースから -->
 	</div>
 	<div> <!-- モーダル -->
-		<form method="GET" action="/E3/SearchResultServlet">
+		<form method="POST" action="/E3/SearchResultServlet">
 			ニックネーム<br> <!-- データベースから -->
 			性別　人数<br> <!-- データベースから -->
 			料金　到着予定時刻<br> <!-- データベースから -->
@@ -37,7 +37,7 @@
 		</form>
 	</div>
 	<div>
-		<form>
+		<form method="POST" action="/E3/SearchResultServlet">
 			<input type="submit" name="reqSta" value="待機登録">
 		</form>
 	</div>
