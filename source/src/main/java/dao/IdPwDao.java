@@ -64,9 +64,10 @@ public class IdPwDao {
 	}
 		
 	//ログインできるときはtrueを返しますよ。
-	public boolean loginCheck(IdPw idpw) {
+	public ResultUserID loginCheck(IdPw idpw) {
 		Connection conn = null;
 		boolean loginResult = false;
+		int generatedId = -1;	//初期値-1(エラー)
 
 		try {
 			// JDBCドライバを読み込む
@@ -90,6 +91,12 @@ public class IdPwDao {
 			rs.next();
 			if (rs.getInt("count(*)") == 1) {
 				loginResult = true;
+				//自動採番されたidを取得
+				try (ResultSet lrs = pStmt.getGeneratedKeys()) {
+	                if (rs.next()) {
+	                    generatedId = lrs.getInt(1);
+	                }
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -110,6 +117,6 @@ public class IdPwDao {
 		}
 
 		// 結果を返す
-		return loginResult;
+		return new ResultUserID(generatedId, loginResult);
 	}
 }
