@@ -19,7 +19,7 @@
         <input type="text" name="address" placeholder="自宅住所"><br>
         <input type="checkbox" name="noSmoking">非喫煙<br>
         <input type="checkbox" name="noTalking">会話を遠慮する<br>
-        <input type="checkbox" name="onlyMale">同性希望<br>
+        <input type="checkbox" name="sameGender">同性希望<br>
         <input type="submit" value="更新">
     </form>
 </body>

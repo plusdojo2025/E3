@@ -17,13 +17,12 @@
         <input type="radio" name="gender" value = 1>女性
         <input type="radio" name="gender" value = 2>その他<br>
         <input type="text" name="address" placeholder="自宅住所"><br>
-        <input type="hidden" name="Smoking" value = 0><br>
+        <input type="hidden" name="Smoking" value = 0>
         <input type="checkbox" name="noSmoking"value = 0>非喫煙<br>
-        <input type="hidden" name="Talking"value = 0><br>
+        <input type="hidden" name="Talking"value = 0>
         <input type="checkbox" name="noTalking"value = 0>会話を遠慮する<br>
         <input type="hidden" name=""value = 2>
-        <input type="checkbox" name="onlyMale"value = 0>男性希望
-        <input type="checkbox" name="onlyFemale"value = 1>女性希望<br>
+        <input type="checkbox" name="sameGender"value = 0>同性希望<br>
         <input type="submit" value="登録">
     </form>
 </body>
