@@ -10,7 +10,6 @@ import java.util.List;
 
 import dto.Request;
 import dto.RequestJoin;
-import dto.User;
 
 public class RequestDao {
 	
@@ -30,7 +29,7 @@ public class RequestDao {
 			// INSERT文を準備する
 			String sql = "insert into Request values( 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, );
+			pStmt.setInt(1, req.getId());
 			pStmt.setDouble(2, req.getCurrent_latitude());
 			pStmt.setDouble(3, req.getCurrent_longitude());
 			pStmt.setDouble(4, req.getDrop_off_latitude());
@@ -116,7 +115,7 @@ public class RequestDao {
 	}
 	
 	
-	public List<RequestJoin> searchRequestMe(RequestJoin reqj) {
+	public List<RequestJoin> searchRequestMe(int id) {
 		Connection conn = null;
 		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
 		
@@ -132,12 +131,13 @@ public class RequestDao {
 			// SELECT文を準備する
 			String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date  from Request join User on Request.id = User.id where partner_id = ? and status = 0;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, 7);
+			pStmt.setInt(1, id);
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 			
 			while(rs.next()) {
+				RequestJoin reqj = new RequestJoin();
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setGender(rs.getInt("gender"));
 				reqj.setHeadcount(rs.getInt("headcount"));
@@ -173,7 +173,7 @@ public class RequestDao {
 	}
 	
 	
-	public List<RequestJoin> searchMyApprove(RequestJoin reqj) {
+	public List<RequestJoin> searchMyApprove(int id) {
 		Connection conn = null;
 		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
 		
@@ -189,12 +189,13 @@ public class RequestDao {
 			// SELECT文を準備する
 			String sql = "select nickname, StandByUser.current_latitude, StandByUser.current_longitude, Request.current_latitude, Request.current_longitude from Request join User on Request.id= User.id join StandByUser on Request.stand_by_id = StandByUser.stand_by_id where partner_id = ? and status = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, );
+			pStmt.setInt(1, id);
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 			
 			while(rs.next()) {
+				RequestJoin reqj = new RequestJoin();
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setPrtnr_current_latitude(rs.getDouble("StandByUser.current_latitude"));
 				reqj.setPrtnr_current_longitude(rs.getDouble("StandByUser.current_longitude"));
@@ -227,7 +228,7 @@ public class RequestDao {
 	}
 	
 	
-	public List<RequestJoin> searchApproved(RequestJoin reqj) {
+	public List<RequestJoin> searchApproved(int id) {
 		Connection conn = null;
 		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
 		
@@ -243,12 +244,13 @@ public class RequestDao {
 			// SELECT文を準備する
 			String sql = "select nickname, StandByUser.current_latitude, StandByUser.current_longitude, Request.current_latitude, Request.current_longitude from Request join User on Request.id= User.id join StandByUser on Request.stand_by_id = StandByUser.stand_by_id where id = ? and status = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, );
+			pStmt.setInt(1, id);
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 			
 			while(rs.next()) {
+				RequestJoin reqj = new RequestJoin();
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setPrtnr_current_latitude(rs.getDouble("StandByUser.current_latitude"));
 				reqj.setPrtnr_current_longitude(rs.getDouble("StandByUser.current_longitude"));
@@ -282,6 +284,7 @@ public class RequestDao {
 	
 	public boolean deleteRequest(Request req) {
 		boolean deleteResult = false;
+		int deleteCount = 0;
 		Connection conn = null;
 
 		try {
@@ -292,13 +295,19 @@ public class RequestDao {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
-
+			
+			String countSql = "select count(*) from Request where status = 2;";
+			PreparedStatement cPStmt = conn.prepareStatement(countSql);
 			// SELECT文を準備する
 			String sql = "delete from Request where status = 2;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
+			ResultSet rs = cPStmt.executeQuery();
+			rs.next();
+			deleteCount = rs.getInt("count(*)");
+			
 			// SQL文を実行する
-			if (pStmt.executeUpdate() >= 0) {
+			if (pStmt.executeUpdate() == deleteCount) {
 				deleteResult = true;
 			}
 			
