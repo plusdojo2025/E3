@@ -1,1 +1,34 @@
-@charset "UTF-8";
+
+html {
+  font-size: 13px;
+  color: #303496;
+}
+
+body {
+  font-size: 13px;
+  background-color: #F5D300;
+}
+
+#logo {
+  display: flex;
+  justify-content: center;
+  margin: 70px auto 70px auto;
+}
+img {
+  max-width: 250px;  /* 最大幅を500ピクセルに設定 */
+  height: auto;
+}
+
+.form_flame {
+	width: 200px;
+	margin: 0 auto;
+	padding: 30px 50px;
+	background-color: #FFFFFF;
+	border-radius: 25px;
+	box-shadow: 2px 2px 4px gray;
+}
+
+h1 {
+	font-size: 25px;
+	margin: 0 auto 0 auto;
+}
