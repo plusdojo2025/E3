@@ -80,7 +80,7 @@ public class SearchResultServlet extends HttpServlet {
 			StandByUserDao sDao = new StandByUserDao();
 			StandByUser SBUser = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, talking, smoking, prtnrGen);
 			sDao.insertStandByUser(SBUser);
-			response.sendRedirect("/e3/HomeSearchServlet.java");
+			response.sendRedirect("/E3/HomeSearchServlet.java");
 //			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home_search.jsp");
 //			dispatcher.forward(request, response);
 		}
