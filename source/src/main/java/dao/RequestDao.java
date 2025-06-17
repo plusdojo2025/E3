@@ -68,7 +68,7 @@ public class RequestDao {
 		return insertResult;
 	}
 	
-	public boolean updateRequest(Request req) {
+	public boolean updateRequest(int id, int status) {
 		Connection conn = null;
 		boolean updateResult = false;
 
@@ -85,8 +85,8 @@ public class RequestDao {
 			String sql = "update Request set status = ? where request_id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
-			pStmt.setInt(1, req.getStatus());
-			pStmt.setInt(2, req.getRequest_id());
+			pStmt.setInt(1, status);
+			pStmt.setInt(2, id);
 			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
