@@ -36,5 +36,10 @@
 			<input type="submit" name="request" value="申請">
 		</form>
 	</div>
+	<div>
+		<form>
+			<input type="submit" name="stand" value="待機登録">
+		</form>
+	</div>
 </body>
 </html>
