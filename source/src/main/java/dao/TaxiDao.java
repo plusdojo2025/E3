@@ -16,8 +16,7 @@ public class TaxiDao {
 	// ログインできるときはtrueを返しますよ。
 	public List<Taxi> SearchTaxiCompany(StandByUser address) {
 		Connection conn = null;
-		boolean loginResult = false;
-		List<Taxi> TaxiList = new ArrayList<Taxi>();
+		List<Taxi> taxiList = new ArrayList<Taxi>();
 
 		try {
 			// JDBCドライバを読み込む
@@ -44,7 +43,7 @@ public class TaxiDao {
 				taxi.setCompany(rs.getString("company"));
 				taxi.setPhone(rs.getString("phone"));
 
-				TaxiList.add(taxi);
+				taxiList.add(taxi);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,6 +62,6 @@ public class TaxiDao {
 				}
 			}
 		}
-		return TaxiList;
+		return taxiList;
 	}
 }

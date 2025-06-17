@@ -225,7 +225,7 @@ public class StandByUserDao {
 	}	
 	
 	// 自分の待機状態解除処理
-	public boolean deleteStandByInfo(int id) {
+	public boolean deleteStandByInfo(int StandById) {
 		Connection conn = null;
 		boolean deleteResult = false;			// trueの場合は成功, falseの場合は失敗
 		
@@ -241,7 +241,7 @@ public class StandByUserDao {
 			// SQL文
 			String sql = "delete from StandByUser where id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, id);
+			pStmt.setInt(1, StandById);
 
 			// SQL文を実行して更新行数を取得　1行の場合は成功
 			if (pStmt.executeUpdate() == 1) {
