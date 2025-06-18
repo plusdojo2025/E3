@@ -15,10 +15,12 @@
 	</div>
 	<div> <!-- 絞り込み -->
 		<form method="GET" action="E3/SearchResultServlet">
-			<input type="checkbox" name="partner_gender" value="man">
-			<input type="checkbox" name="partner_gender" value="woman">
-			<input type="checkbox" name="smoking" value="no_smoking">
-			<input type="checkbox" name="talking" value="no_talking">
+			<input type="hidden" name="same_gender" value="0">
+			<input type="checkbox" name="same_gender" value="1">
+			<input type="hidden" name="smoking" value="0">
+			<input type="checkbox" name="smoking" value="1">
+			<input type="hidden" name="talking" value="0">
+			<input type="checkbox" name="talking" value="1">
 			<input type="submit" name="search" value="検索"> <!-- 勝手に追加してます！！！！ -->
 		</form>
 	</div>
