@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.StandByUser;
+import dto.StandByUserJoin;
 
 public class StandByUserDao {
 	// 必要事項登録　検索時
@@ -126,7 +127,7 @@ public class StandByUserDao {
 	}
 	
 	// searchSandByInfo用
-	public StandByUser getMyInfo(int id) {
+	public StandByUser getMyStandInfo(int id) {
 		Connection conn = null;
 		// 取得データを格納するリスト
 		StandByUser myInfo = new StandByUser();
@@ -182,9 +183,9 @@ public class StandByUserDao {
 	}
 	
 	// 待機情報検索処理
-	public List<StandByUser> searchStandByInfo(int id, StandByUser sbUser) {
+	public List<StandByUserJoin> searchStandByInfo(int id) {
 		Connection conn = null;
-		List<StandByUser> sbuList = new ArrayList<StandByUser>();
+		List<StandByUserJoin> sbujList = new ArrayList<StandByUserJoin>();
 		
 		try {
 			// JDBCドライバを読み込む
@@ -196,38 +197,51 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
-						+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
-						+ "* cos(radians(current_longitude) - radians(?))"
-						+ "+ sin(radians(?))* sin(radians(current_latitude)) as cur_distance,"
-
-						+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
-						+ "* cos(radians(drop_off_longitude) - radians(?))"
-						+ "+ sin(radians(?))* sin(radians(drop_off_latitude)) as drop_distance,"
+			if(getMyStandInfo(id).getPartner_gender() == 1) { // 自分が同性を希望している場合
+				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
+							+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
+							+ "* cos(radians(current_longitude) - radians(?))"
+							+ "+ sin(radians(?))* sin(radians(current_latitude)) as cur_distance,"
+	
+							+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
+							+ "* cos(radians(drop_off_longitude) - radians(?))"
+							+ "+ sin(radians(?))* sin(radians(drop_off_latitude)) as drop_distance,"
+							
+							+ "(headcount + ?) as sum_headcount"
+	
+							+ "join User on StandByUser.id = User.id "
+							+ "where flag = 1 and date <= ?(=自分の希望日時+20分) and date >= ?(=自分の希望日時-20分) (and User.gender = ?(=自分の性別) どちらかが同性を希望した場合)"
+							+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;";
+				
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setDouble(1, getMyStandInfo(id).getCurrent_latitude());
+				pStmt.setDouble(2, getMyStandInfo(id).getCurrent_longitude());
+				pStmt.setDouble(3, getMyStandInfo(id).getCurrent_latitude());
+				pStmt.setDouble(4, getMyStandInfo(id).getDrop_off_latitude());
+				pStmt.setDouble(5, getMyStandInfo(id).getDrop_off_longitude());
+				pStmt.setDouble(6, getMyStandInfo(id).getDrop_off_latitude());
+				pStmt.setDouble(7, getMyStandInfo(id).getHeadcount());
+				pStmt.setString(8, getMyStandInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
+				pStmt.setString(9, getMyStandInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
+				UserDao uDao = new UserDao();
+				pStmt.setInt(10, uDao.searchUser(id).getGender());
+				
+				ResultSet rs = pStmt.executeQuery();
+				while(rs.next()) {
+					StandByUserJoin sbuj = new StandByUserJoin();
+					sbuj.setNickname(rs.getString("nickname"));
+					sbuj.setGender(rs.getInt("gender"));
+					sbuj.setHeadcount(rs.getInt("headcount"));
+					sbuj.setCurrent_latitude(rs.getDouble("current_latitude"));
+					sbuj.setCurrent_longitude(rs.getDouble("current_longitude"));
+					sbuj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
+					sbuj.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
+					sbuj.setRegistration_date(rs.getString("registration_date"));
 						
-						+ "(headcount + ?) as sum_headcount"
-
-						+ "join User on StandByUser.id = User.id "
-						+ "where flag = 1 and date <= ?(=自分の希望日時+20分) and date >= ?(=自分の希望日時-20分) (and User.gender = ?(=自分の性別) どちらかが同性を希望した場合)"
-						+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;";
-			
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setDouble(1, getMyInfo(id).getCurrent_latitude());
-			pStmt.setDouble(2, getMyInfo(id).getCurrent_longitude());
-			pStmt.setDouble(3, getMyInfo(id).getCurrent_latitude());
-			pStmt.setDouble(4, getMyInfo(id).getDrop_off_latitude());
-			pStmt.setDouble(5, getMyInfo(id).getDrop_off_longitude());
-			pStmt.setDouble(6, getMyInfo(id).getDrop_off_latitude());
-			pStmt.setDouble(7, getMyInfo(id).getHeadcount());
-			pStmt.setString(8, getMyInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
-			pStmt.setString(9, getMyInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
-
-
-			
-			// SQL文を実行して更新行数を取得　1行の場合は成功
-			if (pStmt.executeUpdate() == 1) {
-				updateResult = true;
+					sbujList.add(sbuj);
+				}
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -243,7 +257,7 @@ public class StandByUserDao {
 			}
 		}
 		
-		return sbuList;
+		return sbujList;
 	}
 	
 	// 待機情報flag更新
