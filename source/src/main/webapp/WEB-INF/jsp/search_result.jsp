@@ -14,7 +14,7 @@
 		× <!-- 閉じるボタン -->
 	</div>
 	<div> <!-- 絞り込み -->
-		<form method="GET" action="/E3/SearchResultServlet">
+		<form method="GET" action="E3/SearchResultServlet">
 			<input type="checkbox" name="partner_gender" value="man">
 			<input type="checkbox" name="partner_gender" value="woman">
 			<input type="checkbox" name="smoking" value="no_smoking">
@@ -22,24 +22,28 @@
 			<input type="submit" name="search" value="検索"> <!-- 勝手に追加してます！！！！ -->
 		</form>
 	</div>
-	<div> <!-- 検索結果 -->
+	<div class="modal_action"> <!-- 検索結果 -->
 		ニックネーム<br> <!-- データベースから -->
 		料金　到着予定時刻 <!-- データベースから -->
 	</div>
-	<div> <!-- モーダル -->
-		<form method="POST" action="/E3/SearchResultServlet">
+	<div class="modal" style="visibility: hidden;"> <!-- モーダル -->
+		<form method="POST" action="E3/SearchResultServlet" onsubmit="return beforeSubmitReq()">
+            <div class="modal_close"> × </div>
 			ニックネーム<br> <!-- データベースから -->
 			性別　人数<br> <!-- データベースから -->
 			料金　到着予定時刻<br> <!-- データベースから -->
 			登録時刻<br> <!-- データベースから -->
 			<img src=""> <!-- 経路地図 --> <!-- データベースから -->
-			<input type="submit" name="reqSta" value="申請">
+			<input type="submit" name="reqSta" value="申請" class="request">
 		</form>
 	</div>
 	<div>
-		<form method="POST" action="/E3/SearchResultServlet">
+		<form method="POST" action="E3/SearchResultServlet" onsubmit="return beforeSubmitSta()">
 			<input type="submit" name="reqSta" value="待機登録">
 		</form>
 	</div>
+
+<script type="text/javascript" src="/E3/js/search_result.js"></script>
+
 </body>
 </html>
