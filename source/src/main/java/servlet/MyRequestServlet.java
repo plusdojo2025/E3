@@ -44,12 +44,24 @@ public class MyRequestServlet extends HttpServlet {
 		
 		// テスト用　待機情報作成
 		List<StandByUser> standByInfoList = new ArrayList<StandByUser>();
-		StandByUser standByUser = new StandByUser();
-		standByUser.setRegistration_date("2025/06/09 23:00");
-		standByUser.setHeadcount(1);
-		standByUser.setDate("2025/06/09 23:20");
-		standByUser.setStand_by_id(-1);
-		standByInfoList.add(standByUser);
+		StandByUser standByUser1 = new StandByUser();
+		standByUser1.setRegistration_date("2025/06/09 23:00");
+		standByUser1.setHeadcount(1);
+		standByUser1.setDate("2025/06/09 23:20");
+		standByUser1.setStand_by_id(-1);
+		standByInfoList.add(standByUser1);
+		StandByUser standByUser2 = new StandByUser();
+		standByUser2.setRegistration_date("2025/06/13 24:10");
+		standByUser2.setHeadcount(1);
+		standByUser2.setDate("2025/06/13 24:30");
+		standByUser2.setStand_by_id(-2);
+		standByInfoList.add(standByUser2);
+		StandByUser standByUser3 = new StandByUser();
+		standByUser3.setRegistration_date("2025/06/15 11:00");
+		standByUser3.setHeadcount(2);
+		standByUser3.setDate("2025/06/15 13:00");
+		standByUser3.setStand_by_id(-3);
+		standByInfoList.add(standByUser3);
 		request.setAttribute("standByInfoList", standByInfoList);
 		
 		// my_request.jspにフォワード
@@ -85,7 +97,9 @@ public class MyRequestServlet extends HttpServlet {
 			// my_request.jspにリダイレクト　再読み込みによる同一データ登録防止
 			response.sendRedirect(request.getContextPath() + "/MyRequestServlet");
 		} else { 								// 削除失敗
+			// テスト用
 			System.out.println("削除失敗");
+			response.sendRedirect(request.getContextPath() + "/MyRequestServlet");
 		}
 		
 	}
