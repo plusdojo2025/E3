@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 		throws ServletException, IOException {
 			// リクエストパラメータを取得する
 			request.setCharacterEncoding("UTF-8");
-			int id = Integer.parseInt("id");
+			// int id = Integer.parseInt("id");
 			String pass = request.getParameter("pass");
 			String email = request.getParameter("email");
 			
