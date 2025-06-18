@@ -125,8 +125,126 @@ public class StandByUserDao {
 		}
 	}
 	
-	// 待機情報検索処理
+	// searchSandByInfo用
+	public StandByUser getMyInfo(int id) {
+		Connection conn = null;
+		// 取得データを格納するリスト
+		StandByUser myInfo = new StandByUser();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベース接続
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文
+			String sql = "select headcount, current_latitude, current_longitude,"
+					+ "drop_off_latitude, drop_off_longitude,"
+					+ "headcount, registration_date, date from StandByUser "
+					+ "where id = ? and flag = 0";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, id);
+
+			// SQL文を実行して検索結果を取得
+			ResultSet rs = pStmt.executeQuery();
+
+			// 検索結果をコレクションに格納
+				myInfo.setHeadcount(rs.getInt("headcount"));
+				myInfo.setCurrent_latitude(rs.getDouble("current_latitude"));
+				myInfo.setCurrent_longitude(rs.getDouble("current_longitude"));
+				myInfo.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
+				myInfo.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
+				myInfo.setRegistration_date(rs.getString("registration_date"));
+				myInfo.setDate(rs.getString("date"));
+
+			// 検索結果が格納されたコレクションを返す
+			return myInfo;
+		}
+		catch (Exception e) {
+			// 例外処理
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
+	// 待機情報検索処理
+	public List<StandByUser> searchStandByInfo(int id, StandByUser sbUser) {
+		Connection conn = null;
+		List<StandByUser> sbuList = new ArrayList<StandByUser>();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベース接続
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文
+			String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
+						+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
+						+ "* cos(radians(current_longitude) - radians(?))"
+						+ "+ sin(radians(?))* sin(radians(current_latitude)) as cur_distance,"
+
+						+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
+						+ "* cos(radians(drop_off_longitude) - radians(?))"
+						+ "+ sin(radians(?))* sin(radians(drop_off_latitude)) as drop_distance,"
+						
+						+ "(headcount + ?) as sum_headcount"
+
+						+ "join User on StandByUser.id = User.id "
+						+ "where flag = 1 and date <= ?(=自分の希望日時+20分) and date >= ?(=自分の希望日時-20分) (and User.gender = ?(=自分の性別) どちらかが同性を希望した場合)"
+						+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;";
+			
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setDouble(1, getMyInfo(id).getCurrent_latitude());
+			pStmt.setDouble(2, getMyInfo(id).getCurrent_longitude());
+			pStmt.setDouble(3, getMyInfo(id).getCurrent_latitude());
+			pStmt.setDouble(4, getMyInfo(id).getDrop_off_latitude());
+			pStmt.setDouble(5, getMyInfo(id).getDrop_off_longitude());
+			pStmt.setDouble(6, getMyInfo(id).getDrop_off_latitude());
+			pStmt.setDouble(7, getMyInfo(id).getHeadcount());
+			pStmt.setString(8, getMyInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
+			pStmt.setString(9, getMyInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
+
+
+			
+			// SQL文を実行して更新行数を取得　1行の場合は成功
+			if (pStmt.executeUpdate() == 1) {
+				updateResult = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return sbuList;
+	}
 	
 	// 待機情報flag更新
 	public boolean updateFlag(int flag, int stand_by_id) {
