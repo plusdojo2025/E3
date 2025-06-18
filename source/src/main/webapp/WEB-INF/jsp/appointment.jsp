@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="<c:url value='/css/appointment.css' />">
-        <script src="<c:url value='/css/appointment.js' />" defer></script>
+        <script src="<c:url value='/js/appointment.js' />" defer></script>
 		<title>予約確認 | シェアタク</title>
 	</head>
 	<body>
