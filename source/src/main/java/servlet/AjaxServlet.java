@@ -66,18 +66,15 @@ public class AjaxServlet extends HttpServlet {
 	         *		・・・
 	         * }
 	         * ]
-	         * 
-
 	         * */
 	        //マッパ(JSON <-> Map, List)
 	        ObjectMapper mapper = new ObjectMapper();
 	        Map<String, Object> mapMsg = new HashMap<>();
 	        mapMsg.put("reqList", reqList);
+	        //JSON形式に変換
 	        String jsonStr = mapper.writeValueAsString(mapMsg);
-			
-			System.out.println(jsonStr);
 
-	        //pwオブジェクト
+	        //JSON形式として文字列を送信
 	        response.getWriter().write(jsonStr);
 
 	    } catch(Exception e) {

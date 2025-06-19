@@ -46,7 +46,7 @@ public class NoticeServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		int partner_id = Integer.parseInt(request.getParameter("partner_id"));
 
-		// 更新または削除を行う
+		// 承認または却下を行う
 		RequestDao reqDao = new RequestDao();
 		if (request.getParameter("submit").equals("承認")) {				//submitが"承認"
 			if(reqDao.updateRequest(partner_id, 1)) {	//成功
@@ -61,8 +61,7 @@ public class NoticeServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 			}
 		}else {															//submitが""
-			//予約確認サーブレットにリダイレクトする
-			response.sendRedirect("/AppointmentServlet");
+			//何かに使うかも？
 		}
 	}
 }

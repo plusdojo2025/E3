@@ -13,11 +13,13 @@
     <div class="logo"></div>
 
     <a href="/E3/HomeSearchServlet/"><button name="homeButton">✖</button></a>
+    <!-- モーダル外に表示されるもの(クリックするとモーダルON) -->
     <div id="listContainer">
+    	<!-- 初期表示は読み込み中 -->
     	<p>読み込み中...</p>
 	</div>
 	
-	<!-- モーダルは1つだけ -->
+	<!-- モーダルの中身 -->
 	<div id="sharedModal" class="modal" style="display: none;">
 	    <div class="modal-content">
 	        <span class="closeBtn">✖</span>
@@ -30,8 +32,8 @@
 	            <div id="modal-price">価格：￥</div>
 	            <div id="modal-time">時間：</div>
 	            <div id="modal-route">経路</div>
-	            <input type="submit" value="承認" name="submit" onclick="approvalMessage()" class="closeBtn">
-	            <input type="submit" value="却下" name="submit" onclick="rejectedMessage()" class="closeBtn">
+	            <input type="submit" value="承認" name="submit" onclick="approvalMessage()">
+	            <input type="submit" value="却下" name="submit" onclick="rejectedMessage()">
 	        </form>
 	    </div>
 	</div>

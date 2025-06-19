@@ -1,5 +1,7 @@
 'use strict';
 
+/* ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー承認時確認ダイアログーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー */
+
 function approvalMessage() {
     if (!window.confirm('承認しますか？')) {
         alert('キャンセルしました。');
@@ -9,6 +11,8 @@ function approvalMessage() {
     }
 }
 
+/* ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー却下時確認ダイアログーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー */
+
 function rejectedMessage() {
     if (!window.confirm('却下しますか？')) {
         alert('キャンセルしました。');
@@ -17,6 +21,8 @@ function rejectedMessage() {
         alert('却下しました。');
     }
 }
+
+/* ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーモーダルーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー */
 
 let modalOpen = false;
 
@@ -49,26 +55,30 @@ document.addEventListener("click", function (e) {
     }
 });
 
-// データ取得と描画
+/* ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー非同期通信ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー */
+
 function fetchData() {
     fetch('AjaxServlet')
     .then(response => response.json())
     .then(data => {
+		//下記のid属性以下を書き換える
         const container = document.getElementById("listContainer");
         container.innerHTML = "";
 
         if (Array.isArray(data.reqList)) {
+			//リストの中身がない(検索結果無し)場合に表示されたままになる
         	container.innerHTML = "<p>データがありません。</p>";
             data.reqList.forEach(item => {
         		container.innerHTML = "";
                 const row = document.createElement("div");
                 row.className = "request-item modalBtn";
+                //各id属性にデータセット
                 row.dataset.id = item.id;
                 row.dataset.nickname = item.nickname;
                 row.dataset.gender = item.gender;
                 row.dataset.headcount = item.headcount;
                 row.dataset.registrationDate = item.registration_date;
-				
+				//html描画
                 row.innerHTML = `
                     <div>申請が届きました</div>
                     <div>時間</div>
@@ -86,6 +96,6 @@ function fetchData() {
 // モーダルが開いていない時だけ更新
 setInterval(() => {
     if (!modalOpen) fetchData();
-}, 3000);
+}, 3000 /* 3000ms */);
 
 window.onload = fetchData;
