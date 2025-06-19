@@ -36,12 +36,13 @@
 			料金　到着予定時刻<br> <!-- データベースから -->
 			登録時刻<br> <!-- データベースから -->
 			<img src=""> <!-- 経路地図 --> <!-- データベースから -->
-			<input type="submit" name="reqSta" value="申請" class="request">
+			<input type="submit" name="Request" value="申請" class="request">
 		</form>
 	</div>
 	<div>
 		<form method="POST" action="E3/SearchResultServlet" onsubmit="return beforeSubmitSta()">
-			<input type="submit" name="reqSta" value="待機登録">
+			<input type="hidden"><!-- hiddenをたくさんつくりましょうね -->
+			<input type="submit" name="Stand" value="待機登録">
 		</form>
 	</div>
 

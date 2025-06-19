@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.StandByUserDao;
 import dto.StandByUser;
+import dto.StandByUserJoin;
 
 /**
  * Servlet implementation class HomeSearchServlet
@@ -45,28 +47,33 @@ public class HomeSearchServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+//		// TODO Auto-generated method stub
+//		doGet(request, response);
 
-		// リクエストパラメータを取得する
+		HttpSession session = request.getSession();
 		request.setCharacterEncoding("UTF-8");
-		int id = Integer.parseInt("id");
-		String current_latitude = request.getParameter("current_latitude");
-		String current_longitude = request.getParameter("current_longitude");
-		String drop_off_latitude = request.getParameter("drop_off_latitude");
-		String drop_off_longitude = request.getParameter("drop_off_longitude");
-		int headcount = Integer.parseInt(request.getParameter("headcount"));
-
-		// 検索処理を行う
-		StandByUserDao sbDao = new StandByUserDao();
-		List<StandByUser> userList = searchByCondition(date, current_latitude, current_longitude, drop_off_latitude,
-				drop_off_longitude, headcount);
-
-		// 結果ページにフォワードする
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
-		dispatcher.forward(request, response);
-
 		
+		//StandByUser用
+		int id = (int)session.getAttribute("id");
+		String dDate = request.getParameter("desired_date"); 
+		double cLat = Double.parseDouble(request.getParameter("current_latitude"));
+		double cLon = Double.parseDouble(request.getParameter("current_longitude")); 
+		double dLat = Double.parseDouble(request.getParameter("drop_off_latitude")); 
+		double dLon = Double.parseDouble(request.getParameter("drop_off_longitude")); 
+		int headcount = Integer.parseInt(request.getParameter("desired_date")); 
+		String rDate = request.getParameter("registration_date");  
+		
+		if(request.getParameter("search").equals("検索")) {
+			StandByUserDao sDao = new StandByUserDao();
+			StandByUser sbu = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, 0, 0, 0);
+			
+			sDao.insertStandByUser(sbu);
+			
+			List<StandByUserJoin> sbujLi = sDao.searchStandByInfo(id);
+			request.setAttribute("StandBuUserJoin", sbujLi);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/search_result.jsp");
+			dispatcher.forward(request, response);
+		}
 		
 	}
 }

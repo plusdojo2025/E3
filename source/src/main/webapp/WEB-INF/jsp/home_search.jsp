@@ -53,7 +53,7 @@
 		<div id="formError"></div>
 
 		<div>
-			<button type="submit">検索</button>
+			<input type="submit" name="search" value="検索">
 		</div>
 	</form>
 

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import dao.RequestDao;
 import dao.StandByUserDao;
 import dto.Request;
 import dto.StandByUser;
+import dto.StandByUserJoin;
 
 /**
  * Servlet implementation class SearchResultServlet
@@ -67,24 +69,33 @@ public class SearchResultServlet extends HttpServlet {
 		double cLon = Double.parseDouble(request.getParameter("current_longitude")); 
 		double dLat = Double.parseDouble(request.getParameter("drop_off_latitude")); 
 		double dLon = Double.parseDouble(request.getParameter("drop_off_longitude")); 
-		int headcount = Integer.parseInt(request.getParameter("desired_date")); 
+		int headcount = Integer.parseInt(request.getParameter("headcount")); 
 		String rDate = request.getParameter("registration_date"); 
 		int talking = Integer.parseInt(request.getParameter("talking")); 
 		int smoking = Integer.parseInt(request.getParameter("smoking")); 
 		int prtnrGen = Integer.parseInt(request.getParameter("partner_gender")); 
-		//Request用
 		int prtnrId = Integer.parseInt(request.getParameter("partner_id")); 
 		int sbId = Integer.parseInt(request.getParameter("stand_by_id")); 
 		
-		if(request.getParameter("reqSta").equals("待機登録")) {
+		if(request.getParameter("search").equals("検索")) {
 			StandByUserDao sDao = new StandByUserDao();
-			StandByUser SBUser = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, talking, smoking, prtnrGen);
-			sDao.insertStandByUser(SBUser);
-			response.sendRedirect("/E3/HomeSearchServlet.java");
-//			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home_search.jsp");
-//			dispatcher.forward(request, response);
+			StandByUser sbu = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, talking, smoking, prtnrGen);
+			
+			sDao.insertStandByUser(sbu);
+			List<StandByUserJoin> sbujLi = sDao.searchStandByInfo(id);
+			request.setAttribute("StandBuUserJoin", sbujLi);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/search_result.jsp");
+			dispatcher.forward(request, response);
 		}
-		else if(request.getParameter("reqSta").equals("申請")) {
+		
+		if(request.getParameter("Stand").equals("待機登録")) {
+			StandByUserDao sDao = new StandByUserDao();
+			sDao.updateFlag(1, id);
+			response.sendRedirect("/E3/HomeSearchServlet.java");
+
+		}
+		
+		if(request.getParameter("Request").equals("申請")) {
 			RequestDao rDao = new RequestDao();
 			Request req = new Request(0, id, cLat, cLon, dLat, dLon, headcount, 0, prtnrId, talking, smoking, prtnrGen, rDate, sbId);
 			rDao.insertRequest(req);

@@ -217,7 +217,9 @@ public class StandByUserDao {
 							+ "join User on StandByUser.id = User.id "
 							
 							+ "where flag = 1 and date <= ? and date >= ? "
-							+ "and User.gender = ?"
+							+ "and User.gender = ? " //性別
+							+ "and (? = 0 or (? = 1 and smoking = 1))" //喫煙
+							+ "and talking = ?" //会話
 							
 							+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 				
@@ -228,11 +230,14 @@ public class StandByUserDao {
 				pStmt.setDouble(4, myStandInfo.getDrop_off_latitude());
 				pStmt.setDouble(5, myStandInfo.getDrop_off_longitude());
 				pStmt.setDouble(6, myStandInfo.getDrop_off_latitude());
-				pStmt.setDouble(7, myStandInfo.getHeadcount());
+				pStmt.setInt(7, myStandInfo.getHeadcount());
 				pStmt.setString(8, calculateDate(myStandInfo.getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
 				pStmt.setString(9, calculateDate(myStandInfo.getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
 				pStmt.setInt(10, new UserDao().searchUser(id).getGender()); //ユーザーの性別を10つ目の?に代入
-				
+				pStmt.setInt(11, myStandInfo.getSmoking()); //非喫煙を11つ目の?に代入
+				pStmt.setInt(12, myStandInfo.getSmoking()); //非喫煙を12つ目の?に代入
+				pStmt.setInt(13, myStandInfo.getTalking()); //非会話を13つ目の?に代入
+
 				ResultSet rs = pStmt.executeQuery();
 				while(rs.next()) {
 					StandByUserJoin sbuj = new StandByUserJoin();
@@ -263,7 +268,9 @@ public class StandByUserDao {
 						+ "join User on StandByUser.id = User.id "
 						
 						+ "where flag = 1 and date <= ? and date >= ? "
-						+ "and ((partner_gender = 1 and User.gender = ?) or partner_gender = 0)"
+						+ "and ((partner_gender = 1 and User.gender = ?) or partner_gender = 0)" //性別
+						+ "and (? = 0 or (? = 1 and smoking = 1))" //喫煙
+						+ "and talking = ?" //会話
 						
 						+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 			
@@ -278,6 +285,9 @@ public class StandByUserDao {
 			pStmt.setString(8, calculateDate(myStandInfo.getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
 			pStmt.setString(9, calculateDate(myStandInfo.getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
 			pStmt.setInt(10, new UserDao().searchUser(id).getGender()); //ユーザーの性別を10つ目の?に代入
+			pStmt.setInt(11, myStandInfo.getSmoking()); //非喫煙を11つ目の?に代入
+			pStmt.setInt(12, myStandInfo.getSmoking()); //非喫煙を12つ目の?に代入
+			pStmt.setInt(13, myStandInfo.getTalking()); //非会話を13つ目の?に代入
 			
 			ResultSet rs = pStmt.executeQuery();
 			while(rs.next()) {
@@ -314,10 +324,10 @@ public class StandByUserDao {
 	}
 	
 	// 待機情報flag更新
-	public boolean updateFlag(int flag, int stand_by_id) {
+	public boolean updateFlag(int id) {
 		Connection conn = null;
 		boolean updateResult = false;			// trueの場合は成功, falseの場合は失敗
-		
+
 		try {
 			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -328,11 +338,14 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "update StandByUser set flag = ? "
-					+ "where stand_by_id = ?";
+			String sql = "update StandByUser set flag = 1, set talking = ?, set smoking = ?, set partner_gender = ? "
+					+ "where id = ? "
+					+ "order by stand_by_user desc limit 1";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, flag);
-			pStmt.setInt(2, stand_by_id);
+			pStmt.setInt(1, new UserDao().searchUser(id).getTalking());
+			pStmt.setInt(2, new UserDao().searchUser(id).getSmoking());
+			pStmt.setInt(3, new UserDao().searchUser(id).getPartner_gender());
+			pStmt.setInt(4, id);
 
 			// SQL文を実行して更新行数を取得　1行の場合は成功
 			if (pStmt.executeUpdate() == 1) {
