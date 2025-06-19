@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.RequestDao;
-import dao.UserDao;
-import dto.RequestJoin;
-import dto.User;
 
 /**
  * Servlet implementation class NoticeServlet
@@ -29,25 +25,12 @@ public class NoticeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 		HttpSession session = request.getSession();
-		if (session.getAttribute("id") == null) {
-			response.sendRedirect("/webapp/LoginServlet");
-			return;
-		}
+//		if (session.getAttribute("id") == null) {
+//			response.sendRedirect("/E3/LoginServlet");
+//			return;
+//		}
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
-
-		// 検索処理を行う
-		RequestDao reqDao = new RequestDao();
-		List<RequestJoin> reqList = reqDao.searchRequestMe((int)session.getAttribute("id"));
-
-		// 検索結果をリクエストスコープに格納する
-		request.setAttribute("reqList", reqList);
-		
-		UserDao userDao = new UserDao();
-		User user = userDao.searchUser((int)session.getAttribute("id"));
-
-		// 検索結果をリクエストスコープに格納する
-		request.setAttribute("user", user);
 
 		// 通知ページにフォワードする
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/notice.jsp");
@@ -65,21 +48,21 @@ public class NoticeServlet extends HttpServlet {
 
 		// 更新または削除を行う
 		RequestDao reqDao = new RequestDao();
-		if (request.getParameter("submit").equals("承認")) {
+		if (request.getParameter("submit").equals("承認")) {				//submitが"承認"
 			if(reqDao.updateRequest(partner_id, 1)) {	//成功
 				// 通知ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/notice.jsp");
 				dispatcher.forward(request, response);
 			}
-		}else if(request.getParameter("submit").equals("却下")){
+		}else if(request.getParameter("submit").equals("却下")){			//submitが"却下"
 			if(reqDao.updateRequest(partner_id, 2)) {	//成功
 				// 通知ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/notice.jsp");
 				dispatcher.forward(request, response);
 			}
-		}else {
+		}else {															//submitが""
 			//予約確認サーブレットにリダイレクトする
-			response.sendRedirect("/webapp/AppointmentServlet");
+			response.sendRedirect("/AppointmentServlet");
 		}
 	}
 }
