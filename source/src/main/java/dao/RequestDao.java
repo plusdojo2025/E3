@@ -282,6 +282,70 @@ public class RequestDao {
 	}
 	
 	
+	public List<RequestJoin> searchForNotice(int id){
+		Connection conn = null;
+		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "select id, nickname, gender, headcount, "
+					+ "current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, "
+					
+					+ "from Request "
+					+ "join User on Request.id = User.id "
+					+ "where (partner_id = ? and (status = 0 or status = 1)) or (id = ? and status = 1);";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, id);
+			pStmt.setInt(2, id);
+
+			// SELECT文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				RequestJoin reqj = new RequestJoin();
+				reqj.setId(rs.getInt("id"));
+				reqj.setNickname(rs.getString("nickname"));
+				reqj.setGender(rs.getInt("gender"));
+				reqj.setGender(rs.getInt("headcount"));
+				reqj.setCurrent_latitude(rs.getDouble("current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("current_longitude"));
+				reqj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
+				reqj.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
+				reqj.setRegistration_date(rs.getString("registration_date"));
+				
+				reqjList.add(reqj);
+			}
+			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					reqjList = null;
+				}
+			}
+		}
+		return reqjList;
+	}
+	
+	
 	public boolean deleteRequest(Request req) {
 		boolean deleteResult = false;
 		int deleteCount = 0;
@@ -331,4 +395,5 @@ public class RequestDao {
 		
 		return deleteResult;
 	}
+	
 }
