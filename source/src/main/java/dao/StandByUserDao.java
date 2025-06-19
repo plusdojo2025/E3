@@ -190,7 +190,8 @@ public class StandByUserDao {
 	public List<StandByUserJoin> searchStandByInfo(int id) {
 		Connection conn = null;
 		List<StandByUserJoin> sbujList = new ArrayList<StandByUserJoin>();
-		
+		StandByUser myStandInfo = getMyStandInfo(id);
+
 		try {
 			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -199,7 +200,7 @@ public class StandByUserDao {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
-
+			
 			// SQL文
 			if(getMyStandInfo(id).getPartner_gender() == 1) { // 自分が同性を希望している場合
 				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
@@ -221,17 +222,16 @@ public class StandByUserDao {
 							+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 				
 				PreparedStatement pStmt = conn.prepareStatement(sql);
-				pStmt.setDouble(1, getMyStandInfo(id).getCurrent_latitude());
-				pStmt.setDouble(2, getMyStandInfo(id).getCurrent_longitude());
-				pStmt.setDouble(3, getMyStandInfo(id).getCurrent_latitude());
-				pStmt.setDouble(4, getMyStandInfo(id).getDrop_off_latitude());
-				pStmt.setDouble(5, getMyStandInfo(id).getDrop_off_longitude());
-				pStmt.setDouble(6, getMyStandInfo(id).getDrop_off_latitude());
-				pStmt.setDouble(7, getMyStandInfo(id).getHeadcount());
-				pStmt.setString(8, calculateDate(getMyStandInfo(id).getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
-				pStmt.setString(9, calculateDate(getMyStandInfo(id).getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
-				UserDao uDao = new UserDao();
-				pStmt.setInt(10, uDao.searchUser(id).getGender());
+				pStmt.setDouble(1, myStandInfo.getCurrent_latitude());
+				pStmt.setDouble(2, myStandInfo.getCurrent_longitude());
+				pStmt.setDouble(3, myStandInfo.getCurrent_latitude());
+				pStmt.setDouble(4, myStandInfo.getDrop_off_latitude());
+				pStmt.setDouble(5, myStandInfo.getDrop_off_longitude());
+				pStmt.setDouble(6, myStandInfo.getDrop_off_latitude());
+				pStmt.setDouble(7, myStandInfo.getHeadcount());
+				pStmt.setString(8, calculateDate(myStandInfo.getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
+				pStmt.setString(9, calculateDate(myStandInfo.getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
+				pStmt.setInt(10, new UserDao().searchUser(id).getGender()); //ユーザーの性別を10つ目の?に代入
 				
 				ResultSet rs = pStmt.executeQuery();
 				while(rs.next()) {
@@ -268,17 +268,16 @@ public class StandByUserDao {
 						+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 			
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setDouble(1, getMyStandInfo(id).getCurrent_latitude());
-			pStmt.setDouble(2, getMyStandInfo(id).getCurrent_longitude());
-			pStmt.setDouble(3, getMyStandInfo(id).getCurrent_latitude());
-			pStmt.setDouble(4, getMyStandInfo(id).getDrop_off_latitude());
-			pStmt.setDouble(5, getMyStandInfo(id).getDrop_off_longitude());
-			pStmt.setDouble(6, getMyStandInfo(id).getDrop_off_latitude());
-			pStmt.setDouble(7, getMyStandInfo(id).getHeadcount());
-			pStmt.setString(8, calculateDate(getMyStandInfo(id).getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
-			pStmt.setString(9, calculateDate(getMyStandInfo(id).getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
-			UserDao uDao = new UserDao();
-			pStmt.setInt(10, uDao.searchUser(id).getGender());
+			pStmt.setDouble(1, myStandInfo.getCurrent_latitude());
+			pStmt.setDouble(2, myStandInfo.getCurrent_longitude());
+			pStmt.setDouble(3, myStandInfo.getCurrent_latitude());
+			pStmt.setDouble(4, myStandInfo.getDrop_off_latitude());
+			pStmt.setDouble(5, myStandInfo.getDrop_off_longitude());
+			pStmt.setDouble(6, myStandInfo.getDrop_off_latitude());
+			pStmt.setDouble(7, myStandInfo.getHeadcount());
+			pStmt.setString(8, calculateDate(myStandInfo.getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
+			pStmt.setString(9, calculateDate(myStandInfo.getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
+			pStmt.setInt(10, new UserDao().searchUser(id).getGender()); //ユーザーの性別を10つ目の?に代入
 			
 			ResultSet rs = pStmt.executeQuery();
 			while(rs.next()) {
