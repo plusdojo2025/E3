@@ -1,1 +1,94 @@
-@charset "UTF-8";
+html {
+  font-size: 13px;
+  color: #303496;
+}
+
+body {
+  font-size: 30px;
+  background-color: #F5D300;
+}
+
+#logo {
+  display: flex;
+  justify-content: center;
+  margin: 250px auto 150px auto;
+}
+img {
+  max-width: 500px;  /* 最大幅を500ピクセルに設定 */
+  height: auto;
+}
+
+.form_flame {
+	width: 500px;
+	margin:  auto;
+	padding: 70px 100px 60px 100px;
+	background-color: #FFFFFF;
+	border-radius: 90px;
+	box-shadow: 4px 4px 20px gray;
+}
+
+h1 {
+	text-align: center;
+	font-size: 50px;
+	margin: 0 auto 60px auto;
+}
+
+.register-link {
+	text-align: center; 
+	margin-top: 10px;
+}
+input[type=submit] {
+  background-color: #303496;
+  color: #FFFFFF;
+  font-size:30px;
+  height: 2.5em;
+  width: 7em;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px gray;
+  display: block;       /* ブロック要素に変換 */
+  margin: 10px auto 20px auto;
+} 
+
+input[name=mailaddress], .password-wrapper1 input,  .password-wrapper2 input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 70px;
+  border-radius: 40px;
+  border: 2px solid #303496;
+  display: block;
+  margin: 0px auto 0px auto;
+  font-size: 30px;
+}
+
+
+/* パスワード目のマーク*/
+.password-wrapper1, .password-wrapper2 {
+  position: relative;
+  width: 100%;
+}
+
+#view1, #view2 {
+  position: absolute;
+  top: 86%;
+  right: 20px;
+  transform: translateY(-100%);
+  cursor: pointer;
+  color: #888;
+  font-size: 40px;
+}
+
+#output1, #output3, #output4 {
+  color: red;
+  height: 1.5em;
+  font-size: 26px;
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+#output2 {
+  color: red;
+  font-size: 28px;
+  margin-bottom: 8px;
+  white-space: pre-line;
+}

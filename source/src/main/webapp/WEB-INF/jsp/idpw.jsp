@@ -10,27 +10,32 @@
 </head>
 <body>
 	<div id=logo><img></div>
-	<a>新規登録</a>
-	<form id=idpw_form action="/E3/IdPwServlet" method="post">
-		<input type="text" name="mailaddress" placeholder="メールアドレス"><br>
-		<input type="password" id=password1 name="loginPW" placeholder="パスワード">
-		<span id ="view1">
-				<!-- 目のアイコン -->
-				<i class="far fa-eye-slash"></i>
-		</span><br>
-		<input type="password" id=password2 name="loginPW2" placeholder="確認用パスワード">
-		<span id ="view2">
-				<!-- 目のアイコン -->
-				<i class="far fa-eye-slash"></i>
-		</span><br>
-		<div id="output1" style="color: red;"></div>
-		<div id="output2" style="color: red;"></div>
-		<div id="output3" style="color: red;"></div>
-		<div id="output4" style="color: red;"></div>
-		<div id="output5" style="color: red;"></div>
-		<input type="submit" value="登録">
-	</form>
-	<a href="login.jsp">戻る</a>
+	<div class="form_flame">
+	<h1>新規登録</h1>
+		<form id=idpw_form action="/E3/IdPwServlet" method="post">
+			<input type="text" name="mailaddress" placeholder="メールアドレス">
+				<div id="output1" style="color: red;"></div>
+			<div class="password-wrapper1">
+				<input type="password" id=password1 name="loginPW" placeholder="パスワード">
+				<span id ="view1">
+						<!-- 目のアイコン -->
+						<i class="far fa-eye-slash"></i>
+				</span>
+			</div>
+				<div id="output3" style="color: red;"></div>
+			<div class="password-wrapper2">
+				<input type="password" id=password2 name="loginPW2" placeholder="確認用パスワード">
+				<span id ="view2">
+						<!-- 目のアイコン -->
+						<i class="far fa-eye-slash"></i>
+				</span>
+			</div>
+				<div id="output4" style="color: red;"></div>
+				<div id="output2" style="color: red;"></div>
+			<input type="submit" value="登録">
+		</form>
+		<a href="login.jsp">戻る</a>
+	</div>
 <script src="js/idpw.js"></script>
 </body>
 </html>

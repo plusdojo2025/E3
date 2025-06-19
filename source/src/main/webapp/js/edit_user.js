@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const form = document.getElementById('user_form');
 	const output1 = document.getElementById('output1');
 	const output2 = document.getElementById('output2');
+	const output3 = document.getElementById('output3');
 	
 	form.addEventListener('submit', function (event) {
 		event.preventDefault(); // 送信を一旦止める
@@ -14,25 +15,26 @@ document.addEventListener('DOMContentLoaded', function () {
 		
 		let isValid = true;
 		
-		/* 氏名・ニックネームが入力されていない時の処理*/
-		if (name === '' && nickname === '') {
-		  	output1.textContent = '氏名とニックネームを入力してください。';
-		  	isValid = false;
-		} else if (name === '') {
+		/* 氏名が入力されていない時の処理*/
+		if (name === '') {
 		  	output1.textContent = '氏名を入力してください。';
 		  	isValid = false;
-		} else if (nickname === '') {
-		  	output1.textContent = 'ニックネームを入力してください。';
-		  	isValid = false;
 		} else {
-		  	output1.textContent = '';
+			output1.textContent = '';
 		}
-		/* 性別にチェックがされていない時の処理*/
-		if (gender === '') {
-		  	output2.textContent = '性別を選択してください。';
+		/* ニックネームが入力されていない時の処理*/
+		if (nickname === '') {
+		  	output2.textContent = 'ニックネームを入力してください。';
 		  	isValid = false;
 		} else {
 		  	output2.textContent = '';
+		}
+		/* 性別にチェックがされていない時の処理*/
+		if (gender === '') {
+		  	output3.textContent = '性別を選択してください。';
+		  	isValid = false;
+		} else {
+		  	output3.textContent = '';
 		}
 		
 		if (isValid) {

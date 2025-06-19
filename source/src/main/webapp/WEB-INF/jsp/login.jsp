@@ -13,16 +13,21 @@
 	<div class=form_flame>
 		<h1>ログイン</h1>
 		<form id="login_form" action="/E3/LoginServlet" method="post">
-			<input type="text" name="mailaddress" placeholder="メールアドレス"><br>
-			<input type="password" id= "password" name="loginPW" placeholder="パスワード">
-			<span id ="view">
-				<!-- 目のアイコン -->
-				<i class="far fa-eye-slash"></i>
-			</span><br>
-			<div id="output" style="color: red; margin-top: 10px;"></div>
+			<input type="text" name="mailaddress" placeholder="メールアドレス">
+			<div id="output1" style="color: red; margin-top: 10px;"></div>
+			<div class="password-wrapper">
+				<input type="password" id="password" name="loginPW" placeholder="パスワード">
+				<span id ="view">
+					<!-- 目のアイコン -->
+					<i class="far fa-eye-slash"></i>
+				</span>
+			</div>
+			<div id="output2" style="color: red; margin-top: 10px;"></div>
 			<input type="submit" name="login" value="ログイン">
 		</form>
+		<div class="register-link">
 		 <a>新規登録は</a><a href="/E3/IdPwServlet">こちら</a>
+		</div>
 	</div> 
 <script src="js/login.js"></script>
 </body>

@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	const output3 = document.getElementById('output3');
 	const output4 = document.getElementById('output4');
 	const output5 = document.getElementById('output5');
+	const output6 = document.getElementById('output6');
+	const output7 = document.getElementById('output7');
 	  
 	form.addEventListener('submit', function (event) {
 		event.preventDefault(); // 送信を一旦止める
@@ -16,60 +18,54 @@ document.addEventListener('DOMContentLoaded', function () {
 		const password2 = form.loginPW2.value.trim();
 		
 		let isValid = true;
+		let messages = [];
 		
-		/* ユーザー名・パスワードが入力されなかった時の処理 */
-		if (email === '' && password1 === '' && password2 === '') {
-			output1.textContent = 'メールアドレスとパスワードを入力してください。';
-			isValid = false;
-		}else if (email === '' && password1 === '') {
-			output1.textContent = 'メールアドレスとパスワードを入力してください。';
-			isValid = false;
-		}else if (email === '' && password2 === '') {
-			output1.textContent = 'メールアドレスと確認用パスワードを入力してください。';
-			isValid = false;
-		}else if (password1 === '' && password2 === '') {
-			output1.textContent = 'パスワードを入力してください。';
-			isValid = false;
-		}else if (email === '') {
+		/* メールアドレスが入力されなかった時の処理 */
+		if (email === '') {
 		  	output1.textContent = 'メールアドレスを入力してください。';
 		  	isValid = false;
-		} else if (password1 === '') {
-		  	output1.textContent = 'パスワードを入力してください。';
-		  	isValid = false;
-		} else if (password2 === '') {
-		  	output1.textContent = '確認用パスワードを再入力してください。';
-		  	isValid = false;
 		} else {
-		  	output1.textContent = '';
-		}
+			output1.textContent = '';
+		} 
 		/* メールアドレスの文字数が320字以内でない時の処理　*/
 		if (email !== '' && email.length > 320) {
-			output2.textContent = 'メールアドレスは320文字以内で入力してください。';
+			messages.push('メールアドレスは320文字以内で入力してください。');
 			isValid = false;
-		} else {
-			output2.textContent = '';
-		}
+		} 
 		/* メールアドレスに'@'が含まれていない時の処理 */
 		if (email !== '' && !email.includes('@')) {
-			output3.textContent = '有効なメールアドレスを入力してください。';
+			messages.push('有効なメールアドレスを入力してください。');
 			isValid = false;
-		}else {
-			output3.textContent = '';
-		}
+		} 
+		
+		output2.textContent = messages.join('\n');
+		
+		/* パスワードが入力されなかった時の処理 */
+		if (password1 === '') {
+		  	output3.textContent = 'パスワードを入力してください。';
+		  	isValid = false;
+		} 
 		/* パスワードの文字数が8文字以上20文字以内でない時の処理 */
-		if (password1.length < 8 || password1.length > 20) {
-			output4.textContent = 'パスワードは8文字以上20文字以内で入力してください。';
+		else if (password1.length < 8 || password1.length > 20) {
+			output3.textContent = '8文字以上20文字以内で入力してください。';
+			isValid = false;
+		} else {
+			output3.textContent = '';
+		} 
+		/* 確認用パスワードが入力されなかった時の処理 */
+		if (password2 === '') {
+		  	output4.textContent = '確認用パスワードを入力してください。';
+		  	isValid = false;
+		} 
+		/* パスワードと確認用パスワードが一致しなかった時の処理 */
+		else if (password1 !== password2) {
+			output4.textContent = 'パスワードが一致しません。';
 			isValid = false;
 		} else {
 			output4.textContent = '';
 			} 
-		/* パスワードと確認用パスワードが一致しなかった時の処理 */
-		if (password1 !== password2) {
-			output5.textContent = 'パスワードが一致しません。';
-			isValid = false;
-		} else {
-			output5.textContent = '';
-			} 
+		
+		/* すべてを満たすとき */
 		if (isValid) {
 			form.submit();
 		}
