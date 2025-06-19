@@ -5,7 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import dto.StandByUser;
@@ -144,7 +148,7 @@ public class StandByUserDao {
 			// SQL文
 			String sql = "select headcount, current_latitude, current_longitude,"
 					+ "drop_off_latitude, drop_off_longitude,"
-					+ "headcount, registration_date, date from StandByUser "
+					+ "registration_date, date from StandByUser "
 					+ "where id = ? and flag = 0";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
@@ -210,8 +214,11 @@ public class StandByUserDao {
 							+ "(headcount + ?) as sum_headcount"
 	
 							+ "join User on StandByUser.id = User.id "
-							+ "where flag = 1 and date <= ?(=自分の希望日時+20分) and date >= ?(=自分の希望日時-20分) (and User.gender = ?(=自分の性別) どちらかが同性を希望した場合)"
-							+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;";
+							
+							+ "where flag = 1 and date <= ? and date >= ? "
+							+ "and User.gender = ?"
+							
+							+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 				
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				pStmt.setDouble(1, getMyStandInfo(id).getCurrent_latitude());
@@ -221,8 +228,8 @@ public class StandByUserDao {
 				pStmt.setDouble(5, getMyStandInfo(id).getDrop_off_longitude());
 				pStmt.setDouble(6, getMyStandInfo(id).getDrop_off_latitude());
 				pStmt.setDouble(7, getMyStandInfo(id).getHeadcount());
-				pStmt.setString(8, getMyStandInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
-				pStmt.setString(9, getMyStandInfo(id).getDate()); //String型の日時をDateに直して時間を進退させて?の中に代入する
+				pStmt.setString(8, calculateDate(getMyStandInfo(id).getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
+				pStmt.setString(9, calculateDate(getMyStandInfo(id).getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
 				UserDao uDao = new UserDao();
 				pStmt.setInt(10, uDao.searchUser(id).getGender());
 				
@@ -240,6 +247,53 @@ public class StandByUserDao {
 						
 					sbujList.add(sbuj);
 				}
+			}
+			else { // 自分が同性を希望していない場合
+				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
+						+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
+						+ "* cos(radians(current_longitude) - radians(?))"
+						+ "+ sin(radians(?))* sin(radians(current_latitude)) as cur_distance,"
+
+						+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
+						+ "* cos(radians(drop_off_longitude) - radians(?))"
+						+ "+ sin(radians(?))* sin(radians(drop_off_latitude)) as drop_distance,"
+						
+						+ "(headcount + ?) as sum_headcount"
+
+						+ "join User on StandByUser.id = User.id "
+						
+						+ "where flag = 1 and date <= ? and date >= ? "
+						+ "and ((partner_gender = 1 and User.gender = ?) or partner_gender = 0)"
+						
+						+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
+			
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setDouble(1, getMyStandInfo(id).getCurrent_latitude());
+			pStmt.setDouble(2, getMyStandInfo(id).getCurrent_longitude());
+			pStmt.setDouble(3, getMyStandInfo(id).getCurrent_latitude());
+			pStmt.setDouble(4, getMyStandInfo(id).getDrop_off_latitude());
+			pStmt.setDouble(5, getMyStandInfo(id).getDrop_off_longitude());
+			pStmt.setDouble(6, getMyStandInfo(id).getDrop_off_latitude());
+			pStmt.setDouble(7, getMyStandInfo(id).getHeadcount());
+			pStmt.setString(8, calculateDate(getMyStandInfo(id).getDate(), 20)); //ユーザーの希望日時の20分後を8つ目の?に代入
+			pStmt.setString(9, calculateDate(getMyStandInfo(id).getDate(), -20)); //ユーザーの希望日時の20分前を9つ目の?に代入
+			UserDao uDao = new UserDao();
+			pStmt.setInt(10, uDao.searchUser(id).getGender());
+			
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				StandByUserJoin sbuj = new StandByUserJoin();
+				sbuj.setNickname(rs.getString("nickname"));
+				sbuj.setGender(rs.getInt("gender"));
+				sbuj.setHeadcount(rs.getInt("headcount"));
+				sbuj.setCurrent_latitude(rs.getDouble("current_latitude"));
+				sbuj.setCurrent_longitude(rs.getDouble("current_longitude"));
+				sbuj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
+				sbuj.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
+				sbuj.setRegistration_date(rs.getString("registration_date"));
+					
+				sbujList.add(sbuj);
+			}
 			}
 			
 		} catch (SQLException e) {
@@ -397,4 +451,26 @@ public class StandByUserDao {
 		// 結果を返す
 		return deleteResult;
 	}
+	
+	// XXXX/XX/XX XX:XX の時間を進退させて同じ型に戻しますメソッド
+	public static String calculateDate(String bef, int c) {
+		String aft = "";
+		try {
+		SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");		
+		Date date = frmt.parse(bef);
+		Calendar clndr = Calendar.getInstance();
+		clndr.setTime(date);
+		
+		clndr.add(Calendar.MINUTE, c);
+		
+		date = clndr.getTime();
+		
+		aft = frmt.format(date);
+		
+		} catch (ParseException e) {
+            e.printStackTrace();
+        }
+		return aft;
+	}
+
 }
