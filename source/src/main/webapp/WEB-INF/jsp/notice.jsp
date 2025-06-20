@@ -12,7 +12,7 @@
 
     <div class="logo"></div>
 
-    <a href="/E3/HomeSearchServlet/"><button name="homeButton">✖</button></a>
+    <a href="/E3/HomeSearchServlet"><button name="homeButton">✖</button></a>
     <!-- モーダル外に表示されるもの(クリックするとモーダルON) -->
     <div id="listContainer">
     	<!-- 初期表示は読み込み中 -->
