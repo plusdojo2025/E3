@@ -83,7 +83,7 @@ public class SearchResultServlet extends HttpServlet {
 			
 			sDao.insertStandByUser(sbu);
 			List<StandByUserJoin> sbujLi = sDao.searchStandByInfo(id);
-			request.setAttribute("StandBuUserJoin", sbujLi);
+			request.setAttribute("StandByUserJoin", sbujLi);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/search_result.jsp");
 			dispatcher.forward(request, response);
 		}
