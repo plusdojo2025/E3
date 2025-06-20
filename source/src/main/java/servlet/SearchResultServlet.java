@@ -90,7 +90,7 @@ public class SearchResultServlet extends HttpServlet {
 		
 		if(request.getParameter("Stand").equals("待機登録")) {
 			StandByUserDao sDao = new StandByUserDao();
-			sDao.updateFlag(1, id);
+			sDao.updateFlag(id);
 			response.sendRedirect("/E3/HomeSearchServlet.java");
 
 		}

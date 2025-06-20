@@ -34,7 +34,7 @@
 	</div>
 
 	<!-- 検索フォーム -->
-	<form id="searchForm" action="MatchingServlet" method="post">
+	<form id="searchForm" action="/E3/SearchResultServlet" method="post">
 		<div>
 			希望日時<input type="datetime-local" name="date" id="desired_date">
 		</div>
