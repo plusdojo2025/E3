@@ -13,7 +13,7 @@
 	<div id=logo><img src="img/logo.jpg" alt="シェアタク"></div>
 	<div class="form_flame">
 	<h1>新規登録</h1>
-		<form id=idpw_form action="/e3/IdPwServlet" method="post">
+		<form id=idpw_form action="<c:url value='/IdPwServlet' />" method="post">
 			<input type="text" name="mailaddress" placeholder="メールアドレス">
 				<div id="output1" style="color: red;"></div>
 			<div class="password-wrapper1">
