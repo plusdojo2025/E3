@@ -21,15 +21,15 @@
 			<input type="radio" name="gender" value = 2>その他<br>
 				<div id="output3" style="color: red;"></div>
 			<input type="text" name="address" placeholder="自宅住所">
-			<input type="hidden" id="address_latitude">
-        	<input type="hidden" id="address_longitude">
+			<input type="hidden" id="address_latitude" name="address_latitude">
+        	<input type="hidden" id="address_longitude" name="address_longitude">
         	<div id="result"></div>
-			<input type="hidden" name="Smoking" value = 0>
-			<input type="checkbox" name="noSmoking"value = 0>非喫煙<br>
-			<input type="hidden" name="Talking"value = 0>
-			<input type="checkbox" name="noTalking"value = 0>会話を遠慮する<br>
-			<input type="hidden" name=""value = 2>
-			<input type="checkbox" name="sameGender"value = 0>同性希望<br>
+			<input type="hidden" name="noSmoking" value = 0>
+			<input type="checkbox" name="noSmoking"value = 1>非喫煙<br>
+			<input type="hidden" name="noTalking"value = 0>
+			<input type="checkbox" name="noTalking"value = 1>会話を遠慮する<br>
+			<input type="hidden" name="sameGender" value = 0>
+			<input type="checkbox" name="sameGender"value = 1>同性希望<br>
 			<input type="submit" value="登録">
 		</form>
 	</div>

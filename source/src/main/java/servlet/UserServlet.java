@@ -53,12 +53,12 @@ public class UserServlet extends HttpServlet {
 		int id = (int)session.getAttribute("id");
 		String name = request.getParameter("name");
 		String nickname = request.getParameter("nickname");
-		int gender = 0;
-		double latitude = 0.0;
-		double longitude = 0.0;
-		int talking = 0;
-		int smoking = 0;
-		int partner_gender = 0;
+		int gender = Integer.parseInt(request.getParameter("gender"));
+		double latitude = Double.parseDouble(request.getParameter("address_latitude"));
+		double longitude = Double.parseDouble(request.getParameter("address_longitude"));
+		int talking = Integer.parseInt(request.getParameter("noTalking"));
+		int smoking = Integer.parseInt(request.getParameter("noSmoking"));
+		int partner_gender = Integer.parseInt(request.getParameter("sameGender"));
 		String address = request.getParameter("address");
 		
 		UserDao idpw =  new UserDao();
