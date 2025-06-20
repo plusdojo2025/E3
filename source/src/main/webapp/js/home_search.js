@@ -1,6 +1,6 @@
  //通知ボタンから通知一覧へ画面遷移
 document.getElementById('notification').addEventListener('click', () => {
-    location.href = 'notice.jsp';  
+    location.href = '/E3/NoticeServlet';  
   });
 
 //メニューボタン
