@@ -39,8 +39,8 @@ public class LoginServlet extends HttpServlet {
 			// リクエストパラメータを取得する
 			request.setCharacterEncoding("UTF-8");
 			// int id = Integer.parseInt("id");
-			String pass = request.getParameter("pass");
-			String email = request.getParameter("email");
+			String pass = request.getParameter("mailaddress");
+			String email = request.getParameter("loginPW");
 			
 			// ログイン処理を行う
 			IdPwDao iDao = new IdPwDao();

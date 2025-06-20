@@ -80,7 +80,7 @@ public class IdPwDao {
 
 			// SELECT文を準備する
 			String sql = "SELECT count(*) FROM IdPw WHERE email=? AND pass=?";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
+			PreparedStatement pStmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			pStmt.setString(1, idpw.getEmail());
 			pStmt.setString(2, idpw.getPass());
 
