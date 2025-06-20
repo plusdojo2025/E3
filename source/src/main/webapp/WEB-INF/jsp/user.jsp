@@ -21,8 +21,8 @@
 			<input type="radio" name="gender" value = 2>その他<br>
 				<div id="output3" style="color: red;"></div>
 			<input type="text" name="address" placeholder="自宅住所">
-			<input type="hidden" id="address_latitude" name="address_latitude">
-        	<input type="hidden" id="address_longitude" name="address_longitude">
+			<input type="hidden" name="address_latitude" id="address_latitude">
+        	<input type="hidden" name="address_longitude" id="address_longitude">
         	<div id="result"></div>
 			<input type="hidden" name="noSmoking" value = 0>
 			<input type="checkbox" name="noSmoking"value = 1>非喫煙<br>
