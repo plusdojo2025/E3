@@ -3,3 +3,92 @@
 p[name="taxiCompany"], p[name="callTaxi"] {
 	display: inline;
 }
+
+/* テスト用　チャットログ範囲 */
+div[name="chatLog"] {
+	height: 500px;
+	background-color: #dddddd;
+}
+
+/* 吹き出し内のpタグ */
+.fukidashi p {
+	margin: 0;
+}
+
+/* 相手が送信したチャットの吹き出し */
+.partner_fukidashi {
+  position: relative;
+  display: inline-block;
+  margin-left: 15px;
+  padding: 10px;
+  border: 2px solid #000000;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+}
+.partner_fukidashi::before {
+  content: "";
+  position: absolute;
+  top: 43%;
+  left: 0;
+  border-style: solid;
+  border-width: 0 15px 18px 0;
+  border-color: transparent #000000 transparent transparent;
+  translate: -100% -50%;
+}
+.partner_fukidashi::after {
+  content: "";
+  position: absolute;
+  top: 43%;
+  left: 0;
+  border-style: solid;
+  border-width: 0 10.7px 12.9px 0;
+  border-color: transparent #ffffff transparent transparent;
+  translate: -100% calc(-50% - 0.6px);
+}
+
+/* ログインユーザーが送信したチャットの吹き出し */
+.my_fukidashi {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px;
+  padding: 10px;
+  border: 2px solid #000000;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  /*
+  text-align: left;
+  */
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+}
+.my_fukidashi::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  border-style: solid;
+  border-width: 0 0 18px 15px;
+  border-color: transparent transparent transparent #000000;
+  translate: 100% -50%;
+}
+.my_fukidashi::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  border-style: solid;
+  border-width: 0 0 12.9px 10.7px;
+  border-color: transparent transparent transparent #ffffff;
+  translate: 100% calc(-50% - 0.6px);
+}
+/* ログインユーザーが送信したメッセージ */
+.my_chat {
+	text-align: right;
+}

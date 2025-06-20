@@ -5,8 +5,11 @@ document.querySelectorAll('#info').forEach(function(detail) {
 	detail.addEventListener('click', function() {
 		// 選択された項目のstand_by_id取得
 		var id = detail.getAttribute('data-id');
-		console.log(id);
+		// モーダルを非表示から表示に
 		document.getElementById(id).style.display = "block";
+		
+		// テスト用
+		console.log(id);
 	})
 })
 
