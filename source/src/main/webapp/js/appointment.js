@@ -61,11 +61,10 @@ function getChat() {
 }
 
 // 予約確認画面表示時にチャットテーブルからレコード取得メソッド実行
-//window.onload = getChat();
-window.onload = getChat;
+window.onload = getChat();
 
 // 5秒毎にチャットテーブルからレコード取得メソッド実行
-//setInterval(getChat, 5000);
+setInterval(getChat, 5000);
 
 
 // 送信ボタン押下時のチャット送信処理
