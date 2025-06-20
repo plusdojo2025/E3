@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +35,7 @@
 				<div id="output2" style="color: red;"></div>
 			<input type="submit" value="登録">
 		</form>
-		<a href="login.jsp">戻る</a>
+		<a href="<c:url value='/LoginServlet' />">戻る</a>
 	</div>
 <script src="js/idpw.js"></script>
 </body>

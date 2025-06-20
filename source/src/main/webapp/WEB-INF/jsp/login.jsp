@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-	<div id=logo><img src="<c:url value='/images/logo.jpg' />" alt="シェアタク"></div>
+	<div id=logo><img src="<c:url value='/img/logo.jpg' />" alt="シェアタク"></div>
 	<div class=form_flame>
 		<h1>ログイン</h1>
 		<form id="login_form" action="<c:url value='/LoginServlet' />" method="post">
