@@ -42,3 +42,35 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 });
+
+function sendAddress() {
+	//入力された住所を取得
+  	const address = document.getElementById("address").value;
+  	if (!address) {
+    	alert("住所を入力してください");
+    	return;
+  	}
+
+  	// URLエンコードはfetchが自動でやってくれないのでencodeURIComponent使う
+  	const url = 'Geocode?address=' + encodeURIComponent(address);
+
+  	fetch(url)
+	.then(response => response.json())
+	.then(data => {
+		if (data.error) {
+    		document.getElementById('result').textContent = "エラー: " + data.error;
+  		} else {
+			//文字に変換
+	  		data.latitude = String(data.latitude);
+	  		data.longitude = String(data.longitude);
+	  		//緯度
+	  		document.getElementById('address_latitude').textContent =data.latitude;
+	  		//経度
+	  		document.getElementById('address_longitude').textContent =data.longitude;  
+  		}		
+	})
+	.catch(error => {
+  		document.getElementById('result').textContent = "通信エラーが発生しました。";
+  		console.error(error);
+	});
+}
