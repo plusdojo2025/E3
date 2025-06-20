@@ -63,9 +63,9 @@ public class IdPwServlet extends HttpServlet {
 			
 			//デバッグ用
 			System.out.println(session.getAttribute("id"));
-			response.sendRedirect("/E3/UserServlet");
+			response.sendRedirect(request.getContextPath() + "/UserServlet");
 		}else{ // 登録失敗
-			response.sendRedirect("/E3/IdPwServlet");
+			response.sendRedirect(request.getContextPath() + "/IdPwServlet");
 		}
 	}
 }

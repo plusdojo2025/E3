@@ -50,9 +50,9 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("id", resultId.getId());
 				// メニューサーブレットにリダイレクトする
-				response.sendRedirect("/E3/HomeSearchServlet");
+				response.sendRedirect(request.getContextPath() + "/HomeSearchServlet");
 			}  else { // ログイン失敗
-			response.sendRedirect("/E3/LoginServlet");
+				response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			} 
 
 	}
