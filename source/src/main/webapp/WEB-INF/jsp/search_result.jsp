@@ -14,7 +14,7 @@
 		× <!-- 閉じるボタン -->
 	</div>
 	<div> <!-- 絞り込み -->
-		<form method="GET" action="E3/SearchResultServlet">
+		<form method="GET" action="SearchResultServlet">
 			<input type="hidden" name="same_gender" value="0">
 			<input type="checkbox" name="same_gender" value="1">
 			<input type="hidden" name="smoking" value="0">
@@ -29,7 +29,7 @@
 		料金　到着予定時刻 <!-- データベースから -->
 	</div>
 	<div class="modal" style="visibility: hidden;"> <!-- モーダル -->
-		<form method="POST" action="E3/SearchResultServlet" onsubmit="return beforeSubmitReq()">
+		<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitReq()">
             <div class="modal_close"> × </div>
 			ニックネーム<br> <!-- データベースから -->
 			性別　人数<br> <!-- データベースから -->
@@ -40,7 +40,7 @@
 		</form>
 	</div>
 	<div>
-		<form method="POST" action="E3/SearchResultServlet" onsubmit="return beforeSubmitSta()">
+		<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitSta()">
 			<input type="hidden"><!-- hiddenをたくさんつくりましょうね -->
 			<input type="submit" name="Stand" value="待機登録">
 		</form>
