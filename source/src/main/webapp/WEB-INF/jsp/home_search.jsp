@@ -26,9 +26,9 @@
 			aria-labelledby="modalTitle">
 			<h2 id="modalTitle" class="modal-title"></h2>
 			<ul class="menu-list">
-				<li><a href="my_request.jsp">待機情報確認</a></li>
-				<li><a href="user.jsp">ユーザー情報</a></li>
-				<li><a href="login.jsp">ログアウト</a></li>
+				<li><a href="MyRequestServlet">待機情報確認</a></li>
+				<li><a href="UserServlet">ユーザー情報</a></li>
+				<li><a href="LoginServlet">ログアウト</a></li>
 			</ul>
 		</div>
 	</div>
