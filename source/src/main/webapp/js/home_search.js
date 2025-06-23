@@ -23,23 +23,49 @@ document.addEventListener('DOMContentLoaded', () => {
 	const current = document.getElementById('departure_location');
 	const drop = document.getElementById('destination');
 	const headcount = document.getElementById('number_people');
-	const error = document.getElementById('formError');
+
+	const errorDate = document.getElementById('errorDate');
+	const errorCurrent = document.getElementById('errorCurrent');
+	const errorDrop = document.getElementById('errorDrop');
+	const errorHeadcount = document.getElementById('errorHeadcount');
 
 	form.addEventListener('submit', (e) => {
-		const errors = [];
+		let isValid = true;
 
-		if (!date.value) errors.push("希望日時は必須です。");
-		if (!current.value.trim()) errors.push("出発地は必須です。");
-		if (!drop.value.trim()) errors.push("目的地は必須です。");
-		if (!headcount.value || headcount.value < 1 || headcount.value > 2) {
-			errors.push("人数は1～2の範囲で入力してください。");
+		// 希望日時
+		if (!date.value) {
+			errorDate.textContent = '希望日時は必須です。';
+			isValid = false;
+		} else {
+			errorDate.textContent = '';
 		}
 
-		if (errors.length > 0) {
-			e.preventDefault();
-			error.innerHTML = errors.join("<br>");
+		// 出発地
+		if (!current.value.trim()) {
+			errorCurrent.textContent = '出発地は必須です。';
+			isValid = false;
 		} else {
-			error.innerHTML = "";
+			errorCurrent.textContent = '';
+		}
+
+		// 目的地
+		if (!drop.value.trim()) {
+			errorDrop.textContent = '目的地は必須です。';
+			isValid = false;
+		} else {
+			errorDrop.textContent = '';
+		}
+
+		// 人数
+		if (!headcount.value || headcount.value < 1 || headcount.value > 2) {
+			errorHeadcount.textContent = '人数は1～2の範囲で入力してください。';
+			isValid = false;
+		} else {
+			errorHeadcount.textContent = '';
+		}
+
+		if (!isValid) {
+			e.preventDefault();
 		}
 	});
 });
