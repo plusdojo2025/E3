@@ -3,6 +3,75 @@
 let chatForm = document.getElementById('chat_form');
 let chatLog = document.getElementById('chatLog');
 
+// 地図描画
+const map = L.map('meeting_point').setView([36.643238, 138.185428], 20); 
+// OpenStreetMap から地図画像を読み込む
+var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+});
+tileLayer.addTo(map);
+
+const pointA = L.latLng(36.643238, 138.185428); // A地点
+const pointB = L.latLng(36.642931, 138.187182); // B地点
+let time = 0;
+
+const control = L.Routing.control({
+	waypoints: [pointA, pointB],
+	router: L.Routing.osrmv1({
+		serviceUrl: 'https://router.project-osrm.org/route/v1',
+		profile: 'foot'
+	}),
+	createMarker: () => null,
+	addWaypoints: false,
+	routeWhileDragging: false,
+	show: false,
+	fitSelectedRoutes: false,
+	lineOptions: {
+    	styles: [] // ← スタイルなしにすると線は描画されない
+	}
+}).addTo(map);
+
+// 待ち合わせ場所までの所要時間計算メソッド
+function calcTime(distance) {
+  const averageSpeed = 1.33; // m/s
+  return distance / averageSpeed;
+}
+
+control.on('routesfound', function(e) {
+	const coords = e.routes[0].coordinates;
+	const mid = coords[Math.floor(coords.length / 2)];    
+	const midpoint = L.latLng(mid.lat, mid.lng);
+	L.marker(midpoint).addTo(map).bindPopup("待ち合わせ場所").openPopup();
+	
+	// ここで pointA → midpoint の所要時間を取得
+	L.Routing.control({
+	    waypoints: [pointA, midpoint],
+	    router: L.Routing.osrmv1({
+	      serviceUrl: 'https://router.project-osrm.org/route/v1',
+	      profile: 'foot'
+	    }),
+	    createMarker: () => null,
+	    addWaypoints: false,
+	    fitSelectedRoutes: false,
+	    routeWhileDragging: false,
+	    show: false,
+	    lineOptions: {
+			styles: [{ color: 'blue', opacity: 1, weight: 5 }]
+		}
+	}).on('routesfound', function(ev) {
+		const route = ev.routes[0];
+		let distance = route.summary.totalDistance;
+		
+		// 現在日時取得
+		var today = new Date();
+		time = new Date(today.getTime() + calcTime(distance) * 1000);
+		const hours = time.getHours().toString().padStart(2, '0');
+ 		const minutes = time.getMinutes().toString().padStart(2, '0');
+ 		document.getElementById('meetingTime').textContent = hours + ":" + minutes;
+		
+	}).addTo(map);
+});
+
 // チャットテーブルからレコード取得メソッド
 function getChat() {
 	// GetChatServletのurl取得
