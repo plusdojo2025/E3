@@ -17,6 +17,7 @@ public class Request implements Serializable {
 	private int partner_gender;
 	private String registration_date;
 	private int stand_by_id;
+	private String date;
 	
 	public int getRequest_id() {
 		return request_id;
@@ -104,10 +105,16 @@ public class Request implements Serializable {
 		// TODO 自動生成されたメソッド・スタブ
 		this.stand_by_id = stand_by_id;
 	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	
 	public Request(int request_id, int id, double current_latitude, double current_longitude, double drop_off_latitude,
 			double drop_off_longitude, int headcount, int status, int partner_id, int talking, int smoking,
-			int partner_gender, String registration_date, int stand_by_id) {
+			int partner_gender, String registration_date, int stand_by_id, String date) {
 		this.request_id = request_id;
 		this.id = id;
 		this.current_latitude = current_latitude;
@@ -122,6 +129,7 @@ public class Request implements Serializable {
 		this.partner_gender = partner_gender;
 		this.registration_date = registration_date;
 		this.stand_by_id = stand_by_id;
+		this.date = date;
 	}
 	
 	public Request() {
@@ -139,6 +147,7 @@ public class Request implements Serializable {
 		this.partner_gender = 0;
 		this.registration_date = "";
 		this.stand_by_id = 0;
+		this.date = "";
 	}
 
 	
