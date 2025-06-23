@@ -32,24 +32,32 @@
 			</form>
 		</div>
 		<div class="forCalculation">
-			<c:out value="${cLat}"/>
-			<c:out value="${cLon}"/>
-			<c:out value="${dLat}"/>
-			<c:out value="${dLon}"/>
+			<span id="mycLat"><c:out value="${cLat}"/></span>
+			<span id="mycLon"><c:out value="${cLon}"/></span>
+			<span id="mydLat"><c:out value="${dLat}"/></span>
+			<span id="mydLon"><c:out value="${dLon}"/></span>
 		</div>
 		<div class="list">
 			<c:forEach var="e" items="${StandByUserJoin}">
+				<div class="forCalculation">
+					<span class="pncLat"><c:out value="${e.current_latitude}"/></span>
+					<span class="pncLon"><c:out value="${e.current_longitude}"/></span>
+					<span class="pndLat"><c:out value="${e.drop_off_latitude}"/></span>
+					<span class="pndLon"><c:out value="${e.drop_off_longitude}"/></span>
+					<span class="date"><c:out value="${e.registration_date}"/></span>
+				</div>
 				<div class="modal_action"> 
 					<c:out value="${e.nickname}"/><br> 
-
-					<c:out value="${e.nickname}"/>りょうきん　到着予定時刻 
+					料金：<span class="fee"></span><br>
+					到着予定時刻：<span class="time"></span>
 				</div>
 				<div class="modal" style="visibility: hidden;"> 
 					<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitReq()">
 			            <div class="modal_close"> × </div>
 						ニックネーム<c:out value="${e.nickname}"/><br> 
 						性別<c:out value="${e.gender}"/>　人数<c:out value="${e.headcount}"/><br> 
-						料金<c:out value="${e.nickname}"/>　到着予定時刻<c:out value="${e.nickname}"/><br>
+						
+						料金：<span class="fee"></span>　到着予定時刻:<span class="time"></span><br>
 						登録時刻<c:out value="${e.registration_date}"/><br>
 						<img src=""> 
 						<input type="submit" name="Request" value="申請" class="request">
