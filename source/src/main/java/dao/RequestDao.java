@@ -27,7 +27,7 @@ public class RequestDao {
 					"root", "password");
 
 			// INSERT文を準備する
-			String sql = "insert into request values( 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "insert into request values( 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, req.getId());
 			pStmt.setDouble(2, req.getCurrent_latitude());
@@ -42,6 +42,7 @@ public class RequestDao {
 			pStmt.setInt(11, req.getPartner_gender());
 			pStmt.setString(12, req.getRegistration_date());
 			pStmt.setInt(13, req.getStand_by_id());
+			pStmt.setString(14, req.getDate());
 							
 			if (pStmt.executeUpdate() == 1) {
 				insertResult = true;
@@ -297,7 +298,7 @@ public class RequestDao {
 
 			// SELECT文を準備する
 			String sql = "select id, nickname, gender, headcount, "
-					+ "current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, "
+					+ "current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, date"
 					
 					+ "from request "
 					+ "join user on request.id = user.id "
@@ -320,6 +321,7 @@ public class RequestDao {
 				reqj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
 				reqj.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
 				reqj.setRegistration_date(rs.getString("registration_date"));
+				reqj.setRegistration_date(rs.getString("Date"));
 				
 				reqjList.add(reqj);
 			}

@@ -464,6 +464,45 @@ public class StandByUserDao {
 		return deleteResult;
 	}
 	
+	public String getDate(int sbid) {
+		Connection conn = null;
+		String date = "";
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベース接続
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文
+			String sql = "select date from standbyuser where stand_by_id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, sbid);
+
+			ResultSet rs = pStmt.executeQuery();
+			date = rs.getString("date");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return date;	}
+	
 	// XXXX/XX/XX XX:XX の時間を進退させて同じ型に戻しますメソッド
 	public static String calculateDate(String bef, int c) {
 		String aft = "";
