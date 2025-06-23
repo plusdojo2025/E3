@@ -15,7 +15,7 @@
 					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
 				</div>
 				<div id="homeButton">
-					<a href="/E3/HomeSearchServlet"><button name="homeButton">×</button></a>
+					<a href="<c:url value='HomeSearchServlet' />" class="close" id="homeBtn">&times;</a>
 				</div>
 			</div>
 		</header>

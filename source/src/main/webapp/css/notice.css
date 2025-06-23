@@ -12,27 +12,35 @@ body {
 
 
 #header {
+  display: flex;
+  justify-content: center; /* ロゴを中央に */
+  align-items: center;
   position: relative;
   height: 70px;
   margin-top: 50px;
 }
-
-#logo {
-  position: absolute;
-  left: 50%;
-  top: 70%;
-  transform: translate(-50%, -50%); /* 中心にずらす */}
   
 #logo img {
   max-width: 500px;  /* 最大幅を500ピクセルに設定 */
   height: auto;
 }
 
-#menuBotton {  
-  position: absolute;
-  top: 50%;
-  right: 30px;
-  transform: translateY(-50%);
+/* ホームボタンはロゴの右に寄せる */
+#homeBtn {
+  font-size: 80px;
+  color: #303496;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ボタンの見た目 */
+#homeBtn {
+  color: #303496;
+  font-size: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .list {

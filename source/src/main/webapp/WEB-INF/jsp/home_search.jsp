@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
+<head>
 <!-- CSSファイルの読み込み -->
-<link rel="stylesheet" href="<c:url value='/css/home_search.css' />"><head>
+<link rel="stylesheet" href="<c:url value='/css/home_search.css' />">
 <meta charset="UTF-8">
 <title>ホーム| シェアタク</title>
 </head>
@@ -43,35 +46,35 @@
 	<div class="form_flame">
 	<h1>検索</h1>
 	<form id="searchForm" action="/E3/SearchResultServlet" method="post">
+
+		 <div class="form-group">
+		   <label for="desired_date">希望日時</label>
+		   <input type="datetime-local" name="date" id="desired_date">
+		   <div id="errorDate" class="error-message"></div>
+		 </div>
 		
-  <div class="form-group">
-    <label for="desired_date">希望日時</label>
-    <input type="datetime-local" name="date" id="desired_date">
-    <div id="errorDate" class="error-message"></div>
-  </div>
-
-  <div class="form-group">
-    <label for="departure_location">出発地</label>
-    <input type="text" name="current_location" id="departure_location" maxlength="100">
-    <div id="errorCurrent" class="error-message"></div>
-    </div>
-
-  <div class="form-group">
-    <label for="destination">目的地</label>
-    <input type="text" name="drop_off_location" id="destination" maxlength="100">
-    <div id="errorDrop" class="error-message"></div>
-  </div>
-
-  <div class="form-group">
-    <label for="number_people">人数</label>
-    <input type="number" name="headcount" id="number_people" min="1" max="2">
-    <div id="errorHeadcount" class="error-message"></div>
-  </div>
-
-  <div>
-    <button type="submit">検索</button>
-  </div>
-  </form>
+		 <div class="form-group">
+		   <label for="departure_location">出発地</label>
+		   <input type="text" name="current_location" id="departure_location" maxlength="100">
+		   <div id="errorCurrent" class="error-message"></div>
+		   </div>
+		
+		 <div class="form-group">
+		   <label for="destination">目的地</label>
+		   <input type="text" name="drop_off_location" id="destination" maxlength="100">
+		   <div id="errorDrop" class="error-message"></div>
+		 </div>
+		
+		 <div class="form-group">
+		   <label for="number_people">人数</label>
+		   <input type="number" name="headcount" id="number_people" min="1" max="2">
+		   <div id="errorHeadcount" class="error-message"></div>
+		 </div>
+		
+		 <div>
+		   <input type="submit" value="検索">
+		 </div>
+	 </form>
   </div>
 	<!-- JSファイル読み込み -->
 	<script src="js/home_search.js"></script>
