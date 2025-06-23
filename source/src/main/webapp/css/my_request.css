@@ -27,13 +27,21 @@ body {
   height: auto;
 }
 
-#menuBotton {  
+#homeBtn {  
+  font-size: 100px;
   position: absolute;
-  top: 50%;
-  right: 30px;
   transform: translateY(-50%);
 }
 
+
+/* ボタンの見た目 */
+#homeBtn {
+  color: #303496;
+  font-size: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
 .list {
 	width: 500px;
 	margin: 150px auto 20px auto;
@@ -64,13 +72,28 @@ body {
 
 /* モーダルの中身 */
 .modal-content {
+	position: relative;
 	background-color: #ffffff;
 	width: 80%;
 	max-width: 600px;  /* 必要に応じて幅の上限を設定 */
-	padding: 20px;
+	padding: 50px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 	border-radius: 80px;
 	box-sizing: border-box;
+}
+
+.close {
+  position: absolute;
+  color: #aaa;
+  top: 40px;
+  right: 50px;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
 }
 
 input[type=submit] {
