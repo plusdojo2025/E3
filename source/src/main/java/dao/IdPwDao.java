@@ -27,7 +27,7 @@ public class IdPwDao {
 					"root", "password");
 
 			// INSERT文を準備する
-			String sql = "insert into IdPw values(0, ?, ?);";
+			String sql = "insert into idpw values(0, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pStmt.setString(1, idpw.getPass());
 			pStmt.setString(2, idpw.getEmail());
@@ -79,7 +79,7 @@ public class IdPwDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "SELECT count(*) FROM IdPw WHERE email=? AND pass=?";
+			String sql = "SELECT count(*) FROM idpw WHERE email=? AND pass=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			pStmt.setString(1, idpw.getEmail());
 			pStmt.setString(2, idpw.getPass());
