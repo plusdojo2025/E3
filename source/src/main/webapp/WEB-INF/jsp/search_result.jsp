@@ -31,21 +31,26 @@
 				<input type="submit" name="search" value="絞り込み"> <!-- 勝手に追加してます！！！！ -->
 			</form>
 		</div>
-		
+		<div class="forCalculation">
+			<c:out value="${cLat}"/>
+			<c:out value="${cLon}"/>
+			<c:out value="${dLat}"/>
+			<c:out value="${dLon}"/>
+		</div>
 		<div class="list">
 			<c:forEach var="e" items="${StandByUserJoin}">
 				<div class="modal_action"> 
 					<c:out value="${e.nickname}"/><br> 
+
 					<c:out value="${e.nickname}"/>りょうきん　到着予定時刻 
-					<% out.println(1 + 1); %>
 				</div>
 				<div class="modal" style="visibility: hidden;"> 
 					<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitReq()">
 			            <div class="modal_close"> × </div>
-						ニックネーム<br> 
-						性別　人数<br> 
-						料金　到着予定時刻<br>
-						登録時刻<br>
+						ニックネーム<c:out value="${e.nickname}"/><br> 
+						性別<c:out value="${e.gender}"/>　人数<c:out value="${e.headcount}"/><br> 
+						料金<c:out value="${e.nickname}"/>　到着予定時刻<c:out value="${e.nickname}"/><br>
+						登録時刻<c:out value="${e.registration_date}"/><br>
 						<img src=""> 
 						<input type="submit" name="Request" value="申請" class="request">
 					</form>
