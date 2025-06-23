@@ -27,7 +27,7 @@ public class RequestDao {
 					"root", "password");
 
 			// INSERT文を準備する
-			String sql = "insert into Request values( 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "insert into request values( 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, req.getId());
 			pStmt.setDouble(2, req.getCurrent_latitude());
@@ -82,7 +82,7 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "update Request set status = ? where request_id = ?;";
+			String sql = "update request set status = ? where request_id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			pStmt.setInt(1, status);
@@ -129,7 +129,7 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date  from Request join User on Request.id = User.id where partner_id = ? and status = 0;";
+			String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date  from request join user on request.id = user.id where partner_id = ? and status = 0;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 
@@ -187,7 +187,7 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select nickname, StandByUser.current_latitude, StandByUser.current_longitude, Request.current_latitude, Request.current_longitude from Request join User on Request.id= User.id join StandByUser on Request.stand_by_id = StandByUser.stand_by_id where partner_id = ? and status = 1;";
+			String sql = "select nickname, standbyuser.current_latitude, standbyuser.current_longitude, request.current_latitude, request.current_longitude from request join user on request.id= User.id join standbyuser on request.stand_by_id = standbyuser.stand_by_id where partner_id = ? and status = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 
@@ -197,10 +197,10 @@ public class RequestDao {
 			while(rs.next()) {
 				RequestJoin reqj = new RequestJoin();
 				reqj.setNickname(rs.getString("nickname"));
-				reqj.setPrtnr_current_latitude(rs.getDouble("StandByUser.current_latitude"));
-				reqj.setPrtnr_current_longitude(rs.getDouble("StandByUser.current_longitude"));
-				reqj.setCurrent_latitude(rs.getDouble("Request.current_latitude"));
-				reqj.setCurrent_longitude(rs.getDouble("Request.current_longitude"));
+				reqj.setPrtnr_current_latitude(rs.getDouble("standbyuser.current_latitude"));
+				reqj.setPrtnr_current_longitude(rs.getDouble("standbyuser.current_longitude"));
+				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
 				
 				reqjList.add(reqj);
 			}
@@ -242,7 +242,7 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select nickname, StandByUser.current_latitude, StandByUser.current_longitude, Request.current_latitude, Request.current_longitude from Request join User on Request.id= User.id join StandByUser on Request.stand_by_id = StandByUser.stand_by_id where id = ? and status = 1;";
+			String sql = "select nickname, standbyuser.current_latitude, standbyuser.current_longitude, request.current_latitude, request.current_longitude from request join user on request.id= user.id join standbyuser on request.stand_by_id = standbyuser.stand_by_id where id = ? and status = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 
@@ -252,10 +252,10 @@ public class RequestDao {
 			while(rs.next()) {
 				RequestJoin reqj = new RequestJoin();
 				reqj.setNickname(rs.getString("nickname"));
-				reqj.setPrtnr_current_latitude(rs.getDouble("StandByUser.current_latitude"));
-				reqj.setPrtnr_current_longitude(rs.getDouble("StandByUser.current_longitude"));
-				reqj.setCurrent_latitude(rs.getDouble("Request.current_latitude"));
-				reqj.setCurrent_longitude(rs.getDouble("Request.current_longitude"));
+				reqj.setPrtnr_current_latitude(rs.getDouble("standbyuser.current_latitude"));
+				reqj.setPrtnr_current_longitude(rs.getDouble("standbyuser.current_longitude"));
+				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
 				
 				reqjList.add(reqj);
 			}
@@ -299,8 +299,8 @@ public class RequestDao {
 			String sql = "select id, nickname, gender, headcount, "
 					+ "current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, "
 					
-					+ "from Request "
-					+ "join User on Request.id = User.id "
+					+ "from request "
+					+ "join user on request.id = user.id "
 					+ "where (partner_id = ? and (status = 0 or status = 1)) or (id = ? and status = 1);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
@@ -360,10 +360,10 @@ public class RequestDao {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			
-			String countSql = "select count(*) from Request where status = 2;";
+			String countSql = "select count(*) from request where status = 2;";
 			PreparedStatement cPStmt = conn.prepareStatement(countSql);
 			// SELECT文を準備する
-			String sql = "delete from Request where status = 2;";
+			String sql = "delete from request where status = 2;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			ResultSet rs = cPStmt.executeQuery();
