@@ -1,9 +1,53 @@
 @charset "UTF-8";
+html {
+  font-size: 13px;
+  color: #303496;
+}
+
+body {
+  font-size: 30px;
+  background-color: #F5D300;
+}
+
+#header {
+  position: relative;
+  height: 70px;
+  margin-top: 50px;
+}
+
+#logo {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%); /* 中心にずらす */}
+  
+#logo img {
+  max-width: 500px;  /* 最大幅を500ピクセルに設定 */
+  height: auto;
+}
+
+#notification {  
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+}
+
+#notification img {
+  max-width: 160px; /* 通知アイコンの大きさを調整 */
+}
+
+#menu {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
 
 /* ハンバーガーメニュー */
 .menuBtn {
-	width: 30px;
-	height: 24px;
+	width: 60px;
+	height: 48px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -18,7 +62,57 @@
 .menuBtn span {
 	display: block;
 	height: 4px;
-	background-color: #333; /*　線の色　*/
+	background-color: #303496; /*　線の色　*/
+	box-shadow: 4px 4px 6px gray;
+}
+
+.form_flame {
+	width: 500px;
+	margin: 600px auto 20px auto;
+	padding: 70px 120px 60px 120px;
+	background-color: #FFFFFF;
+	border-radius: 90px;
+	box-shadow: 4px 4px 20px gray;
+}
+
+h1 {
+	text-align: center;
+	font-size: 50px;
+	margin: 0 auto 60px auto;
+}
+
+input[type=submit] {
+  background-color: #303496;
+  color: #FFFFFF;
+  font-size:30px;
+  height: 2.5em;
+  width: 7em;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px gray;
+  display: block;       /* ブロック要素に変換 */
+  margin: 10px auto 20px auto;
+} 
+
+input[name=date], input[name=current_location], input[name=drop_off_location] {
+  width: 100%;
+  box-sizing: border-box;
+  height: 70px;
+  border-radius: 40px;
+  border: 2px solid #303496;
+  display: block;
+  margin: 0px auto 0px auto;
+  font-size: 30px;
+}
+input[name=headcount] {
+  width: 30%;
+  box-sizing: border-box;
+  height: 70px;
+  border-radius: 40px;
+  border: 2px solid #303496;
+  display: inline-block;
+  font-size: 30px;
 }
 
 /* モーダル全体 */
@@ -31,23 +125,24 @@
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 1000;
-	align-items: center;
-	justify-content: center;
 }
 
 /* モーダル表示時 */
 .menuModal.show {
-	display: flex;
+	display: block;
 }
 
 /* モーダルの中身 */
 .modal-content {
+	position: absolute;
+	top: 150px;
+	right: 20px;
 	background: #fff;
-	padding: 30px 20px;
-	width: 280px;
-	max-width: 90%;
+	padding: 30px;
+	width: 350px;
 	box-sizing: border-box;
-	position: relative;
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	border-radius: 40px;
 }
 
 /* メニューリスト */
@@ -63,11 +158,6 @@
 
 .menu-list a {
 	text-decoration: none;
-	font-size: 18px;
-	color: #0f5474;
-}
-
-/*ホバー時に下線*/
-.menu-list a:hover {
-	text-decoration: underline;
+	font-size: 36px;
+	color: #303496;
 }

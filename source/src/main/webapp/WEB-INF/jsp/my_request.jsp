@@ -6,18 +6,22 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="<c:url value='/css/my_request.css' />">
-        <script src="<c:url value='/js/my_request.js' />" defer></script>
 		<title>待機情報確認 | シェアタク</title>
 	</head>
 	<body>
 		<header>
-			<div name="logo">
-				<img src=""> <!-- ロゴ -->
+			<div id="header">
+				<div id=logo>
+					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+				</div>
+				<div id="homeButton">
+					<button name="homeButton">×</button>
+				</div>
 			</div>
-			<button name="homeButton">×</button>
 		</header>
 		
 		<main>
+			<div class="list">
 			<!-- 待機情報一覧 -->
 			<c:forEach var="info" items="${standByInfoList}">
 				<div id="info" data-id="<c:out value="${info.stand_by_id}" />">
@@ -28,7 +32,7 @@
 				
 				<!-- 待機情報詳細モーダル -->
 				<div class="modal" id="<c:out value="${info.stand_by_id}" />">
-					<div id="modalContent">
+					<div class="modal-content">
 						<button name="close" id="close">×</button>
 						<form method="post" action="<c:url value='MyRequestServlet' />">
 				            <p name="getTaxiDate"><c:out value="${info.date}" /></p>
@@ -42,10 +46,12 @@
 					</div>
 				</div>
 			</c:forEach>
+			</div>
 		</main>
 		
 		<footer>
 			
 		</footer>
+	<script src="<c:url value='/js/my_request.js' />" defer></script>
 	</body>
 </html>

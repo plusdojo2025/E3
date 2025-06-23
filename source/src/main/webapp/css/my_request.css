@@ -1,16 +1,88 @@
 @charset "UTF-8";
+html {
+  font-size: 13px;
+  color: #303496;
+}
+
+body {
+  font-size: 30px;
+  background-color: #F5D300;
+}
+
+
+#header {
+  position: relative;
+  height: 70px;
+  margin-top: 50px;
+}
+
+#logo {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%); /* 中心にずらす */}
+  
+#logo img {
+  max-width: 500px;  /* 最大幅を500ピクセルに設定 */
+  height: auto;
+}
+
+#menuBotton {  
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+}
+
+.list {
+	width: 500px;
+	margin: 150px auto 20px auto;
+	padding: 70px 120px 60px 120px;
+	background-color: #FFFFFF;
+	border-radius: 90px;
+	box-shadow: 4px 4px 20px gray;
+}
+
 /* モーダル画面 */
 .modal {
 	display: none;
 	position: fixed;
-	z-index: 1;
-    left: 0;
-    top: 0;
+	top: 0;
+	left: 0;
 	width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 1000;
 }
-#modalContent {
+
+/* モーダル表示時 */
+.modal.show {
+	display: flex;
+	justify-content: center; /* 水平方向中央 */
+	align-items: center;     /* 垂直方向中央 */
+}
+
+/* モーダルの中身 */
+.modal-content {
 	background-color: #ffffff;
 	width: 80%;
+	max-width: 600px;  /* 必要に応じて幅の上限を設定 */
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+	border-radius: 80px;
+	box-sizing: border-box;
 }
+
+input[type=submit] {
+  background-color: #303496;
+  color: #FFFFFF;
+  font-size:30px;
+  height: 2.5em;
+  width: 7em;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px gray;
+  display: block;       /* ブロック要素に変換 */
+  margin: 10px auto 20px auto;
+} 

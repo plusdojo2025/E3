@@ -5,16 +5,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>通知</title>
+<title>通知 | シェアタク</title>
 <link rel="stylesheet" type="text/css" href="css/notice.css">
 </head>
 <body>
-
-    <div class="logo"></div>
-
-    <a href="/E3/HomeSearchServlet"><button name="homeButton">✖</button></a>
-    <!-- モーダル外に表示されるもの(クリックするとモーダルON) -->
-    <div id="listContainer">
+    <header>
+			<div id="header">
+				<div id=logo>
+					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+				</div>
+				<div id="homeButton">
+					<a href="/E3/HomeSearchServlet"><button name="homeButton">×</button></a>
+				</div>
+			</div>
+		</header>
+	    <!-- モーダル外に表示されるもの(クリックするとモーダルON) -->
+    <div id="listContainer" class="list">
     	<!-- 初期表示は読み込み中 -->
     	<p>読み込み中...</p>
 	</div>

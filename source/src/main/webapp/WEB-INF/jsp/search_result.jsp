@@ -5,49 +5,57 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>一覧</title>
+		<link rel="stylesheet" href="<c:url value='/css/search_result.css' />">
+		<title>一覧 | シェアタク</title>
 	</head>
 	<body>
-		<div>
-			<img src=""> <!-- ロゴ -->
-		</div>
-		<div>
-			× <!-- 閉じるボタン -->
-		</div>
-		<div> <!-- 絞り込み -->
+		<header>
+			<div id="header">
+				<div id=logo>
+					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+				</div>
+				<div id="homeButton">
+					<button name="homeButton">×</button>
+				</div>
+			</div>
+		</header>
+		
+		<div class="form_flame"> <!-- 絞り込み -->
 			<form method="GET" action="SearchResultServlet">
 				<input type="hidden" name="same_gender" value="0">
-				<input type="checkbox" name="same_gender" value="1">
+				<input type="checkbox" name="same_gender" value="1">同性希望
 				<input type="hidden" name="smoking" value="0">
-				<input type="checkbox" name="smoking" value="1">
+				<input type="checkbox" name="smoking" value="1">非喫煙
 				<input type="hidden" name="talking" value="0">
-				<input type="checkbox" name="talking" value="1">
-				<input type="submit" name="search" value="検索"> <!-- 勝手に追加してます！！！！ -->
+				<input type="checkbox" name="talking" value="1">会話NG
+				<input type="submit" name="search" value="絞り込み"> <!-- 勝手に追加してます！！！！ -->
 			</form>
 		</div>
 		
-		<c:forEach var="e" items="${StandByUserJoin}">
-			<div class="modal_action"> 
-				<c:out value="${e.nickname}"/><br> 
-				<c:out value="${e.nickname}"/>りょうきん　到着予定時刻 
-				<% out.println(1 + 1); %>
-			</div>
-			<div class="modal" style="visibility: hidden;"> 
-				<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitReq()">
-		            <div class="modal_close"> × </div>
-					ニックネーム<br> 
-					性別　人数<br> 
-					料金　到着予定時刻<br>
-					登録時刻<br>
-					<img src=""> 
-					<input type="submit" name="Request" value="申請" class="request">
-				</form>
-			</div>
-		</c:forEach>
+		<div class="list">
+			<c:forEach var="e" items="${StandByUserJoin}">
+				<div class="modal_action"> 
+					<c:out value="${e.nickname}"/><br> 
+					<c:out value="${e.nickname}"/>りょうきん　到着予定時刻 
+					<% out.println(1 + 1); %>
+				</div>
+				<div class="modal" style="visibility: hidden;"> 
+					<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitReq()">
+			            <div class="modal_close"> × </div>
+						ニックネーム<br> 
+						性別　人数<br> 
+						料金　到着予定時刻<br>
+						登録時刻<br>
+						<img src=""> 
+						<input type="submit" name="Request" value="申請" class="request">
+					</form>
+				</div>
+			</c:forEach>
+		</div>
 		<div>
 			<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitSta()">
 				<input type="hidden"><!-- hiddenをたくさんつくりましょうね -->
-				<input type="submit" name="Stand" value="待機登録">
+				<input type="submit" name="stand" value="待機登録">
 			</form>
 		</div>
 	
