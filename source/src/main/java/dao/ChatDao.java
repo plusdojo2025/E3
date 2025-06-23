@@ -26,7 +26,7 @@ public class ChatDao {
 					"root", "password");
 
 			// INSERT文を準備する
-			String sql = "insert into Chat values(?, ?, ?, ?, ?);";
+			String sql = "insert into chat values(?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, chat.getId());
 			pStmt.setInt(2, chat.getRoomId());
@@ -74,7 +74,7 @@ public class ChatDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select sender_id, chat_text, chat_date from Chat where room_id = ?";
+			String sql = "select sender_id, chat_text, chat_date from chat where room_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, roomId);
 

@@ -24,7 +24,7 @@ public class UserDao {
 					"root", "password");
 
 			// INSERT文を準備する
-			String sql = "insert into User values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "insert into user values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, user.getId());
 			pStmt.setString(2, user.getName());
@@ -79,7 +79,7 @@ public class UserDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select name, nickname, gender, address_latitude, address_longitude, partner_gender, smoking, talking from User where id = ?;";
+			String sql = "select name, nickname, gender, address_latitude, address_longitude, partner_gender, smoking, talking from user where id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 
@@ -133,7 +133,7 @@ public class UserDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "update User set name = ?, nickname = ?, gender = ?, address_latitude = ?, address_longitude = ?, partner_gender = ?, smoking = ?,talking = ?where id = ?;";
+			String sql = "update user set name = ?, nickname = ?, gender = ?, address_latitude = ?, address_longitude = ?, partner_gender = ?, smoking = ?, talking = ? where id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 		

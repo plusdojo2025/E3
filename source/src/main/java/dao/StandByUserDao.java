@@ -31,7 +31,7 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "insert into StandByUser values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into standbyuser values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, standByUser.getStand_by_id());
 			pStmt.setInt(2, standByUser.getId());
@@ -88,7 +88,7 @@ public class StandByUserDao {
 			// SQL文
 			String sql = "select headcount, current_latitude, current_longitude,"
 					+ "drop_off_latitude, drop_off_longitude,"
-					+ "registration_date, date from StandByUser "
+					+ "registration_date, date from standbyuser "
 					+ "where id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
@@ -148,7 +148,7 @@ public class StandByUserDao {
 			// SQL文
 			String sql = "select headcount, current_latitude, current_longitude,"
 					+ "drop_off_latitude, drop_off_longitude,"
-					+ "registration_date, date from StandByUser "
+					+ "registration_date, date from standbyuser "
 					+ "where id = ? and flag = 0";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
@@ -214,10 +214,10 @@ public class StandByUserDao {
 							
 							+ "(headcount + ?) as sum_headcount"
 	
-							+ "join User on StandByUser.id = User.id "
+							+ "join user on standbyuser.id = user.id "
 							
 							+ "where flag = 1 and date <= ? and date >= ? "
-							+ "and User.gender = ? " //性別
+							+ "and user.gender = ? " //性別
 							+ "and (? = 0 or (? = 1 and smoking = 1))" //喫煙
 							+ "and talking = ?" //会話
 							
@@ -265,10 +265,10 @@ public class StandByUserDao {
 						
 						+ "(headcount + ?) as sum_headcount"
 
-						+ "join User on StandByUser.id = User.id "
+						+ "join user on standbyuser.id = user.id "
 						
 						+ "where flag = 1 and date <= ? and date >= ? "
-						+ "and ((partner_gender = 1 and User.gender = ?) or partner_gender = 0)" //性別
+						+ "and ((partner_gender = 1 and user.gender = ?) or partner_gender = 0)" //性別
 						+ "and (? = 0 or (? = 1 and smoking = 1))" //喫煙
 						+ "and talking = ?" //会話
 						
@@ -338,7 +338,7 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "update StandByUser set flag = 1, set talking = ?, set smoking = ?, set partner_gender = ? "
+			String sql = "update standbyuser set flag = 1, set talking = ?, set smoking = ?, set partner_gender = ? "
 					+ "where id = ? "
 					+ "order by stand_by_user desc limit 1";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -387,10 +387,10 @@ public class StandByUserDao {
 
 			// SQL文
 			// 予定日を超過したデータ数を求めるSQL
-			String countSql = "select count(*) from StandByUser where date < curdate();";
+			String countSql = "select count(*) from standbyuser where date < curdate();";
 			PreparedStatement cPStmt = conn.prepareStatement(countSql);
 			// 削除するSQL
-			String deleteSql = "delete from StandByUser where date < curdate();";
+			String deleteSql = "delete from standbyuser where date < curdate();";
 			PreparedStatement dPStmt = conn.prepareStatement(deleteSql);
 
 			// データ数を求めるSQL文を実行してデータ数を格納
@@ -437,7 +437,7 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "delete from StandByUser where id = ?";
+			String sql = "delete from standbyuser where id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, StandById);
 

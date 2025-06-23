@@ -28,7 +28,7 @@ public class TaxiDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select company, phone,(6371 * acos(cos(radians(?)) * cos(radians(taxi_address_latitude)) * cos(radians(taxi_address_longitude) - radians(?)) + sin(radians(?)) * sin(radians(taxi_address_latitude)))) AS distance FROM Taxi ORDER BY distance LIMIT 3";
+			String sql = "select company, phone,(6371 * acos(cos(radians(?)) * cos(radians(taxi_address_latitude)) * cos(radians(taxi_address_longitude) - radians(?)) + sin(radians(?)) * sin(radians(taxi_address_latitude)))) AS distance FROM taxi ORDER BY distance LIMIT 3";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setDouble(1, address.getCurrent_latitude());
 			pStmt.setDouble(2, address.getCurrent_longitude());
