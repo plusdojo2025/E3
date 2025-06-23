@@ -24,17 +24,18 @@ document.querySelectorAll('#cancel').forEach(function(btn) {
 });
 
 // ×ボタン押下時にモーダル閉じる処理
-document.querySelectorAll('#close').forEach(function(btn) {
+document.querySelectorAll('.close').forEach(function(btn) {
 	btn.addEventListener('click', function() {
-		var modal = btn.closest('.modal');
-	    modal.style.display = "none";
-	    modal.classList.remove("show");
+		const modal = btn.closest('.modal');
+		if (modal) {
+			modal.classList.remove('show');
+		}
 	});
 });
 
 // モーダル画面外押下時にモーダル閉じる処理
-window.onclick = function(event) {
-    if (event.target.className === "modal") {
+window.addEventListener('click', function(event) {
+	if (event.target.classList.contains('modal')) {
     	event.target.classList.remove("show");
   	}
-}
+});

@@ -6,9 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	const output2 = document.getElementById('output2');
 	const output3 = document.getElementById('output3');
 	const output4 = document.getElementById('output4');
-	const output5 = document.getElementById('output5');
-	const output6 = document.getElementById('output6');
-	const output7 = document.getElementById('output7');
 	  
 	form.addEventListener('submit', function (event) {
 		event.preventDefault(); // 送信を一旦止める

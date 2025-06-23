@@ -15,7 +15,7 @@
 					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
 				</div>
 				<div id="homeButton">
-					<button name="homeButton">×</button>
+					<a href="<c:url value='HomeSearchServlet' />" class="close" id="homeBtn">&times;</a>
 				</div>
 			</div>
 		</header>
@@ -33,7 +33,7 @@
 				<!-- 待機情報詳細モーダル -->
 				<div class="modal" id="<c:out value="${info.stand_by_id}" />">
 					<div class="modal-content">
-						<button name="close" id="close">×</button>
+						<span id="closeBtn" class="close">&times;</span>
 						<form method="post" action="<c:url value='MyRequestServlet' />">
 				            <p name="getTaxiDate"><c:out value="${info.date}" /></p>
 				            <p name="departurePoint">渋谷区道玄坂2</p>
