@@ -3,22 +3,28 @@
 <!DOCTYPE html>
 <html>
 <!-- CSSファイルの読み込み -->
-<link rel="stylesheet" href="css/	home_search.css">
-<head>
+<link rel="stylesheet" href="<c:url value='/css/home_search.css' />"><head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ホーム| シェアタク</title>
 </head>
 <body>
-	<div class="logo"></div>
-
-	<!-- 通知ボタン -->
-	<button id=notification>通知</button>
-
-
-	<!-- ハンバーガーボタン -->
-	<button id="menu" class="menuBtn" aria-label="メニューを開く">
-		<span></span> <span></span> <span></span>
-	</button>
+	<header>
+		<div id="header">
+			<div id=logo>
+				<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+			</div>
+			<!-- 通知ボタン -->
+			<div id="notification">
+				<a href="NoticeServlet" id="notification">
+					<img src="img/bell.png" alt="通知">
+				</a>
+			</div>
+			<!-- ハンバーガーボタン -->
+			<button id="menu" class="menuBtn" aria-label="メニューを開く">
+				<span></span> <span></span> <span></span>
+			</button>
+		</div>
+	</header>
 
 	<!-- モーダルメニュー -->
 	<div id="menuModal" class="menuModal" aria-hidden="true">
@@ -26,14 +32,16 @@
 			aria-labelledby="modalTitle">
 			<h2 id="modalTitle" class="modal-title"></h2>
 			<ul class="menu-list">
-				<li><a href="MyRequestServlet">待機情報確認</a></li>
-				<li><a href="UserServlet">ユーザー情報</a></li>
-				<li><a href="LoginServlet">ログアウト</a></li>
+				<li><a href="MyRequestServlet">▸待機情報確認</a></li>
+				<li><a href="UserServlet">▸ユーザー情報</a></li>
+				<li><a href="LoginServlet">▸ログアウト</a></li>
 			</ul>
 		</div>
 	</div>
 
 	<!-- 検索フォーム -->
+	<div class="form_flame">
+	<h1>検索</h1>
 	<form id="searchForm" action="/E3/SearchResultServlet" method="post">
 		
   <div class="form-group">
@@ -46,7 +54,7 @@
     <label for="departure_location">出発地</label>
     <input type="text" name="current_location" id="departure_location" maxlength="100">
     <div id="errorCurrent" class="error-message"></div>
-  </div>
+    </div>
 
   <div class="form-group">
     <label for="destination">目的地</label>
@@ -64,6 +72,7 @@
     <button type="submit">検索</button>
   </div>
   </form>
+  </div>
 	<!-- JSファイル読み込み -->
 	<script src="js/home_search.js"></script>
 

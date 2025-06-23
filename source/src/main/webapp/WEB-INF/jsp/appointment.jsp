@@ -20,8 +20,8 @@
 		<main>
 			<!-- マッチング相手のニックネームと待ち合わせ時間表示 -->
 			<div>
-				<p name="nickname">ニックネームさん</p>
-				<p name="meetingTime">23:00</p>
+				<a name="nickname">ニックネームさん</a>
+				<a name="meetingTime">23:00</a>
 			</div>
 			
 			<!-- 現在地から待ち合わせ場所までの経路表示 -->
