@@ -1,4 +1,84 @@
 @charset "UTF-8";
+
+@charset "UTF-8";
+html {
+  font-size: 13px;
+  color: #303496;
+}
+
+body {
+  font-size: 30px;
+  background-color: #F5D300;
+}
+
+
+#header {
+  position: relative;
+  height: 70px;
+  margin-top: 50px;
+}
+
+#logo {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%); /* 中心にずらす */}
+  
+#logo img {
+  max-width: 500px;  /* 最大幅を500ピクセルに設定 */
+  height: auto;
+}
+
+.info {
+	margin-top: 70px;
+	padding: 30px;
+	background-color: #FFFFFF;
+	text-align: center;
+	border-radius: 50px;
+	box-shadow: 4px 4px 20px gray;
+}
+
+a[name=nickname], a[name=meetingTime] {
+	font-weight: bold;
+	text-align: center;
+	font-size: 50px;
+}
+
+.taxi {
+	padding: 30px;
+	color: #FFFFFF;
+	background-color: #303496;
+	text-align: center;
+	border-radius: 50px;
+	box-shadow: 4px 4px 20px gray;
+}
+
+input[type=submit] {
+  background-color: #303496;
+  color: #FFFFFF;
+  font-size:30px;
+  height: 2.3em;
+  width: 7em;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px gray;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 20p;     /* 追加 */
+}
+
+select[name=selectPhrase] {
+  width: 75%;
+  box-sizing: border-box;
+  height: 70px;
+  border-radius: 40px;
+  border: 2px solid #303496;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
 /* タクシー会社名とタクシー電話番号を1行で表示 */
 p[name="taxiCompany"], p[name="callTaxi"] {
 	display: inline;
@@ -6,8 +86,12 @@ p[name="taxiCompany"], p[name="callTaxi"] {
 
 /* テスト用　チャットログ範囲 */
 div[name="chatLog"] {
-	height: 500px;
-	background-color: #dddddd;
+	height: 400px;
+	background-color: #FFFFFF;
+	padding: 20px;
+	overflow-y: auto;
+	border-radius: 70px;
+	box-shadow: 4px 4px 20px gray;
 }
 
 /* 吹き出し内のpタグ */

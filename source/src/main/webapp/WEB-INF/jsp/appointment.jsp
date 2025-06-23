@@ -11,15 +11,19 @@
 	</head>
 	<body>
 		<header>
-			<div name="logo">
-				<img src=""> <!-- ロゴ -->
+			<div id="header">
+				<div id=logo>
+					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+				</div>
+				<div id="homeButton">
+					<button name="homeButton">×</button>
+				</div>
 			</div>
-			<button name="homeButton">×</button>
 		</header>
 		
 		<main>
 			<!-- マッチング相手のニックネームと待ち合わせ時間表示 -->
-			<div>
+			<div class="info">
 				<a name="nickname">ニックネームさん</a>
 				<a name="meetingTime">23:00</a>
 			</div>
@@ -30,6 +34,7 @@
 			</div>
 			
 			<!-- タクシー会社の情報 -->
+			<div class="taxi">
 			<c:forEach var="taxi" items="${taxiList}">
 				<div>
 					<p name="taxiCompany"><c:out value="${taxi.company}" />：</p>
@@ -37,6 +42,7 @@
 					<br>
 				</div>
 			</c:forEach>
+			</div>
 			
 			<!-- チャット欄　ルームid, セッションスコープのユーザーid, チャットログ取得用サーブレットのurl保持 -->
 			<div name="chatLog" id="chatLog" data-room-id="${roomId }" data-session-id="${sessionScope.id}" data-get-chat-url="<c:url value='/GetChatServlet' />"></div>
