@@ -8,19 +8,47 @@ body {
   background-color: #F5D300;
 }
 
-#logo {
+#header {
   display: flex;
-  justify-content: center;
-  margin: 160px auto 150px auto;
+  align-items: center;           /* 垂直方向中央揃え */
+  justify-content: center;       /* ロゴとボタンを中央寄せ */
+  height: 70px;
+  margin-top: 200px;
+  gap: 40px;                      /* ロゴとボタンの間に余白 */
 }
-img {
-  max-width: 500px;  /* 最大幅を500ピクセルに設定 */
+
+#logo {
+  position: static;              /* absolute を解除 */
+  transform: none;               /* transform も解除 */
+}
+
+#logo img {
+  max-width: 500px;
   height: auto;
+}
+
+
+/* ホームボタンはロゴの右に寄せる */
+#homeBtn {
+  font-size: 80px;
+  color: #303496;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ボタンの見た目 */
+#homeBtn {
+  color: #303496;
+  font-size: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .form_flame {
 	width: 500px;
-	margin:  auto;
+	margin: 150px auto auto auto;
 	padding: 50px 100px 40px 100px;
 	background-color: #FFFFFF;
 	border-radius: 90px;

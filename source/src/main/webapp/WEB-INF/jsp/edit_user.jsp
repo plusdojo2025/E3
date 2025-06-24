@@ -1,14 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ユーザー情報編集</title>
+<title>ユーザー情報編集 | シェアタク</title>
 <link rel="stylesheet" type="text/css" href="css/edit_user.css">
 </head>
 <body>
-	<div id=logo><img src="img/logo.jpg" alt="シェアタク"></div>
+	<header>
+			<div id="header">
+				<div id=logo>
+					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+				</div>
+				<div id="homeButton">
+					<a href="<c:url value='HomeSearchServlet' />" class="close" id="homeBtn">&times;</a>
+				</div>
+			</div>
+		</header>
 	<div class="form_flame">
 		<h1>ユーザー情報編集</h1>
 		<form id="user_form" action="/E3/EditUserServlet" method="post">
@@ -25,6 +35,7 @@
 			<input type="checkbox" name="noTalking">会話を遠慮する<br>
 			<input type="checkbox" name="sameGender">同性希望<br>
 			<input type="submit" value="更新">
+			<a href="<c:url value='/HomeSearchServlet' />">戻る</a>
 		</form>
 	</div>
 	<script src="js/edit_user.js"></script>

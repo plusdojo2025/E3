@@ -11,16 +11,17 @@ body {
 
 
 #header {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ロゴを中央に */
   height: 70px;
   margin-top: 50px;
+  position: relative;
 }
 
 #logo {
-  position: absolute;
-  left: 50%;
-  top: 70%;
-  transform: translate(-50%, -50%); /* 中心にずらす */}
+  margin-right: 30px;
+}
   
 #logo img {
   max-width: 500px;  /* 最大幅を500ピクセルに設定 */
@@ -29,17 +30,8 @@ body {
 
 /* ホームボタンはロゴの右に寄せる */
 #homeBtn {
-  font-size: 80px;
-  color: #303496;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* ボタンの見た目 */
-#homeBtn {
-  color: #303496;
   font-size: 40px;
+  color: #303496;
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
@@ -47,7 +39,7 @@ body {
 
 .form_flame {
 	width: 680px;
-	margin: 150px auto 20px auto;
+	margin: 100px auto 20px auto;
 	padding: 40px 80px 40px 80px;
 	background-color: #FFFFFF;
 	border-radius: 50px;
@@ -56,7 +48,7 @@ body {
 
 .list {
 	width: 600px;
-	margin: 150px auto 20px auto;
+	margin: 50px auto 20px auto;
 	padding: 70px 120px 60px 120px;
 	background-color: #FFFFFF;
 	border-radius: 90px;
