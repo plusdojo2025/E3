@@ -77,6 +77,7 @@ document.addEventListener("click", function (e) {
     const modalBtn = e.target.closest(".modalBtn");
 
     if (modalBtn) {
+	
         // すでにマップがあるなら破棄
         if (map) {
             map.remove();
@@ -115,37 +116,28 @@ document.addEventListener("click", function (e) {
 		var point_lng;
 		
 		if (d1 < d2) {
-		    // 申請者の降車位置 が中継地点 → 被申請者の降車位置 が目的地
+		    // d1 が先、中継地点 → d2 が目的地
 		    point_lat = drop1Lat;
 		    point_lng = drop1Lng;
 		    lat2 = drop2Lat;
 		    lng2 = drop2Lng;
 		} else {
-		    // 被申請者の降車位置 が中継地点 → 申請者の降車位置 が目的地
 		    point_lat = drop2Lat;
 		    point_lng = drop2Lng;
 		    lat2 = drop1Lat;
 		    lng2 = drop1Lng;
 		}
 		
-		/* 距離の比率計算 */
 		var div = distance(lat1, lng1, drop2Lat, drop2Lng) / (distance(lat1, lng1, point_lat, point_lng) + distance(point_lat, point_lng, lat2, lng2));
 		
-		/* 料金計算 */
 		document.getElementById("modal-price").textContent ="￥" + Math.trunc((420 + ((distance(lat1, lng1, lat2, lng2) * 1000 - 1000) / 255 * 100 )) * div);
 		
 		/* -------------------------------到着時間表示--------------------------------------------- */
-		/* 被申請者の希望時間を設定 */
 		let time = new Date(modalBtn.dataset.desiredDate);
-		
-		/*　距離による時間を加算 */
 		time.setMinutes(time.getMinutes() + distance(lat1, lng1, lat2, lng2) * 1000 / 40 / 1000 * 60);
 		document.getElementById('modal-time').textContent =
 		time.getHours().toString().padStart(2, '0') + ":" + time.getMinutes().toString().padStart(2, '0') + "着";
-		
-		/*	ーーーーーーーーーーーーーーーーーーーーーマップ生成ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー */
-		
-		//乗車位置、自分と相手の降車位置を設定
+
         const start = L.latLng(lat1, lng1);
         const via = L.latLng(point_lat, point_lng);
         const end = L.latLng(lat2, lng2);
@@ -168,20 +160,31 @@ document.addEventListener("click", function (e) {
 
         // ルート描画
         routingControl = L.Routing.control({
-		    waypoints: [start, via, end],		//[乗車位置, 中継地, 最終目的地]
+		    waypoints: [start, via, end],
 		    routeWhileDragging: false,
 		    addWaypoints: false,
 		    createMarker: function() { return null; },
-		    fitSelectedRoutes: true
+		    fitSelectedRoutes: true,
+		    show: false
 		}).addTo(map);
+	
+		const approveBtn = document.getElementById("approveBtn");
+		const rejectBtn = document.getElementById("rejectBtn");
 		
+		if(modalBtn.dataset.type === "req") {
+		    approveBtn.style.display = "inline-block";  // 表示
+		    rejectBtn.style.display = "inline-block";
+		} else {
+		    approveBtn.style.display = "none";  // 非表示
+		    rejectBtn.style.display = "none";
+		}
+
         // モーダル表示
         document.getElementById("sharedModal").style.display = "block";
         modalOpen = true;
     }
 });
 
-//距離計測
 function distance(lat1, lng1, lat2, lng2) {
   	lat1 *= Math.PI / 180;
   	lng1 *= Math.PI / 180;
@@ -199,6 +202,8 @@ function fetchData() {
 		//下記のid属性以下を書き換える
         const container = document.getElementById("listContainer");
         container.innerHTML = "";
+        
+        var count = 0;
 
         if (Array.isArray(data.reqList)) {
 			if(data.reqList.length > 0){
@@ -206,6 +211,8 @@ function fetchData() {
 	            data.reqList.forEach(item => {
 	                const row = document.createElement("div");
 	                row.className = "request-item modalBtn";
+	                // 申請
+					row.dataset.type = "req";
 	                //各id属性にデータセット
 	                row.dataset.id = item.id;
 	                row.dataset.current_latitude = item.current_latitude;
@@ -231,11 +238,84 @@ function fetchData() {
 	                `;
 	                container.appendChild(row);
         		});
-            }else{
-				//リストの中身がない(検索結果無し)場合に表示されたままになる
-		    	container.innerHTML = "<p>通知なし</p>";
-			}
+            }
         }
+
+        if (Array.isArray(data.sendAnsList)) {
+			if(data.sendAnsList.length > 0){
+	            data.sendAnsList.forEach(item => {
+	                const row = document.createElement("div");
+	                row.className = "request-item modalBtn";
+					// 承認された
+					row.dataset.type = "sendAns";
+	                //各id属性にデータセット
+	                row.dataset.id = item.id;
+	                row.dataset.current_latitude = item.current_latitude;
+	                row.dataset.current_longitude = item.current_longitude;
+	                row.dataset.drop_off_latitude = item.drop_off_latitude;
+	                row.dataset.drop_off_longitude = item.drop_off_longitude;
+	                row.dataset.my_current_latitude = item.prtnr_current_latitude;
+	                row.dataset.my_current_longitude = item.prtnr_current_longitude;
+	                row.dataset.my_drop_off_latitude = item.prtnr_drop_off_latitude;
+	                row.dataset.my_drop_off_longitude = item.prtnr_drop_off_longitude;
+	                row.dataset.nickname = item.nickname;
+	                row.dataset.gender = item.gender;
+	                row.dataset.headcount = item.headcount;
+	                row.dataset.registrationDate = item.registration_date;
+	                row.dataset.desiredDate = item.desired_date;
+					//html描画
+	                row.innerHTML = `
+	                	<div id="list">
+		                    <div>承認されました</div>
+		                    <div>時間</div>
+		                    <div>${item.nickname}</div>
+	                    </div>
+	                `;
+	                container.appendChild(row);
+        		});
+            }
+        }
+
+        if (Array.isArray(data.respAnsList)) {
+			if(data.respAnsList.length > 0){
+	            data.respAnsList.forEach(item => {
+	                const row = document.createElement("div");
+	                row.className = "request-item modalBtn";
+	                // 承認した
+					row.dataset.type = "respAns";
+	                //各id属性にデータセット
+	                row.dataset.id = item.id;
+	                row.dataset.current_latitude = item.current_latitude;
+	                row.dataset.current_longitude = item.current_longitude;
+	                row.dataset.drop_off_latitude = item.drop_off_latitude;
+	                row.dataset.drop_off_longitude = item.drop_off_longitude;
+	                row.dataset.my_current_latitude = item.prtnr_current_latitude;
+	                row.dataset.my_current_longitude = item.prtnr_current_longitude;
+	                row.dataset.my_drop_off_latitude = item.prtnr_drop_off_latitude;
+	                row.dataset.my_drop_off_longitude = item.prtnr_drop_off_longitude;
+	                row.dataset.nickname = item.nickname;
+	                row.dataset.gender = item.gender;
+	                row.dataset.headcount = item.headcount;
+	                row.dataset.registrationDate = item.registration_date;
+	                row.dataset.desiredDate = item.desired_date;
+					//html描画
+	                row.innerHTML = `
+	                	<div id="list">
+		                    <div>承認しました</div>
+		                    <div>時間</div>
+		                    <div>${item.nickname}</div>
+	                    </div>
+	                `;
+	                container.appendChild(row);
+        		});
+            }
+        }
+        
+        if(data.respAnsList.length <= 0 && data.sendAnsList.length <= 0 && data.reqList.length <= 0){
+	        	container.innerHTML = "";
+			//リストの中身がない(検索結果無し)場合に表示されたままになる
+	    	container.innerHTML = "<p>通知なし</p>";
+		}
     })
     .catch(err => {
         console.error("データ取得エラー:", err);

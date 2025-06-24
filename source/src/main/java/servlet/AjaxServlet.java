@@ -30,10 +30,6 @@ public class AjaxServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 		HttpSession session = request.getSession();
-//		if (session.getAttribute("id") == null) {
-//			response.sendRedirect("/LoginServlet");
-//			return;
-//		}
 
         //処理（DB呼び出し等）
         // リクエストパラメータを取得する
@@ -42,8 +38,7 @@ public class AjaxServlet extends HttpServlet {
 		try {
 
 	        //パラメータ取得
-//	        int param1 = Integer.parseInt(session.getAttribute());
-	        int param1 = 17;
+	        int param1 = Integer.parseInt(String.valueOf(session.getAttribute("id")));
 
 			// 検索処理を行う
 			RequestDao reqDao = new RequestDao();

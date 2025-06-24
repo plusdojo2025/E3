@@ -399,6 +399,132 @@ public class RequestDao {
 		}
 		return reqjList;
 	}
+
+	public List<RequestJoin> sendForNotice(int id){
+		Connection conn = null;
+		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "select request.partner_id, nickname, gender, standbyuser.headcount, "
+					+ "standbyuser.current_latitude, standbyuser.current_longitude, standbyuser.drop_off_latitude, standbyuser.drop_off_longitude, standbyuser.registration_date, request.date "
+					+ "from request "
+					+ "join user on request.partner_id = user.id "
+					+ "join standbyuser on request.partner_id = standbyuser.id "
+					+ "where request.id = ? and status = 1;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, id);
+
+			// SELECT文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				RequestJoin reqj = new RequestJoin();
+				reqj.setId(rs.getInt("request.partner_id"));
+				reqj.setNickname(rs.getString("nickname"));
+				reqj.setGender(rs.getInt("gender"));
+				reqj.setGender(rs.getInt("standbyuser.headcount"));
+				reqj.setCurrent_latitude(rs.getDouble("standbyuser.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("standbyuser.current_longitude"));
+				reqj.setDrop_off_latitude(rs.getDouble("standbyuser.drop_off_latitude"));
+				reqj.setDrop_off_longitude(rs.getDouble("standbyuser.drop_off_longitude"));
+				reqj.setRegistration_date(rs.getString("standbyuser.registration_date"));
+				reqj.setDesired_date(rs.getString("request.date"));
+				
+				reqjList.add(reqj);
+			}
+			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					reqjList = null;
+				}
+			}
+		}
+		return reqjList;
+	}
+	
+
+	public List<RequestJoin> respForNotice(int id){
+		Connection conn = null;
+		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "select request.id, nickname, gender, headcount, "
+					+ "request.current_latitude, request.current_longitude, request.drop_off_latitude, request.drop_off_longitude, registration_date, request.date "
+					+ "from request "
+					+ "join user on request.id = user.id "
+					+ "where request.partner_id = ? and status = 1;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, id);
+
+			// SELECT文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				RequestJoin reqj = new RequestJoin();
+				reqj.setId(rs.getInt("request.id"));
+				reqj.setNickname(rs.getString("nickname"));
+				reqj.setGender(rs.getInt("gender"));
+				reqj.setGender(rs.getInt("headcount"));
+				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
+				reqj.setDrop_off_latitude(rs.getDouble("request.drop_off_latitude"));
+				reqj.setDrop_off_longitude(rs.getDouble("request.drop_off_longitude"));
+				reqj.setRegistration_date(rs.getString("registration_date"));
+				reqj.setDesired_date(rs.getString("request.date"));
+				
+				reqjList.add(reqj);
+			}
+			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			reqjList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					reqjList = null;
+				}
+			}
+		}
+		return reqjList;
+	}
 	
 	
 	public boolean deleteRequest(Request req) {

@@ -55,8 +55,8 @@
 	            <!-- 自足40km/hで計算 -->
 	            <div id="modal-time"></div>
 	            <div id="modal-route">ルート</div>
-	            <input type="submit" value="承認" name="submit" onclick="approvalMessage()">
-	            <input type="submit" value="却下" name="submit" onclick="rejectedMessage()">
+	            <input type="submit" value="承認" name="submit" id="approveBtn" onclick="approvalMessage()">
+				<input type="submit" value="却下" name="submit" id="rejectBtn" onclick="rejectedMessage()">
 	        </form>
 	    </div>
 	</div>

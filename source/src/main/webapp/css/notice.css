@@ -46,6 +46,10 @@ body {
   cursor: pointer;
 }
 
+#modal-route{
+	border-radius: 50px;
+}
+
 .list {
 	width: 500px;
 	margin: 150px auto 20px auto;
@@ -53,6 +57,10 @@ body {
 	background-color: #FFFFFF;
 	border-radius: 90px;
 	box-shadow: 4px 4px 20px gray;
+}
+
+#list{
+	border-bottom: 5px solid #0000ff;	
 }
 
 /* モーダル画面 */
