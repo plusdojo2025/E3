@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ユーザー情報登録</title>
-<link rel="stylesheet" type="text/css" href="css/user.css">
-</head>
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/user.css' />"></head>
 <body>
-	<div id=logo><img src="img/logo.jpg" alt="シェアタク"></div>
+	<div id=logo><img src="<c:url value='/img/logo.jpg' />" alt="シェアタク"></div>
 		<div class="form_flame">
 		<h1>ユーザー情報登録</h1>
-		<form id="user_form" action="/E3/UserServlet" method="post">
+		<form id="user_form" action="<c:url value='/UserServlet' />" method="post">
 			<input type="text" name="name" placeholder="氏名">
 				<div id="output1" style="color: red;"></div>
 			<input type="text" name="nickname" placeholder="ニックネーム">
@@ -33,6 +33,6 @@
 			<input type="submit" value="登録">
 		</form>
 	</div>
-	<script src="js/user.js"></script>
+<script src="<c:url value='/js/user.js' />"></script>
 </body>
 </html>

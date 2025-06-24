@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>新規登録</title>
-<link rel="stylesheet" type="text/css" href="css/idpw.css">
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/idpw.css' />">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -37,6 +37,6 @@
 		</form>
 		<a href="<c:url value='/LoginServlet' />">戻る</a>
 	</div>
-<script src="js/idpw.js"></script>
+<script src="<c:url value='/js/idpw.js' />"></script>
 </body>
 </html>
