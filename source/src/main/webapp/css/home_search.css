@@ -44,27 +44,42 @@ body {
   transform: translateY(-50%);
 }
 
-/* ハンバーガーメニュー */
+/* ハンバーガーボタン */
 .menuBtn {
-	width: 60px;
-	height: 48px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	cursor: pointer;
-	background: none;
-	border: none;
-	padding: 0;
-	position: relative;
-	z-index: 1100;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  overflow: visible;
 }
 
 .menuBtn span {
-	display: block;
-	height: 4px;
-	background-color: #303496; /*　線の色　*/
-	box-shadow: 4px 4px 6px gray;
+  width: 50px;
+  height: 4px;
+  background-color: #303496;
+  margin: 6px 0;
+  transition: 0.3s;
+  transform-origin: center center;
 }
+
+.menuBtn.open span:nth-child(1) {
+  transform: rotate(45deg) translateX(3.5px) translateY(20px);
+}
+
+.menuBtn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuBtn.open span:nth-child(3) {
+  transform: rotate(-45deg) translateX(3.5px) translateY(-20px);
+}
+
 
 .form_flame {
 	width: 500px;

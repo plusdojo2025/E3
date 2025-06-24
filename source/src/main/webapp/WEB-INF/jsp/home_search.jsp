@@ -66,8 +66,8 @@
 		 </div>
 		
 		 <div class="form-group">
-		   <label for="number_people">人数</label>
-		   <input type="number" name="headcount" id="number_people" min="1" max="2">
+		   <label for="number_people">人数</label><br>
+		   <input type="number" name="headcount" id="number_people" min="1" max="2">人
 		   <div id="errorHeadcount" class="error-message"></div>
 		 </div>
 		
