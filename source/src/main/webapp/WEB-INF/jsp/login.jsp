@@ -31,6 +31,6 @@
 		 <a>新規登録は</a><a href="<c:url value='/IdPwServlet' />">こちら</a>
 		</div>
 	</div> 
-<script src="js/login.js"></script>
+<script src="<c:url value='/js/login.js' />"></script>
 </body>
 </html>

@@ -68,9 +68,9 @@ public class UserServlet extends HttpServlet {
 				latitude,  longitude,  talking,  
 				smoking,  partner_gender,  id,  
 				address))){// 登録成功
-			response.sendRedirect("/E3/HomeSearchServlet");
+			response.sendRedirect(request.getContextPath() + "/HomeSearchServlet");
 		}else{ // 登録失敗
-			response.sendRedirect("/E3/UserServlet");
+			response.sendRedirect(request.getContextPath() + "/UserServlet");
 		}
 	}
 }
