@@ -9,7 +9,6 @@ body {
   background-color: #F5D300;
 }
 
-
 #header {
   position: relative;
   height: 70px;
@@ -20,19 +19,30 @@ body {
   position: absolute;
   left: 50%;
   top: 70%;
-  transform: translate(-50%, -50%); /* 中心にずらす */}
+  transform: translate(-50%, -50%); /* 中央寄せ */
+}
   
 #logo img {
   max-width: 500px;  /* 最大幅を500ピクセルに設定 */
   height: auto;
 }
 
-#homeBtn {  
-  font-size: 100px;
+/* ホームボタンはロゴの右に寄せる */
+#homeButton {
   position: absolute;
-  transform: translateY(-50%);
+  right: 120px;
+  top: 50%;
+  transform: translateY(-50%); /* 垂直方向中央揃え */
 }
 
+#homeBtn {
+  font-size: 40px;
+  color: #303496;
+  text-decoration: none;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 /* ボタンの見た目 */
 #homeBtn {
@@ -42,6 +52,7 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
 .list {
 	width: 500px;
 	margin: 150px auto 20px auto;

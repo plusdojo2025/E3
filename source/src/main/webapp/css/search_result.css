@@ -11,24 +11,31 @@ body {
 
 
 #header {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* ロゴを中央に */
+  position: relative;
   height: 70px;
   margin-top: 50px;
-  position: relative;
 }
 
 #logo {
-  margin-right: 30px;
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
 }
   
 #logo img {
-  max-width: 500px;  /* 最大幅を500ピクセルに設定 */
+  max-width: 500px; 
   height: auto;
 }
 
 /* ホームボタンはロゴの右に寄せる */
+#homeButton {
+  position: absolute;
+  right: 120px;
+  top: 50%;
+  transform: translateY(-50%); 
+}
+
 #homeBtn {
   font-size: 40px;
   color: #303496;
@@ -70,15 +77,15 @@ body {
 /* モーダル表示時 */
 .modal.show {
 	display: flex;
-	justify-content: center; /* 水平方向中央 */
-	align-items: center;     /* 垂直方向中央 */
+	justify-content: center;
+	align-items: center;
 }
 
 /* モーダルの中身 */
 .modal-content {
 	background-color: #ffffff;
 	width: 80%;
-	max-width: 600px;  /* 必要に応じて幅の上限を設定 */
+	max-width: 600px;
 	padding: 20px;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 	border-radius: 80px;
@@ -95,7 +102,7 @@ input[name=search] {
   cursor: pointer;
   border-radius: 20px;
   box-shadow: 2px 2px 4px gray;
-  margin-left: 50px;  /* 追加 */
+  margin-left: 50px;
 }
 
 input[name=stand] {
@@ -109,8 +116,12 @@ input[name=stand] {
   border-radius: 100px;
   box-shadow: 2px 2px 4px gray;
   margin-right: 50px;
-  margin-left: auto;     /* 追加 */
+  margin-left: auto;
   display: block;
+  position: fixed;   /* 追従 */
+  bottom: 50px;
+  right: 10px;
+  z-index: 1000;
 }
 
 input[name=same_gender], input[name=smoking],input[name=talking] {
