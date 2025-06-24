@@ -24,12 +24,12 @@
 			<input type="hidden" name="address_latitude" id="address_latitude">
         	<input type="hidden" name="address_longitude" id="address_longitude">
         	<div id="result"></div>
-			<input type="hidden" name="noSmoking" value = 0>
-			<input type="checkbox" name="noSmoking"value = 1>非喫煙<br>
-			<input type="hidden" name="noTalking"value = 0>
-			<input type="checkbox" name="noTalking"value = 1>会話を遠慮する<br>
-			<input type="hidden" name="sameGender" value = 0>
-			<input type="checkbox" name="sameGender"value = 1>同性希望<br>
+			<input type="checkbox" name="noSmoking" value="1">非喫煙<br>
+			<input type="hidden" name="noSmoking" value="0">
+			<input type="checkbox" name="noTalking" value="1">会話を遠慮する<br>
+			<input type="hidden" name="noTalking" value="0">
+			<input type="checkbox" name="sameGender" value="1">同性希望<br>
+			<input type="hidden" name="sameGender" value="0">
 			<input type="submit" value="登録">
 		</form>
 	</div>

@@ -33,6 +33,20 @@ public class EditUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// edit_user.jspにフォワードする
+		HttpSession session = request.getSession();
+		int id = (int)session.getAttribute("id");
+		UserDao uDao = new UserDao();
+		User user = new User();
+		user = uDao.searchUser(id);
+		
+		request.setCharacterEncoding("UTF-8");
+		request.setAttribute("name", user.getName());
+		request.setAttribute("nickname", user.getNickname());
+		request.setAttribute("address", user.getAddress());
+		request.setAttribute("noSmoking", user.getSmoking());
+		request.setAttribute("noTalking", user.getTalking());
+		request.setAttribute("sameGender", user.getPartner_gender());
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_user.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -59,24 +73,24 @@ public class EditUserServlet extends HttpServlet {
 		int id = (int)session.getAttribute("id");
 		String name = request.getParameter("name");
 		String nickname = request.getParameter("nickname");
-		int gender = 0;
-		double latitude = 0.0;
-		double longitude = 0.0;
-		int talking = 0;
-		int smoking = 0;
-		int partner_gender = 0;
+		int gender = Integer.parseInt(request.getParameter("gender"));
+		double latitude = Double.parseDouble(request.getParameter("address_latitude"));
+		double longitude = Double.parseDouble(request.getParameter("address_longitude"));	
+		int talking = Integer.parseInt(request.getParameter("noTalking"));
+		int smoking = Integer.parseInt(request.getParameter("noSmoking"));
+		int partner_gender = Integer.parseInt(request.getParameter("sameGender"));
 		String address = request.getParameter("address");
 		
-		UserDao idpw =  new UserDao();
+		UserDao uDao =  new UserDao();
 		
-		if(idpw.insertUser(new User( 
+		if(uDao.updateUser(new User( 
 				name,  nickname,  gender,  
 				latitude,  longitude,  talking,  
 				smoking,  partner_gender,  id,  
-				address))){// 更新成功
-			response.sendRedirect("/E3/HomeSearchServlet");
+				address), id)){// 更新成功
+			response.sendRedirect(request.getContextPath() + "/HomeSearchServlet");
 		}else{ // 登録失敗
-			response.sendRedirect("/E3/EditUserServlet");
+			response.sendRedirect(request.getContextPath() + "/EditUserServlet");
 		}
 	}
 }
