@@ -79,7 +79,7 @@ public class UserDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select name, nickname, gender, address_latitude, address_longitude, partner_gender, smoking, talking from user where id = ?;";
+			String sql = "select name, nickname, gender, address_latitude, address_longitude, partner_gender, smoking, talking, address from user where id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 
@@ -96,7 +96,7 @@ public class UserDao {
 			user.setPartner_gender(rs.getInt("partner_gender")); 
 			user.setSmoking(rs.getInt("smoking")); 
 			user.setTalking(rs.getInt("talking")); 
-				
+			user.setAddress(rs.getString("address"));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
