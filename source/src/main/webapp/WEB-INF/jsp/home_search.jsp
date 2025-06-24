@@ -18,7 +18,7 @@
 			</div>
 			<!-- 通知ボタン -->
 			<div id="notification">
-				<a href="NoticeServlet" id="notification">
+				<a href="<c:url value='/NoticeServlet' />" id="notification">
 					<img src="img/bell.png" alt="通知">
 				</a>
 			</div>
@@ -35,9 +35,9 @@
 			aria-labelledby="modalTitle">
 			<h2 id="modalTitle" class="modal-title"></h2>
 			<ul class="menu-list">
-				<li><a href="MyRequestServlet">▸待機情報確認</a></li>
-				<li><a href="EditUserServlet">▸ユーザー情報</a></li>
-				<li><a href="LoginServlet">▸ログアウト</a></li>
+				<li><a href="<c:url value='/MyRequestServlet' />">▸待機情報確認</a></li>
+				<li><a href="<c:url value='/EditUserServlet' />">▸ユーザー情報</a></li>
+				<li><a href="<c:url value='/LoginServlet' />">▸ログアウト</a></li>
 			</ul>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 	<!-- 検索フォーム -->
 	<div class="form_flame">
 	<h1>検索</h1>
-	<form id="searchForm" action="/E3/SearchResultServlet" method="post">
+	<form id="searchForm" action="<c:url value='/SearchResultServlet' />" method="post">
 
 		 <div class="form-group">
 		   <label for="desired_date">希望日時</label>
@@ -77,7 +77,7 @@
 	 </form>
   </div>
 	<!-- JSファイル読み込み -->
-	<script src="js/home_search.js"></script>
+<script src="<c:url value='/js/home_search.js' />"></script>
 
 </body>
 </html>
