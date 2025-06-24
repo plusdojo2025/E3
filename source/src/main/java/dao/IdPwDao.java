@@ -31,14 +31,14 @@ public class IdPwDao {
 			PreparedStatement pStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pStmt.setString(1, idpw.getPass());
 			pStmt.setString(2, idpw.getEmail());
-							
+			
 			if (pStmt.executeUpdate() == 1) {
 				insertResult = true;
 				//自動採番されたidを取得
 				try (ResultSet rs = pStmt.getGeneratedKeys()) {
-	                if (rs.next()) {
-	                    generatedId = rs.getInt(1);
-	                }
+                    generatedId = rs.getInt(1);
+	            }catch(Exception e) {
+                    System.out.println("エラー");
 	            }
 			}
 		} catch (SQLException e) {
@@ -79,7 +79,7 @@ public class IdPwDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "SELECT count(*) FROM idpw WHERE email=? AND pass=?";
+			String sql = "SELECT id, COUNT(*) FROM idpw WHERE email = ? AND pass = ? GROUP BY id;";
 			PreparedStatement pStmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			pStmt.setString(1, idpw.getEmail());
 			pStmt.setString(2, idpw.getPass());
@@ -91,12 +91,7 @@ public class IdPwDao {
 			rs.next();
 			if (rs.getInt("count(*)") == 1) {
 				loginResult = true;
-				//自動採番されたidを取得
-				try (ResultSet lrs = pStmt.getGeneratedKeys()) {
-	                if (rs.next()) {
-	                    generatedId = lrs.getInt(1);
-	                }
-				}
+				generatedId = rs.getInt("id");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

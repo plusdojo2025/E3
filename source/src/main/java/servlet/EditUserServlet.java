@@ -35,12 +35,14 @@ public class EditUserServlet extends HttpServlet {
 		// edit_user.jspにフォワードする
 		HttpSession session = request.getSession();
 		int id = (int)session.getAttribute("id");
+		System.out.println(session.getAttribute("id"));
 		UserDao uDao = new UserDao();
 		User user = new User();
 		user = uDao.searchUser(id);
 		
 		request.setCharacterEncoding("UTF-8");
 		request.setAttribute("name", user.getName());
+		request.setAttribute("gender", user.getGender());
 		request.setAttribute("nickname", user.getNickname());
 		request.setAttribute("address", user.getAddress());
 		request.setAttribute("noSmoking", user.getSmoking());
