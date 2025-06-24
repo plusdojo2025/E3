@@ -20,7 +20,7 @@
 			<input type="radio" name="gender" value = 1>女性
 			<input type="radio" name="gender" value = 2>その他<br>
 				<div id="output3" style="color: red;"></div>
-			<input type="text" name="address" placeholder="自宅住所">
+			<input type="text" name="address"  id="address" placeholder="自宅住所" onblur="sendAddress()">
 			<input type="hidden" name="address_latitude" id="address_latitude">
         	<input type="hidden" name="address_longitude" id="address_longitude">
         	<div id="result"></div>

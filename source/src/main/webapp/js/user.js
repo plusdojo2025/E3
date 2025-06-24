@@ -64,9 +64,9 @@ function sendAddress() {
 	  		data.latitude = String(data.latitude);
 	  		data.longitude = String(data.longitude);
 	  		//緯度
-	  		document.getElementById('address_latitude').textContent =data.latitude;
+	  		document.getElementById('address_latitude').value = data.latitude;
 	  		//経度
-	  		document.getElementById('address_longitude').textContent =data.longitude;  
+	  		document.getElementById('address_longitude').value = data.longitude;  
   		}		
 	})
 	.catch(error => {
