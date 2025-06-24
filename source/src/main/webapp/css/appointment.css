@@ -181,6 +181,7 @@ div[name="chatLog"] {
 	text-align: right;
 }
 
+/* 地図上のいらないUI非表示 */
 .leaflet-routing-container {
   display: none !important;
 }
