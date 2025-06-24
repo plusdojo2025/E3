@@ -21,11 +21,11 @@ body {
   position: absolute;
   left: 50%;
   top: 70%;
-  transform: translate(-50%, -50%); /* 中央寄せ */
+  transform: translate(-50%, -50%);
 }
   
 #logo img {
-  max-width: 500px;  /* 最大幅を500ピクセルに設定 */
+  max-width: 500px; 
   height: auto;
 }
 
@@ -34,7 +34,7 @@ body {
   position: absolute;
   right: 120px;
   top: 50%;
-  transform: translateY(-50%); /* 垂直方向中央揃え */
+  transform: translateY(-50%); 
 }
 
 #homeBtn {
@@ -42,6 +42,7 @@ body {
   color: #303496;
   text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
   cursor: pointer;
 }
 
