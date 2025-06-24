@@ -115,29 +115,37 @@ document.addEventListener("click", function (e) {
 		var point_lng;
 		
 		if (d1 < d2) {
-		    // d1 が先、中継地点 → d2 が目的地
+		    // 申請者の降車位置 が中継地点 → 被申請者の降車位置 が目的地
 		    point_lat = drop1Lat;
 		    point_lng = drop1Lng;
 		    lat2 = drop2Lat;
 		    lng2 = drop2Lng;
 		} else {
+		    // 被申請者の降車位置 が中継地点 → 申請者の降車位置 が目的地
 		    point_lat = drop2Lat;
 		    point_lng = drop2Lng;
 		    lat2 = drop1Lat;
 		    lng2 = drop1Lng;
 		}
 		
+		/* 距離の比率計算 */
 		var div = distance(lat1, lng1, drop2Lat, drop2Lng) / (distance(lat1, lng1, point_lat, point_lng) + distance(point_lat, point_lng, lat2, lng2));
 		
+		/* 料金計算 */
 		document.getElementById("modal-price").textContent ="￥" + Math.trunc((420 + ((distance(lat1, lng1, lat2, lng2) * 1000 - 1000) / 255 * 100 )) * div);
 		
 		/* -------------------------------到着時間表示--------------------------------------------- */
-		console.log(modalBtn.dataset.desiredDate);
+		/* 被申請者の希望時間を設定 */
 		let time = new Date(modalBtn.dataset.desiredDate);
+		
+		/*　距離による時間を加算 */
 		time.setMinutes(time.getMinutes() + distance(lat1, lng1, lat2, lng2) * 1000 / 40 / 1000 * 60);
 		document.getElementById('modal-time').textContent =
 		time.getHours().toString().padStart(2, '0') + ":" + time.getMinutes().toString().padStart(2, '0') + "着";
-
+		
+		/*	ーーーーーーーーーーーーーーーーーーーーーマップ生成ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー */
+		
+		//乗車位置、自分と相手の降車位置を設定
         const start = L.latLng(lat1, lng1);
         const via = L.latLng(point_lat, point_lng);
         const end = L.latLng(lat2, lng2);
@@ -160,19 +168,20 @@ document.addEventListener("click", function (e) {
 
         // ルート描画
         routingControl = L.Routing.control({
-		    waypoints: [start, via, end],
+		    waypoints: [start, via, end],		//[乗車位置, 中継地, 最終目的地]
 		    routeWhileDragging: false,
 		    addWaypoints: false,
 		    createMarker: function() { return null; },
 		    fitSelectedRoutes: true
 		}).addTo(map);
-
+		
         // モーダル表示
         document.getElementById("sharedModal").style.display = "block";
         modalOpen = true;
     }
 });
 
+//距離計測
 function distance(lat1, lng1, lat2, lng2) {
   	lat1 *= Math.PI / 180;
   	lng1 *= Math.PI / 180;
