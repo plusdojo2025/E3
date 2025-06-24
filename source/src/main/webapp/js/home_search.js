@@ -12,9 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	menu.addEventListener('click', () => {
 		const isOpen = modal.classList.toggle('show');
 		menu.classList.toggle('open', isOpen);
-
+	});
+		
+	// モーダルの外側をクリックしたらモーダルを閉じる
+	window.addEventListener('click', (event) => {
+		if (modal.classList.contains('show') && !modalContent.contains(event.target) && !menu.contains(event.target)) {
+			modal.classList.remove('show');
+			menu.classList.remove('open');
+		}
 	});
 });
+
 
 //必須項目
 document.addEventListener('DOMContentLoaded', () => {
