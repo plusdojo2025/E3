@@ -1,6 +1,4 @@
 @charset "UTF-8";
-
-@charset "UTF-8";
 html {
   font-size: 13px;
   color: #303496;
@@ -79,6 +77,11 @@ select[name=selectPhrase] {
   margin-left: 10px;
 }
 
+/* 地図 */
+#meeting_point {
+	height: 500px;
+}
+
 /* タクシー会社名とタクシー電話番号を1行で表示 */
 p[name="taxiCompany"], p[name="callTaxi"] {
 	display: inline;
@@ -92,6 +95,7 @@ div[name="chatLog"] {
 	overflow-y: auto;
 	border-radius: 70px;
 	box-shadow: 4px 4px 20px gray;
+	min-height: 400px;
 }
 
 /* 吹き出し内のpタグ */
@@ -175,4 +179,9 @@ div[name="chatLog"] {
 /* ログインユーザーが送信したメッセージ */
 .my_chat {
 	text-align: right;
+}
+
+/* 地図上のいらないUI非表示 */
+.leaflet-routing-container {
+  display: none !important;
 }
