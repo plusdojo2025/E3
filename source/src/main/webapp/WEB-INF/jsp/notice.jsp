@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>通知 | シェアタク</title>
-<link rel="stylesheet" type="text/css" href="css/notice.css">
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/notice.css' />">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
