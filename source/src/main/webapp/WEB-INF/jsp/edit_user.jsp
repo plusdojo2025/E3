@@ -30,7 +30,7 @@
 			<input type="radio" name="gender" value="1"<c:if test="${gender == 1}">checked</c:if> >女性
 			<input type="radio" name="gender" value="2"<c:if test="${gender == 2}">checked</c:if> >その他
 				<div id="output3" style="color: red;"></div>
-			<input type="text" name="address" placeholder="自宅住所" id="address" value="${address}">
+			<input type="text" name="address" id="address" placeholder="自宅住所" value="${address}">
 			<input type="hidden" name="address_latitude" id="address_latitude">
         	<input type="hidden" name="address_longitude" id="address_longitude">
         	<div id="result"></div>
