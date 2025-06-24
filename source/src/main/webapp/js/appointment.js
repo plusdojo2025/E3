@@ -1,25 +1,30 @@
 'use strict';
-// チャットフォーム
-let chatForm = document.getElementById('chat_form');
-let chatLog = document.getElementById('chatLog');
 
-// 地図描画
-const map = L.map('meeting_point').setView([36.643238, 138.185428], 20); 
-// OpenStreetMap から地図画像を読み込む
+// マッチング相手のニックネームと到着予定時刻表示欄から自分と相手の現在地取得
+let info = document.getElementsByName('info');
+let myLat = info.getAttribute('data-my-lat');	// 自分の現在地　緯度
+let myLng = info.getAttribute('data-my-lng');	// 自分の現在地　経度
+let pLat = info.getAttribute('data-p-lat');		// 相手の現在地　緯度
+let pLng = info.getAttribute('data-p-lng');		// 相手の現在地　緯度
+
+// 地図描画　中心を自分の現在地に
+const map = L.map('meeting_point').setView([myLat, myLng], 20); 
+// OpenStreetMapから地図画像を読み込む
 var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 });
 tileLayer.addTo(map);
 
-const pointA = L.latLng(36.643238, 138.185428); // A地点
-const pointB = L.latLng(36.642931, 138.187182); // B地点
-let time = 0;
+const myPoint = L.latLng(myLat, myLng);		// 自分の現在地　(緯度, 経度)
+const pPoint = L.latLng(pLat, pLng);		// 相手の現在地　(緯度, 経度)
+let time = 0;								// 所要時間
 
+// 自分の現在地から相手の現在地までのルート導出
 const control = L.Routing.control({
-	waypoints: [pointA, pointB],
+	waypoints: [myPoint, pPoint],
 	router: L.Routing.osrmv1({
 		serviceUrl: 'https://router.project-osrm.org/route/v1',
-		profile: 'foot'
+		profile: 'foot'			// 徒歩に設定
 	}),
 	createMarker: () => null,
 	addWaypoints: false,
@@ -27,28 +32,31 @@ const control = L.Routing.control({
 	show: false,
 	fitSelectedRoutes: false,
 	lineOptions: {
-    	styles: [] // ← スタイルなしにすると線は描画されない
+    	styles: []				// スタイルを空にして描画させないように
 	}
 }).addTo(map);
 
 // 待ち合わせ場所までの所要時間計算メソッド
 function calcTime(distance) {
-  const averageSpeed = 1.33; // m/s
+  const averageSpeed = 1.33;		// 徒歩の平均速度　秒速1.33m
   return distance / averageSpeed;
 }
 
+// 自分と相手の現在地から中間地点を求める
 control.on('routesfound', function(e) {
-	const coords = e.routes[0].coordinates;
-	const mid = coords[Math.floor(coords.length / 2)];    
+	const coords = e.routes[0].coordinates;				// 経路
+	const mid = coords[Math.floor(coords.length / 2)];	// 経路から中間地点を求める
 	const midpoint = L.latLng(mid.lat, mid.lng);
+	// 自分の現在地と求めた中間地点にマーカー設定
+	L.marker(myPoint).addTo(map).bindPopup("現在地").openPopup();
 	L.marker(midpoint).addTo(map).bindPopup("待ち合わせ場所").openPopup();
 	
-	// ここで pointA → midpoint の所要時間を取得
+	// 自分の現在地から中間地点までのルート導出
 	L.Routing.control({
-	    waypoints: [pointA, midpoint],
+	    waypoints: [myPoint, midpoint],
 	    router: L.Routing.osrmv1({
 	      serviceUrl: 'https://router.project-osrm.org/route/v1',
-	      profile: 'foot'
+	      profile: 'foot'			// 徒歩に設定
 	    }),
 	    createMarker: () => null,
 	    addWaypoints: false,
@@ -56,21 +64,29 @@ control.on('routesfound', function(e) {
 	    routeWhileDragging: false,
 	    show: false,
 	    lineOptions: {
-			styles: [{ color: 'blue', opacity: 1, weight: 5 }]
+			styles: [{ color: 'blue', opacity: 1, weight: 5 }]		// ルートを表す線の設定
 		}
 	}).on('routesfound', function(ev) {
+		// 自分の現在地から中間地点までの距離取得
 		const route = ev.routes[0];
 		let distance = route.summary.totalDistance;
 		
-		// 現在日時取得
+		// 現在時刻取得
 		var today = new Date();
+		// 距離から所要時間を求め、現在時刻に加える
 		time = new Date(today.getTime() + calcTime(distance) * 1000);
 		const hours = time.getHours().toString().padStart(2, '0');
  		const minutes = time.getMinutes().toString().padStart(2, '0');
+ 		// 到着予定時刻をhh:mm形式にして表示
  		document.getElementById('meetingTime').textContent = hours + ":" + minutes;
 		
 	}).addTo(map);
 });
+
+
+// チャットフォーム
+let chatForm = document.getElementById('chat_form');
+let chatLog = document.getElementById('chatLog');
 
 // チャットテーブルからレコード取得メソッド
 function getChat() {

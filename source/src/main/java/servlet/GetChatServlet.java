@@ -45,11 +45,4 @@ public class GetChatServlet extends HttpServlet {
 	    response.getWriter().write(json);		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 }

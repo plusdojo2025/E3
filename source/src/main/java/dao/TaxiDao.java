@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.StandByUser;
+import dto.RequestJoin;
 import dto.Taxi;
 
 public class TaxiDao {
 
-	// ログインできるときはtrueを返しますよ。
-	public List<Taxi> SearchTaxiCompany(StandByUser address) {
+	// 申請者の現在地と近いタクシー会社情報取得
+	public List<Taxi> searchTaxiCompany(int loginUserId, RequestJoin reqj) {
 		Connection conn = null;
 		List<Taxi> taxiList = new ArrayList<Taxi>();
 
@@ -30,10 +30,20 @@ public class TaxiDao {
 			// SELECT文を準備する
 			String sql = "select company, phone,(6371 * acos(cos(radians(?)) * cos(radians(taxi_address_latitude)) * cos(radians(taxi_address_longitude) - radians(?)) + sin(radians(?)) * sin(radians(taxi_address_latitude)))) AS distance FROM taxi ORDER BY distance LIMIT 3";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setDouble(1, address.getCurrent_latitude());
-			pStmt.setDouble(2, address.getCurrent_longitude());
-			pStmt.setDouble(3, address.getCurrent_latitude());
-
+			
+			// ログインユーザーが待機者か申請者か
+			if (reqj.getId() == loginUserId) {		// ログインユーザーが申請者の場合
+				// 申請者（ログインユーザー）の現在地と近い会社を検索
+				pStmt.setDouble(1, reqj.getCurrent_latitude());
+				pStmt.setDouble(2, reqj.getCurrent_longitude());
+				pStmt.setDouble(3, reqj.getCurrent_latitude());
+			} else {								// ログインユーザーが待機者の場合
+				// 申請者（相手）の現在地と近い会社を検索
+				pStmt.setDouble(1, reqj.getPrtnr_current_latitude());
+				pStmt.setDouble(2, reqj.getPrtnr_current_longitude());
+				pStmt.setDouble(3, reqj.getPrtnr_current_latitude());
+			}
+			
 			// SQL文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 

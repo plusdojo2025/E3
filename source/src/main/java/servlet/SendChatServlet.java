@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ChatDao;
 import dto.Chat;
@@ -19,30 +20,23 @@ public class SendChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// ログイン状態チェック
-//		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 //		if (session.getAttribute("id") == null) {
 //			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 //			return;
 //		}
 		
 		// テスト用　送信者id
-		int senderId = -11;
+//		int senderId = -11;
 		
 		// 申請情報id, 送信者id, チャットメッセージ, 送信日時を取得
 		request.setCharacterEncoding("UTF-8");
 		int roomId = Integer.parseInt(request.getParameter("room_id"));
-//		int senderId = (int) session.getAttribute("id");
+		int senderId = (int) session.getAttribute("id");
 		String chatText = request.getParameter("selectPhrase");
 		String chatDate = request.getParameter("chat_date"); 
 		

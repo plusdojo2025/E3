@@ -12,8 +12,7 @@
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
 		   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
 		   crossorigin="" defer></script>
-		<link
-			rel="stylesheet"
+		<link rel="stylesheet"
 			href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
 		<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js" defer></script>
 		<script src="<c:url value='/js/appointment.js' />" defer></script>
@@ -32,10 +31,10 @@
 		</header>
 		
 		<main>
-			<!-- マッチング相手のニックネームと待ち合わせ時間表示 -->
-			<div class="info">
-				<a name="nickname">ニックネームさん</a>
-				<a name="meetingTime" id="meetingTime">23:00</a>
+			<!-- マッチング相手のニックネームと待ち合わせ時間表示　現在地の緯度経度を保持 -->
+			<div class="info" data-my-lat="${reqj.current_latitude }" data-my-lng="${reqj.current_longitude }" data-p-lat="${reqj.prtnr_current_latitude}" data-p-lng="${reqj.prtnr_current_longitude}">
+				<a name="nickname"><c:out value="${reqj.nickname}" /></a>
+				<a name="meetingTime" id="meetingTime"></a>
 			</div>
 			
 			<!-- 現在地から待ち合わせ場所までの経路表示 -->

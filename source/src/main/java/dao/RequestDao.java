@@ -173,10 +173,11 @@ public class RequestDao {
 		return reqjList;
 	}
 	
-	
-	public List<RequestJoin> searchMyApprove(int id) {
+	// ログインユーザーが待機者か申請者かチェックして情報取得
+	public RequestJoin getRequestInfo(int loginUserId, int requestId) {
 		Connection conn = null;
-		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
+		int id = 0; 
+		RequestJoin reqj = new RequestJoin();
 		
 		try {
 			// JDBCドライバを読み込む
@@ -188,32 +189,30 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select nickname, standbyuser.current_latitude, standbyuser.current_longitude, request.current_latitude, request.current_longitude from request join user on request.id= User.id join standbyuser on request.stand_by_id = standbyuser.stand_by_id where partner_id = ? and status = 1;";
+			String sql = "select id from Request where request_id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, id);
+			pStmt.setInt(1, requestId);
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 			
 			while(rs.next()) {
-				RequestJoin reqj = new RequestJoin();
-				reqj.setNickname(rs.getString("nickname"));
-				reqj.setPrtnr_current_latitude(rs.getDouble("standbyuser.current_latitude"));
-				reqj.setPrtnr_current_longitude(rs.getDouble("standbyuser.current_longitude"));
-				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
-				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
-				
-				reqjList.add(reqj);
+				id = rs.getInt("id");
 			}
 
-			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			// リクエスト情報の申請者idとログインユーザーのidを比較
+			if (id == loginUserId) {		// ログインユーザーが申請者の場合
+				reqj = searchApproved(requestId);
+			} else {						// ログインユーザーが待機者の場合
+				reqj = searchMyApprove(requestId); 
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			reqjList = null;
+			reqj = null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			reqjList = null;
+			reqj = null;
 		} finally {
 			// データベースを切断
 			if (conn != null) {
@@ -221,17 +220,17 @@ public class RequestDao {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					reqjList = null;
+					reqj = null;
 				}
 			}
 		}
-		return reqjList;
+		return reqj;
 	}
 	
-	
-	public List<RequestJoin> searchApproved(int id) {
+	// ログインユーザーが申請者の場合の相手のニックネーム, 現在地, 自分の現在地取得処理
+	public RequestJoin searchMyApprove(int requestId) {
 		Connection conn = null;
-		List<RequestJoin> reqjList = new ArrayList<RequestJoin>();
+		RequestJoin reqj = new RequestJoin();
 		
 		try {
 			// JDBCドライバを読み込む
@@ -243,31 +242,29 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select nickname, standbyuser.current_latitude, standbyuser.current_longitude, request.current_latitude, request.current_longitude from request join user on request.id= user.id join standbyuser on request.stand_by_id = standbyuser.stand_by_id where id = ? and status = 1;";
+			String sql = "select nickname, standbyuser.current_latitude, standbyuser.current_longitude, request.current_latitude, request.current_longitude from request join user on request.id= user.id join standbyuser on request.stand_by_id = standbyuser.stand_by_id where request_id = ? and status = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, id);
+			pStmt.setInt(1, requestId);
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 			
 			while(rs.next()) {
-				RequestJoin reqj = new RequestJoin();
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setPrtnr_current_latitude(rs.getDouble("standbyuser.current_latitude"));
 				reqj.setPrtnr_current_longitude(rs.getDouble("standbyuser.current_longitude"));
 				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
 				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
-				
-				reqjList.add(reqj);
 			}
+
 			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			reqjList = null;
+			reqj = null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			reqjList = null;
+			reqj = null;
 		} finally {
 			// データベースを切断
 			if (conn != null) {
@@ -275,11 +272,62 @@ public class RequestDao {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					reqjList = null;
+					reqj = null;
 				}
 			}
 		}
-		return reqjList;
+		return reqj;
+	}
+	
+	// ログインユーザーが待機者の場合の相手のニックネーム, 現在地, 自分の現在地取得処理
+	public RequestJoin searchApproved(int requestId) {
+		Connection conn = null;
+		RequestJoin reqj = new RequestJoin();
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "select nickname, standbyuser.current_latitude, standbyuser.current_longitude, request.current_latitude, request.current_longitude from request join user on request.id= user.id join standbyuser on request.stand_by_id = standbyuser.stand_by_id where request_id = ? and status = 1;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, requestId);
+
+			// SELECT文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				reqj.setNickname(rs.getString("nickname"));
+				reqj.setPrtnr_current_latitude(rs.getDouble("request.current_latitude"));
+				reqj.setPrtnr_current_longitude(rs.getDouble("request.current_longitude"));
+				reqj.setCurrent_latitude(rs.getDouble("standbyuser.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("standbyuser.current_longitude"));
+			}
+			// ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reqj = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			reqj = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					reqj = null;
+				}
+			}
+		}
+		return reqj;
 	}
 	
 	
