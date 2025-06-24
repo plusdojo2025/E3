@@ -414,12 +414,15 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select request.partner_id, nickname, gender, standbyuser.headcount, "
-					+ "standbyuser.current_latitude, standbyuser.current_longitude, standbyuser.drop_off_latitude, standbyuser.drop_off_longitude, standbyuser.registration_date, request.date "
-					+ "from request "
-					+ "join user on request.partner_id = user.id "
-					+ "join standbyuser on request.partner_id = standbyuser.id "
-					+ "where request.id = ? and status = 1;";
+			String sql = "select standbyuser.id, nickname, gender, standbyuser.headcount, request.current_latitude, "
+					+"request.current_longitude, request.drop_off_latitude, "
+					+ "request.drop_off_longitude, standbyuser.current_latitude, "
+					+"standbyuser.current_longitude, standbyuser.drop_off_latitude, "
+					+"standbyuser.drop_off_longitude, request.registration_date, standbyuser.date  "
+					+"from standbyuser "
+					+"join user on standbyuser.id = user.id "
+					+"join request on request.partner_id = standbyuser.id "
+					+"where request.id = ? and status = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 
@@ -432,12 +435,17 @@ public class RequestDao {
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setGender(rs.getInt("gender"));
 				reqj.setGender(rs.getInt("standbyuser.headcount"));
-				reqj.setCurrent_latitude(rs.getDouble("standbyuser.current_latitude"));
-				reqj.setCurrent_longitude(rs.getDouble("standbyuser.current_longitude"));
-				reqj.setDrop_off_latitude(rs.getDouble("standbyuser.drop_off_latitude"));
-				reqj.setDrop_off_longitude(rs.getDouble("standbyuser.drop_off_longitude"));
+				reqj.setPrtnr_current_latitude(rs.getDouble("standbyuser.current_latitude"));
+				reqj.setPrtnr_current_longitude(rs.getDouble("standbyuser.current_longitude"));
+				reqj.setPrtnr_drop_off_latitude(rs.getDouble("standbyuser.drop_off_latitude"));
+				reqj.setPrtnr_drop_off_longitude(rs.getDouble("standbyuser.drop_off_longitude"));
 				reqj.setRegistration_date(rs.getString("standbyuser.registration_date"));
-				reqj.setDesired_date(rs.getString("request.date"));
+				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
+				reqj.setDrop_off_latitude(rs.getDouble("request.drop_off_latitude"));
+				reqj.setDrop_off_longitude(rs.getDouble("request.drop_off_longitude"));
+				reqj.setRegistration_date(rs.getString("request.registration_date"));
+				reqj.setDesired_date(rs.getString("standbyuser.date"));
 				
 				reqjList.add(reqj);
 			}
@@ -478,10 +486,14 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select request.id, nickname, gender, headcount, "
-					+ "request.current_latitude, request.current_longitude, request.drop_off_latitude, request.drop_off_longitude, registration_date, request.date "
-					+ "from request "
-					+ "join user on request.id = user.id "
+			String sql = "select Request.id, nickname, gender, Request.headcount, request.current_latitude, "
+					+"request.current_longitude, request.drop_off_latitude, "
+					+ "request.drop_off_longitude, standbyuser.current_latitude, "
+					+"standbyuser.current_longitude, standbyuser.drop_off_latitude, "
+					+"standbyuser.drop_off_longitude, standbyuser.registration_date, request.date  "
+					+"from request "
+					+"join user on request.id = user.id "
+					+"join standbyuser on request.partner_id = standbyuser.id "
 					+ "where request.partner_id = ? and status = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
@@ -495,11 +507,15 @@ public class RequestDao {
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setGender(rs.getInt("gender"));
 				reqj.setGender(rs.getInt("headcount"));
-				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
-				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
-				reqj.setDrop_off_latitude(rs.getDouble("request.drop_off_latitude"));
-				reqj.setDrop_off_longitude(rs.getDouble("request.drop_off_longitude"));
-				reqj.setRegistration_date(rs.getString("registration_date"));
+				reqj.setPrtnr_current_latitude(rs.getDouble("request.current_latitude"));
+				reqj.setPrtnr_current_longitude(rs.getDouble("request.current_longitude"));
+				reqj.setPrtnr_drop_off_latitude(rs.getDouble("request.drop_off_latitude"));
+				reqj.setPrtnr_drop_off_longitude(rs.getDouble("request.drop_off_longitude"));
+				reqj.setCurrent_latitude(rs.getDouble("standbyuser.current_latitude"));
+				reqj.setCurrent_longitude(rs.getDouble("standbyuser.current_longitude"));
+				reqj.setDrop_off_latitude(rs.getDouble("standbyuser.drop_off_latitude"));
+				reqj.setDrop_off_longitude(rs.getDouble("standbyuser.drop_off_longitude"));
+				reqj.setRegistration_date(rs.getString("standbyuser.registration_date"));
 				reqj.setDesired_date(rs.getString("request.date"));
 				
 				reqjList.add(reqj);
@@ -525,7 +541,6 @@ public class RequestDao {
 		}
 		return reqjList;
 	}
-	
 	
 	public boolean deleteRequest(Request req) {
 		boolean deleteResult = false;
