@@ -203,10 +203,13 @@ function fetchData() {
         const container = document.getElementById("listContainer");
         container.innerHTML = "";
         
-        var count = 0;
+        var count1 = 0;
+        var count2 = 0;
+        var count3 = 0;
 
         if (Array.isArray(data.reqList)) {
 			if(data.reqList.length > 0){
+				count1 =data.reqList.length;
 	        	container.innerHTML = "";
 	            data.reqList.forEach(item => {
 	                const row = document.createElement("div");
@@ -243,6 +246,7 @@ function fetchData() {
 
         if (Array.isArray(data.sendAnsList)) {
 			if(data.sendAnsList.length > 0){
+				count2 = data.sendAnsList.length;
 	            data.sendAnsList.forEach(item => {
 	                const row = document.createElement("div");
 	                row.className = "request-item modalBtn";
@@ -278,6 +282,7 @@ function fetchData() {
 
         if (Array.isArray(data.respAnsList)) {
 			if(data.respAnsList.length > 0){
+				count3 = data.respAnsList.length;
 	            data.respAnsList.forEach(item => {
 	                const row = document.createElement("div");
 	                row.className = "request-item modalBtn";
@@ -311,8 +316,8 @@ function fetchData() {
             }
         }
         
-        if(data.respAnsList.length <= 0 && data.sendAnsList.length <= 0 && data.reqList.length <= 0){
-	        	container.innerHTML = "";
+        if((count1 + count2 + count3 <= 0)){
+        	container.innerHTML = "";
 			//リストの中身がない(検索結果無し)場合に表示されたままになる
 	    	container.innerHTML = "<p>通知なし</p>";
 		}

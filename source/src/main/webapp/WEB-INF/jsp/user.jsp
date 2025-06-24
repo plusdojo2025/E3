@@ -20,7 +20,7 @@
 			<input type="radio" name="gender" value = 1>女性
 			<input type="radio" name="gender" value = 2>その他<br>
 				<div id="output3" style="color: red;"></div>
-			<input type="text" name="address"  id="address" placeholder="自宅住所" onblur="sendAddress()">
+			<input type="text" name="address"  id="address" placeholder="自宅住所">
 			<input type="hidden" name="address_latitude" id="address_latitude">
         	<input type="hidden" name="address_longitude" id="address_longitude">
         	<div id="result"></div>
@@ -30,7 +30,7 @@
 			<input type="hidden" name="noTalking" value="0">
 			<input type="checkbox" name="sameGender" value="1">同性希望<br>
 			<input type="hidden" name="sameGender" value="0">
-			<input type="submit" value="登録">
+			<input type="submit" value="登録" id="submitBtn">
 		</form>
 	</div>
 <script src="<c:url value='/js/user.js' />"></script>

@@ -30,14 +30,17 @@
 			<input type="radio" name="gender" value="1">女性
 			<input type="radio" name="gender" value="2">その他
 				<div id="output3" style="color: red;"></div>
-			<input type="text" name="address" placeholder="自宅住所" value="${address}">
+			<input type="text" name="address" placeholder="自宅住所" id="address" value="${address}">
+			<input type="hidden" name="address_latitude" id="address_latitude">
+        	<input type="hidden" name="address_longitude" id="address_longitude">
+        	<div id="result"></div>
 			<input type="checkbox" name="noSmoking" value="1">非喫煙<br>
 			<input type="hidden" name="noSmoking" value="0">
 			<input type="checkbox" name="noTalking" value="1">会話を遠慮する<br>
 			<input type="hidden" name="noTalking" value="0">
 			<input type="checkbox" name="sameGender" value="1">同性希望<br>
 			<input type="hidden" name="sameGender" value="0">
-			<input type="submit" value="更新">
+			<input type="submit" value="更新" id="submitBtn">
 			<a href="<c:url value='/HomeSearchServlet' />">戻る</a>
 		</form>
 	</div>
