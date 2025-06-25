@@ -63,7 +63,27 @@ function culTime(dis, date){
 
 for(let i = 0; i < action.length; i++){
     action[i].onclick = function(){
-        modal[i].style.visibility = "visible";
+		let sLat = (mycLat + pncLat[i]) / 2; 
+		let sLon = (mycLon + pncLon[i]) / 2; 
+		
+		var map = L.map('mapid', {
+		center: [sLat, sLon],
+		zoom: 16,
+		}); 
+		
+		// OpenStreetMap から地図画像を読み込む
+		
+		var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+		});
+		tileLayer.addTo(map);
+		
+		// マーカー画像の場所を指定する
+		
+		L.marker([sLat, sLon]).addTo(map); 
+		        
+		modal[i].style.visibility = "visible";
+		
     }
 }
 
