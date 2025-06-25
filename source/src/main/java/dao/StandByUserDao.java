@@ -150,7 +150,7 @@ public class StandByUserDao {
 			String sql = "select headcount, current_latitude, current_longitude,"
 					+ "drop_off_latitude, drop_off_longitude,"
 					+ "registration_date, date from standbyuser "
-					+ "where id = ? and flag = 0";
+					+ "where id = ? and flag = 0 order by stand_by_id DESC;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 

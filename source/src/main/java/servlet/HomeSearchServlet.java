@@ -55,9 +55,9 @@ public class HomeSearchServlet extends HttpServlet {
 		
 		//StandByUser用
 		int id = (int)session.getAttribute("id");
-		
-		System.out.println(id);
-		String dDate = request.getParameter("date"); 
+		String dDate = request.getParameter("date");
+		dDate = dDate.replace("T", " "); // T をスペースに変換
+		System.out.println("date" + dDate);
 		double cLat = Double.parseDouble(request.getParameter("current_latitude"));
 		double cLon = Double.parseDouble(request.getParameter("current_longitude")); 
 		double dLat = Double.parseDouble(request.getParameter("drop_off_latitude")); 
