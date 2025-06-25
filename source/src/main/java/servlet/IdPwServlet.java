@@ -46,26 +46,33 @@ public class IdPwServlet extends HttpServlet {
 		//doGet(request, response);
 		// リクエストパラメータを取得する
 		
-		//セッションの開始
-		HttpSession session = request.getSession();
-		
-		request.setCharacterEncoding("UTF-8");
-		int id = 0;
-		String email = request.getParameter("mailaddress");
-		String pass = request.getParameter("loginPW");
-		
-		IdPwDao idpw =  new IdPwDao();
-		ResultUserID result = idpw.insertIdpw(new IdPw(id, email, pass));
-		
-		if(result.isResult()){ // 登録成功		
-			//セッションスコープにidを格納
-			session.setAttribute("id", result.getId());
+			//セッションの開始
+			HttpSession session = request.getSession();
 			
-			//デバッグ用
-			System.out.println(session.getAttribute("id"));
-			response.sendRedirect(request.getContextPath() + "/UserServlet");
-		}else{ // 登録失敗
-			response.sendRedirect(request.getContextPath() + "/IdPwServlet");
-		}
+			request.setCharacterEncoding("UTF-8");
+			int id = 0;
+			String email = request.getParameter("mailaddress");
+			String pass = request.getParameter("loginPW");
+	        IdPwDao dao = new IdPwDao();
+	        if (dao.findByEmail(email)) {
+	            // メールアドレスが重複している場合
+	            request.setAttribute("emailerror", "登録済みメールアドレスです");
+	            request.getRequestDispatcher("/WEB-INF/jsp/idpw.jsp").forward(request, response);
+	        } else {
+			
+				IdPwDao idpw =  new IdPwDao();
+				ResultUserID result = idpw.insertIdpw(new IdPw(id, email, pass));
+				
+				if(result.isResult()){ // 登録成功
+					//セッションスコープにidを格納
+					session.setAttribute("id", result.getId());
+					
+					//デバッグ用
+					System.out.println(session.getAttribute("id"));
+					response.sendRedirect(request.getContextPath() + "/UserServlet");
+				}else{ // 登録失敗
+					response.sendRedirect(request.getContextPath() + "/IdPwServlet");
+				}
+	        }
 	}
 }

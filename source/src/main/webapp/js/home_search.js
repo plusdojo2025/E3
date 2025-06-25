@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const errorHeadcount = document.getElementById('errorHeadcount');
 
 	form.addEventListener('submit', (e) => {
+		event.preventDefault(); // フォーム送信を一旦止める
+		const departure_location = document.getElementById("departure_location").value.trim(); // ← ★追加！
+		const destination = document.getElementById("destination").value.trim(); // ← ★追加！
+		const resultDiv = document.getElementById("result"); // ← ★追加！
 		let isValid = true;
 
 		// 希望日時
@@ -72,8 +76,56 @@ document.addEventListener('DOMContentLoaded', () => {
 			errorHeadcount.textContent = '';
 		}
 
-		if (!isValid) {
-			e.preventDefault();
+		if (departure_location === '') {
+			alert("出発地を入力してください。");
+			isValid = false;
 		}
+
+		if (destination === '') {
+			alert("目的地を入力してください。");
+			isValid = false;
+		}
+
+		if (!isValid) {
+			return;
+		}
+
+		const url1 = 'Geocode?address=' + encodeURIComponent(departure_location);
+		fetch(url1)
+			.then(response => response.json())
+			.then(data => {
+				if (data.error) {
+					resultDiv.textContent = "エラー: " + data.error;
+				} else {
+					form.current_latitude.value = String(data.latitude);
+					form.current_longitude.value = String(data.longitude);
+
+					const url2 = 'Geocode?address=' + encodeURIComponent(destination);
+					fetch(url2)
+						.then(response => response.json())
+						.then(data2 => {
+							if (data2.error) {
+								resultDiv.textContent = "エラー: " + data2.error;
+							} else {
+								form.drop_off_latitude.value = String(data2.latitude);
+								form.drop_off_longitude.value = String(data2.longitude);
+								const hiddenSubmit = document.createElement("input");
+								hiddenSubmit.type = "hidden";
+								hiddenSubmit.name = "search";
+								hiddenSubmit.value = "検索";
+								form.appendChild(hiddenSubmit);
+								form.submit(); // ★ここでページ遷移（送信）！
+							}
+						})
+						.catch(error => {
+							resultDiv.textContent = "通信エラーが発生しました";
+							console.error(error);
+						});
+							}
+						})
+			.catch(error => {
+				resultDiv.textContent = "通信エラーが発生しました。";
+				console.error(error);
+			});
 	});
 });

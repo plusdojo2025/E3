@@ -68,7 +68,7 @@ public class UserServlet extends HttpServlet {
 				latitude,  longitude,  talking,  
 				smoking,  partner_gender,  id,  
 				address))){// 登録成功
-			response.sendRedirect(request.getContextPath() + "/HomeSearchServlet");
+			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 		}else{ // 登録失敗
 			response.sendRedirect(request.getContextPath() + "/UserServlet");
 		}

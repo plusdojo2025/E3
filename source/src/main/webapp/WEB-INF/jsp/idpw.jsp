@@ -15,7 +15,7 @@
 	<h1>新規登録</h1>
 		<form id=idpw_form action="<c:url value='/IdPwServlet' />" method="post">
 			<input type="text" name="mailaddress" placeholder="メールアドレス">
-				<div id="output1" style="color: red;"></div>
+				<div id="output1" style="color: red;">${emailerror}</div>
 			<div class="password-wrapper1">
 				<input type="password" id=password1 name="loginPW" placeholder="パスワード">
 				<span id ="view1">

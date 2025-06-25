@@ -45,7 +45,7 @@
 	<!-- 検索フォーム -->
 	<div class="form_flame">
 	<h1>検索</h1>
-	<form id="searchForm" action="<c:url value='/SearchResultServlet' />" method="post">
+	<form id="searchForm" action="<c:url value='/HomeSearchServlet' />" method="post">
 
 		 <div class="form-group">
 		   <label for="desired_date">希望日時</label>
@@ -56,14 +56,20 @@
 		 <div class="form-group">
 		   <label for="departure_location">出発地</label>
 		   <input type="text" name="current_location" id="departure_location" maxlength="100">
+		   <input type="hidden" id="current_latitude" name="current_latitude">
+		   <input type="hidden" id="current_longitude" name="current_longitude">
 		   <div id="errorCurrent" class="error-message"></div>
 		   </div>
 		
 		 <div class="form-group">
 		   <label for="destination">目的地</label>
 		   <input type="text" name="drop_off_location" id="destination" maxlength="100">
+		   <input type="hidden" id="drop_off_latitude" name="drop_off_latitude">
+		   <input type="hidden" id="drop_off_longitude" name="drop_off_longitude">
 		   <div id="errorDrop" class="error-message"></div>
 		 </div>
+		 
+		 <div id="result"></div>
 		
 		 <div class="form-group">
 		   <label for="number_people">人数</label><br>
@@ -72,7 +78,7 @@
 		 </div>
 		
 		 <div>
-		   <input type="submit" name="search" value="検索">
+		   <input type="submit" name="search" value="検索" id="submitBtn">
 		 </div>
 	 </form>
   </div>

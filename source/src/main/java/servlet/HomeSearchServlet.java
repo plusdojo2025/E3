@@ -55,15 +55,16 @@ public class HomeSearchServlet extends HttpServlet {
 		
 		//StandByUser用
 		int id = (int)session.getAttribute("id");
-		String dDate = request.getParameter("desired_date"); 
+		String dDate = request.getParameter("date"); 
 		double cLat = Double.parseDouble(request.getParameter("current_latitude"));
 		double cLon = Double.parseDouble(request.getParameter("current_longitude")); 
 		double dLat = Double.parseDouble(request.getParameter("drop_off_latitude")); 
 		double dLon = Double.parseDouble(request.getParameter("drop_off_longitude")); 
-		int headcount = Integer.parseInt(request.getParameter("desired_date")); 
-		String rDate = request.getParameter("registration_date");  
+		int headcount = Integer.parseInt(request.getParameter("headcount")); 
+		String rDate = request.getParameter("registration_date");
 		
-		if(request.getParameter("search").equals("検索")) {
+		String submitVal = request.getParameter("search");
+		if("検索".equals(submitVal)) {
 			StandByUserDao sDao = new StandByUserDao();
 			StandByUser sbu = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, 0, 0, 0);
 			
@@ -74,7 +75,6 @@ public class HomeSearchServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/search_result.jsp");
 			dispatcher.forward(request, response);
 		}
-		
 	}
 }
 
