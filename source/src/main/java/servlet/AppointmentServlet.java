@@ -29,30 +29,15 @@ public class AppointmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// ログイン状態チェック
 		HttpSession session = request.getSession();
-//		if (session.getAttribute("id") == null) {
-//			response.sendRedirect(request.getContextPath() + "/LoginServlet");
-//			return;
-//		}
-		
-		// テスト用　タクシー会社情報作成
-//		List<Taxi> taxiList = new ArrayList<Taxi>();
-//		for (int i=0; i<3; i++) {
-//			Taxi taxi = new Taxi();
-//			taxi.setCompany("タクシー会社" + (i+1));
-//			taxi.setPhone("03-123-4567");
-//			taxiList.add(taxi);
-//		}
-//		request.setAttribute("taxiList", taxiList);
-//		// テスト用　ルームid
-//		int roomId = -1;
-//		request.setAttribute("roomId", roomId);
-//		// テスト用　ログインユーザーid
-//		int id = -11;
-//		session.setAttribute("id", id);
+		if (session.getAttribute("id") == null) {
+			response.sendRedirect(request.getContextPath() + "/LoginServlet");
+			return;
+		}
 		
 		// 前画面からリクエストidを取得
 		request.setCharacterEncoding("UTF-8");
 		int requestId = Integer.parseInt(request.getParameter("request_id"));
+
 		
 		// リクエスト情報取得処理
 		RequestDao requestDao = new RequestDao();

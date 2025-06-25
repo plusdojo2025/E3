@@ -14,7 +14,7 @@
 		   crossorigin="" defer></script>
 		<link rel="stylesheet"
 			href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
-		<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js" defer></script>
+		<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.min.js" defer></script>
 		<script src="<c:url value='/js/appointment.js' />" defer></script>
 		<title>予約確認 | シェアタク</title>
 	</head>
@@ -33,7 +33,7 @@
 		<main>
 			<!-- マッチング相手のニックネームと待ち合わせ時間表示　現在地の緯度経度を保持 -->
 			<div class="info" data-my-lat="${reqj.current_latitude }" data-my-lng="${reqj.current_longitude }" data-p-lat="${reqj.prtnr_current_latitude}" data-p-lng="${reqj.prtnr_current_longitude}">
-				<a name="nickname"><c:out value="${reqj.nickname}" /></a>
+				<a name="nickname"><c:out value="${reqj.nickname}" />さん</a>
 				<a name="meetingTime" id="meetingTime"></a>
 			</div>
 			
@@ -57,8 +57,15 @@
 			<form method="post" action="<c:url value='/SendChatServlet' />" id="chat_form">
 				<select name="selectPhrase" id="selectPhrase">
 					<option value="メッセージを選択">メッセージを選択</option>
-					<option value="5分ほど遅れます">5分ほど遅れます</option>
+					<option value="よろしくお願いします">よろしくお願いします</option>
+					<option value="ありがとうございました">ありがとうございました</option>
 					<option value="到着しました">到着しました</option>
+					<option value="タクシーを呼びました">タクシーを呼びました</option>
+					<option value="5分ほど遅れます">5分ほど遅れます</option>
+					<option value="10分ほど遅れます">10分ほど遅れます</option>
+					<option value="お先にどうぞ">お先にどうぞ</option>
+					<option value="少しならお待ちできます">少しならお待ちできます</option>
+					<option value="ご到着まだでしょうか？">ご到着まだでしょうか？</option>
 				</select>
 				<!-- ルームid付与 -->
 				<input type="hidden" name="room_id" value="${roomId }">

@@ -86,7 +86,7 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "select headcount, current_latitude, current_longitude,"
+			String sql = "select stand_by_id,  headcount, current_latitude, current_longitude,"
 					+ "drop_off_latitude, drop_off_longitude,"
 					+ "registration_date, date from standbyuser "
 					+ "where id = ?";
@@ -99,6 +99,7 @@ public class StandByUserDao {
 			// 検索結果をコレクションに格納
 			while (rs.next()) {
 				StandByUser standByUser = new StandByUser();
+				standByUser.setStand_by_id(rs.getInt("stand_by_id"));
 				standByUser.setHeadcount(rs.getInt("headcount"));
 				standByUser.setCurrent_latitude(rs.getDouble("current_latitude"));
 				standByUser.setCurrent_longitude(rs.getDouble("current_longitude"));
@@ -425,7 +426,7 @@ public class StandByUserDao {
 	}	
 	
 	// 自分の待機状態解除処理
-	public boolean deleteStandByInfo(int StandById) {
+	public boolean deleteStandByInfo(int standById) {
 		Connection conn = null;
 		boolean deleteResult = false;			// trueの場合は成功, falseの場合は失敗
 		
@@ -439,9 +440,9 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "delete from standbyuser where id = ?";
+			String sql = "delete from standbyuser where stand_by_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, StandById);
+			pStmt.setInt(1, standById);
 
 			// SQL文を実行して更新行数を取得　1行の場合は成功
 			if (pStmt.executeUpdate() == 1) {
