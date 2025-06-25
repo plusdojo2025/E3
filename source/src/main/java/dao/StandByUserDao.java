@@ -204,25 +204,26 @@ public class StandByUserDao {
 			
 			// SQL文
 			if(getMyStandInfo(id).getPartner_gender() == 1) { // 自分が同性を希望している場合
-				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
-							+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
-							+ "* cos(radians(current_longitude) - radians(?))"
-							+ "+ sin(radians(?))* sin(radians(current_latitude)) as cur_distance,"
-	
-							+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
-							+ "* cos(radians(drop_off_longitude) - radians(?))"
-							+ "+ sin(radians(?))* sin(radians(drop_off_latitude)))) as drop_distance,"
-							
-							+ "(headcount + ?) as sum_headcount"
-	
-							+ "join user on standbyuser.id = user.id "
-							
-							+ "where flag = 1 and date <= ? and date >= ? "
-							+ "and user.gender = ? " //性別
-							+ "and (? = 0 or (? = 1 and smoking = 1))" //喫煙
-							+ "and talking = ?" //会話
-							
-							+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
+				String sql =
+						"SELECT * FROM ("
+						+ "SELECT nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
+						+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
+						+ "* cos(radians(current_longitude) - radians(?))"
+						+ "+ sin(radians(?)) * sin(radians(current_latitude)))) AS cur_distance,"
+
+						+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
+						+ "* cos(radians(drop_off_longitude) - radians(?))"
+						+ "+ sin(radians(?)) * sin(radians(drop_off_latitude)))) AS drop_distance,"
+
+						+ "(headcount + ?) AS sum_headcount "
+						+ "FROM standbyuser "
+						+ "JOIN user ON standbyuser.id = user.id "
+						+ "WHERE flag = 1 AND date <= ? AND date >= ? "
+						+ "AND user.gender = ? "
+						+ "AND (? = 0 OR (? = 1 AND smoking = 1)) "		//喫煙
+						+ "AND talking = ?"			//会話
+						+ ") AS filtered "
+						+ "WHERE cur_distance < 1 AND drop_distance < 5 AND sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 				
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				pStmt.setDouble(1, myStandInfo.getCurrent_latitude());
@@ -256,22 +257,22 @@ public class StandByUserDao {
 			}
 			else { // 自分が同性を希望していない場合
 				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
-						+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
-						+ "* cos(radians(current_longitude) - radians(?))"
-						+ "+ sin(radians(?))* sin(radians(current_latitude)) as cur_distance,"
+				        + "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
+				        + "* cos(radians(current_longitude) - radians(?))"
+				        + "+ sin(radians(?)) * sin(radians(current_latitude)))) as cur_distance,"  // ← 最後に "))" を追加
 
-						+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
-						+ "* cos(radians(drop_off_longitude) - radians(?))"
-						+ "+ sin(radians(?))* sin(radians(drop_off_latitude)))) as drop_distance,"
+				        + "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
+				        + "* cos(radians(drop_off_longitude) - radians(?))"
+				        + "+ sin(radians(?)) * sin(radians(drop_off_latitude)))) as drop_distance,"  // ← 同様に "))" に修正
 						
-						+ "(headcount + ?) as sum_headcount"
+						+ "(headcount + ?) as sum_headcount from standbyuser "
 
 						+ "join user on standbyuser.id = user.id "
 						
 						+ "where flag = 1 and date <= ? and date >= ? "
-						+ "and ((partner_gender = 1 and user.gender = ?) or partner_gender = 0)" //性別
-						+ "and (? = 0 or (? = 1 and smoking = 1))" //喫煙
-						+ "and talking = ?" //会話
+						+ "and ((user.partner_gender = 1 and user.gender = ?) or user.partner_gender = 0)" //性別
+						+ "and (? = 0 or (? = 1 and user.smoking = 1))" //喫煙
+						+ "and user.talking = ? " //会話
 						
 						+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 			
@@ -508,20 +509,19 @@ public class StandByUserDao {
 	public static String calculateDate(String bef, int c) {
 		String aft = "";
 		try {
-		SimpleDateFormat frmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");		
-		Date date = frmt.parse(bef);
-		Calendar clndr = Calendar.getInstance();
-		clndr.setTime(date);
-		
-		clndr.add(Calendar.MINUTE, c);
-		
-		date = clndr.getTime();
-		
-		aft = frmt.format(date);
-		
+			// 入力の形式に合わせたフォーマットを使う
+			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm"); 
+			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm"); // 出力フォーマット
+
+			Date date = inputFormat.parse(bef);
+			Calendar clndr = Calendar.getInstance();
+			clndr.setTime(date);
+			clndr.add(Calendar.MINUTE, c);
+
+			aft = outputFormat.format(clndr.getTime());
 		} catch (ParseException e) {
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		}
 		return aft;
 	}
 
