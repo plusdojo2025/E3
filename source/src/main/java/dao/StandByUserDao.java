@@ -149,7 +149,7 @@ public class StandByUserDao {
 			// SQL文
 			String sql = "select headcount, current_latitude, current_longitude,"
 					+ "drop_off_latitude, drop_off_longitude,"
-					+ "registration_date, date from standbyuser "
+					+ "registration_date, date, partner_gender from standbyuser "
 					+ "where id = ? and flag = 0 order by stand_by_id DESC;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
@@ -165,10 +165,10 @@ public class StandByUserDao {
 				myInfo.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
 				myInfo.setRegistration_date(rs.getString("registration_date"));
 				myInfo.setDate(rs.getString("date"));
+				myInfo.setPartner_gender(rs.getInt("partner_gender"));
 			}
 
-			// 検索結果が格納されたコレクションを返す
-			return myInfo;
+
 		}
 		catch (Exception e) {
 			// 例外処理
@@ -186,6 +186,8 @@ public class StandByUserDao {
 				}
 			}
 		}
+		// 検索結果が格納されたコレクションを返す
+		return myInfo;
 	}
 	
 	// 待機情報検索処理
