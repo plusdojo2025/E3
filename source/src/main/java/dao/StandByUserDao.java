@@ -22,11 +22,11 @@ public class StandByUserDao {
 		boolean insertResult = false;			// trueの場合は成功, falseの場合は失敗
 		
 		try {
-			// JDstandByUserドライバを読み込む
-			Class.forName("com.mysql.cj.jdstandByUser.Driver");
+			// jdbcドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベース接続
-			conn = DriverManager.getConnection("jdstandByUser:mysql://localhost:3306/e3?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -155,8 +155,8 @@ public class StandByUserDao {
 
 			// SQL文を実行して検索結果を取得
 			ResultSet rs = pStmt.executeQuery();
-
-			// 検索結果をコレクションに格納
+			if (rs.next()) {
+				// 検索結果をコレクションに格納
 				myInfo.setHeadcount(rs.getInt("headcount"));
 				myInfo.setCurrent_latitude(rs.getDouble("current_latitude"));
 				myInfo.setCurrent_longitude(rs.getDouble("current_longitude"));
@@ -164,6 +164,7 @@ public class StandByUserDao {
 				myInfo.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
 				myInfo.setRegistration_date(rs.getString("registration_date"));
 				myInfo.setDate(rs.getString("date"));
+			}
 
 			// 検索結果が格納されたコレクションを返す
 			return myInfo;
@@ -210,7 +211,7 @@ public class StandByUserDao {
 	
 							+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
 							+ "* cos(radians(drop_off_longitude) - radians(?))"
-							+ "+ sin(radians(?))* sin(radians(drop_off_latitude)) as drop_distance,"
+							+ "+ sin(radians(?))* sin(radians(drop_off_latitude)))) as drop_distance,"
 							
 							+ "(headcount + ?) as sum_headcount"
 	
@@ -261,7 +262,7 @@ public class StandByUserDao {
 
 						+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
 						+ "* cos(radians(drop_off_longitude) - radians(?))"
-						+ "+ sin(radians(?))* sin(radians(drop_off_latitude)) as drop_distance,"
+						+ "+ sin(radians(?))* sin(radians(drop_off_latitude)))) as drop_distance,"
 						
 						+ "(headcount + ?) as sum_headcount"
 
@@ -340,7 +341,7 @@ public class StandByUserDao {
 			// SQL文
 			String sql = "update standbyuser set flag = 1, set talking = ?, set smoking = ?, set partner_gender = ? "
 					+ "where id = ? "
-					+ "order by stand_by_user desc limit 1";
+					+ "order by stand_by_id desc limit 1";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, new UserDao().searchUser(id).getTalking());
 			pStmt.setInt(2, new UserDao().searchUser(id).getSmoking());
