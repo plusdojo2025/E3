@@ -10,6 +10,10 @@ body {
 }
 
 
+.forCalculation {
+	visibility: hidden;
+}
+
 #header {
   position: relative;
   height: 70px;
