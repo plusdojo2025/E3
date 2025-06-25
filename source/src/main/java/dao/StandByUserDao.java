@@ -510,7 +510,7 @@ public class StandByUserDao {
 		String aft = "";
 		try {
 			// 入力の形式に合わせたフォーマットを使う
-			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm"); 
+			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm"); // 出力フォーマット
 
 			Date date = inputFormat.parse(bef);
