@@ -13,9 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import dao.RequestDao;
 import dao.StandByUserDao;
+import dao.UserDao;
 import dto.Request;
 import dto.StandByUser;
 import dto.StandByUserJoin;
+import dto.User;
 
 /**
  * Servlet implementation class SearchResultServlet
@@ -64,6 +66,8 @@ public class SearchResultServlet extends HttpServlet {
 		
 		//StandByUser用
 		int id = (int)session.getAttribute("id");
+		UserDao uDao = new UserDao();
+		User user = uDao.searchUser(id);
 		String dDate = request.getParameter("desired_date"); 
 		double cLat = Double.parseDouble(request.getParameter("current_latitude"));
 		double cLon = Double.parseDouble(request.getParameter("current_longitude")); 
@@ -71,45 +75,56 @@ public class SearchResultServlet extends HttpServlet {
 		double dLon = Double.parseDouble(request.getParameter("drop_off_longitude")); 
 		int headcount = Integer.parseInt(request.getParameter("headcount")); 
 		String rDate = request.getParameter("registration_date"); 
-		int talking = Integer.parseInt(request.getParameter("talking")); 
-		int smoking = Integer.parseInt(request.getParameter("smoking")); 
-		int prtnrGen = Integer.parseInt(request.getParameter("partner_gender")); 
-		int prtnrId = Integer.parseInt(request.getParameter("partner_id")); 
-		int sbId = Integer.parseInt(request.getParameter("stand_by_id")); 
-		StandByUserDao sbud = new StandByUserDao();
-		String date = sbud.getDate(sbId);
-		
-		if(request.getParameter("search").equals("検索")) {
-			StandByUserDao sDao = new StandByUserDao();
-			StandByUser sbu = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, talking, smoking, prtnrGen);
-			
-			sDao.insertStandByUser(sbu);
-			request.setAttribute("cLat", cLat);
-			request.setAttribute("cLon", cLon);
-			request.setAttribute("dLat", dLat);
-			request.setAttribute("dLon", dLon);
-			
-			List<StandByUserJoin> sbujLi = sDao.searchStandByInfo(id);
-			request.setAttribute("StandByUserJoin", sbujLi);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/search_result.jsp");
-			dispatcher.forward(request, response);
+		int talking = user.getTalking();
+		if(request.getParameter("talking") != null) {
+			talking = Integer.parseInt(request.getParameter("talking")); 
+		}
+		int smoking = user.getSmoking();
+		if(request.getParameter("smoking") != null) {
+			smoking = Integer.parseInt(request.getParameter("smoking")); 
+		}
+		int prtnrGen = user.getPartner_gender();
+		if(request.getParameter("partner_gender") != null) {
+			prtnrGen = Integer.parseInt(request.getParameter("partner_gender")); 
 		}
 		
-		if(request.getParameter("Stand").equals("待機登録")) {
-			StandByUserDao sDao = new StandByUserDao();
-			sDao.updateFlag(id);
-			response.sendRedirect("/E3/HomeSearchServlet.java");
-
+		if(request.getParameter("search") != null) {
+			if(request.getParameter("search").equals("検索")) {
+				StandByUserDao sDao = new StandByUserDao();
+				StandByUser sbu = new StandByUser(0, id, dDate, cLat, cLon, dLat, dLon, headcount, 1, rDate, talking, smoking, prtnrGen);
+				
+				boolean rr = sDao.insertStandByUser(sbu);
+				request.setAttribute("cLat", cLat);
+				request.setAttribute("cLon", cLon);
+				request.setAttribute("dLat", dLat);
+				request.setAttribute("dLon", dLon);
+				System.out.println(rr);
+				List<StandByUserJoin> sbujLi = sDao.searchStandByInfo(id);
+				request.setAttribute("StandByUserJoin", sbujLi);
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/search_result.jsp");
+				dispatcher.forward(request, response);
+			}
 		}
-		
-		if(request.getParameter("Request").equals("申請")) {
-			RequestDao rDao = new RequestDao();
-			Request req = new Request(0, id, cLat, cLon, dLat, dLon, headcount, 0, prtnrId, talking, smoking, prtnrGen, rDate, sbId, date);
-			rDao.insertRequest(req);
+		if(request.getParameter("Stand") != null) {
+			if(request.getParameter("Stand").equals("待機登録")) {
+				StandByUserDao sDao = new StandByUserDao();
+				sDao.updateFlag(id);
+				response.sendRedirect("/E3/HomeSearchServlet.java");
+			}
 		}
+		if(request.getParameter("Request") != null) {
+			if(request.getParameter("Request").equals("申請")) {
+				int prtnrId = Integer.parseInt(request.getParameter("partner_id"));
+				int sbId = Integer.parseInt(request.getParameter("stand_by_id")); 
+				StandByUserDao sbud = new StandByUserDao();
+				String date = sbud.getDate(sbId);
+				RequestDao rDao = new RequestDao();
+				Request req = new Request(0, id, cLat, cLon, dLat, dLon, headcount, 0, prtnrId, talking, smoking, prtnrGen, rDate, sbId, date);
+				rDao.insertRequest(req);
+			}
 		
-
+		}
 	}
 
 }
