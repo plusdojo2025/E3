@@ -14,7 +14,7 @@
 	<div class="form_flame">
 	<h1>新規登録</h1>
 		<form id=idpw_form action="<c:url value='/IdPwServlet' />" method="post">
-			<input type="text" name="mailaddress" placeholder="メールアドレス">
+			<input type="text" name="mailaddress" placeholder="メールアドレス" oninput="name_error()">
 				<div id="output1" style="color: red;">${emailerror}</div>
 			<div class="password-wrapper1">
 				<input type="password" id=password1 name="loginPW" placeholder="パスワード">

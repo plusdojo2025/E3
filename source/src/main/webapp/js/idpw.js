@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 });
 
+//エラー削除
+function name_error(){
+	document.getElementById("output1").textContent = "";
+}
+
 //目のマーク(パスワード)
 //  id="view"を取得
 let viewicon1 = document.getElementById('view1');
