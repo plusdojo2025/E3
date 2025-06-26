@@ -74,7 +74,16 @@
 		</div>
 		<div>
 			<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitSta()">
-				<input type="hidden"><!-- hiddenをたくさんつくりましょうね -->
+				<input type="hidden" name="date" value="${date}">
+				<input type="hidden" name="current_latitude" value="${cLat}">
+				<input type="hidden" name="current_longitude" value="${cLon}">
+				<input type="hidden" name="drop_off_latitude" value="${dLat}">
+				<input type="hidden" name="drop_off_longitude" value="${dLon}">
+				<input type="hidden" name="headcount" value="${headcount}">
+				<input type="hidden" name="registration_date" value="rDate">
+				<input type="hidden" name="talking" value="${talking}">
+				<input type="hidden" name="smoking" value="${smoking}">
+				<input type="hidden" name="partner_gender" value="${partner_gender}">
 				<input type="submit" name="stand" value="待機登録">
 			</form>
 		</div>
