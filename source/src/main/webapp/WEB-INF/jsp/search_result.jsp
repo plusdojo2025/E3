@@ -39,23 +39,23 @@
 			</form>
 		</div>
 		<div class="forCalculation">
-			<span id="mycLat"><c:out value="${cLat}"/></span>
-			<span id="mycLon"><c:out value="${cLon}"/></span>
-			<span id="mydLat"><c:out value="${dLat}"/></span>
-			<span id="mydLon"><c:out value="${dLon}"/></span>
+			<input type="hidden" id="mycLat" value="${cLat}">
+			<input type="hidden" id="mycLon" value="${cLon}">
+			<input type="hidden" id="mydLat" value="${dLat}">
+			<input type="hidden" id="mydLon" value="${dLon}">
 		</div>
 		<div class="list">
 			<c:forEach var="e" items="${StandByUserJoin}">
 				<div class="forCalculation">
-					<span class="pncLat"><c:out value="${e.current_latitude}"/></span>
-					<span class="pncLon"><c:out value="${e.current_longitude}"/></span>
-					<span class="pndLat"><c:out value="${e.drop_off_latitude}"/></span>
-					<span class="pndLon"><c:out value="${e.drop_off_longitude}"/></span>
-					<span class="date"><c:out value="${e.date}"/></span>
+					<input type="hidden" class="pncLat" value="${e.current_latitude}">
+					<input type="hidden" class="pndLat" value="${e.drop_off_latitude}">
+					<input type="hidden" class="pncLon" value="${e.current_longitude}">
+					<input type="hidden" class="pndLon" value="${e.drop_off_longitude}">
+					<input type="hidden" class="date" value="${e.date}">
 				</div>
 				<div class="modal_action"> 
 					<c:out value="${e.nickname}"/><br> 
-					料金：<span class="fee"></span><br>
+					料金：<span class="fee"></span>円<br>
 					到着予定時刻：<span class="time"></span>
 				</div>
 				<div class="modal" style="visibility: hidden;"> 
@@ -88,7 +88,7 @@
 			</form>
 		</div>
 	
-	<script type="text/javascript" src="/E3/js/search_result.js"></script>
+	<script type="text/javascript" src="<c:url value='/js/search_result.js' />"></script>
 
 	</body>
 </html>
