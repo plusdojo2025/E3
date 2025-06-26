@@ -252,6 +252,7 @@ public class StandByUserDao {
 					sbuj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
 					sbuj.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
 					sbuj.setRegistration_date(rs.getString("registration_date"));
+					sbuj.setDate(rs.getString("date"));
 						
 					sbujList.add(sbuj);
 				}
