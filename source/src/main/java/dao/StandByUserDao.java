@@ -514,7 +514,7 @@ public class StandByUserDao {
 		try {
 			// 入力の形式に合わせたフォーマットを使う
 			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
-			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm"); // 出力フォーマット
+			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); // 出力フォーマット
 
 			Date date = inputFormat.parse(bef);
 			Calendar clndr = Calendar.getInstance();
