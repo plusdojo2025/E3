@@ -41,6 +41,10 @@
 			</ul>
 		</div>
 	</div>
+	
+	<div class="appointment">
+		<a href="<c:url value='/AppointmentServlet' />" id="appointment">予約確認はこちら▸</a>
+	</div>
 
 	<!-- 検索フォーム -->
 	<div class="form_flame">

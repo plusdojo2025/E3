@@ -83,11 +83,28 @@ body {
 
 .form_flame {
 	width: 500px;
-	margin: 550px auto 20px auto;
+	margin: 100px auto 20px auto;
 	padding: 50px 120px 60px 120px;
 	background-color: #FFFFFF;
 	border-radius: 90px;
 	box-shadow: 4px 4px 20px gray;
+}
+
+.appointment {
+	width: 500px;
+	margin: 200px auto 20px auto;
+	padding: 50px 120px 60px 120px;
+	background-color: #FFFFFF;
+	border-radius: 50px;
+	box-shadow: 4px 4px 20px gray;
+}
+
+#appointment {
+	text-align: center;
+	color: #303496;
+	font-size: 50px;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 h1 {
