@@ -68,7 +68,7 @@ public class SearchResultServlet extends HttpServlet {
 		int id = (int)session.getAttribute("id");
 		UserDao uDao = new UserDao();
 		User user = uDao.searchUser(id);
-		String dDate = request.getParameter("desired_date"); 
+		String dDate = request.getParameter("date"); 
 		double cLat = Double.parseDouble(request.getParameter("current_latitude"));
 		double cLon = Double.parseDouble(request.getParameter("current_longitude")); 
 		double dLat = Double.parseDouble(request.getParameter("drop_off_latitude")); 
@@ -106,11 +106,11 @@ public class SearchResultServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 			}
 		}
-		if(request.getParameter("Stand") != null) {
-			if(request.getParameter("Stand").equals("待機登録")) {
+		if(request.getParameter("stand") != null) {
+			if(request.getParameter("stand").equals("待機登録")) {
 				StandByUserDao sDao = new StandByUserDao();
 				sDao.updateFlag(id);
-				response.sendRedirect("/E3/HomeSearchServlet.java");
+				response.sendRedirect(request.getContextPath() + "/HomeSearchServlet");
 			}
 		}
 		if(request.getParameter("Request") != null) {

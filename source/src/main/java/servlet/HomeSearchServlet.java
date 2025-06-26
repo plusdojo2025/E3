@@ -63,10 +63,19 @@ public class HomeSearchServlet extends HttpServlet {
 		double dLat = Double.parseDouble(request.getParameter("drop_off_latitude")); 
 		double dLon = Double.parseDouble(request.getParameter("drop_off_longitude")); 
 		int headcount = Integer.parseInt(request.getParameter("headcount")); 
+		int talking = 1;
+		int smoking = 1;
+		int partner_gender = 1;
+
 		request.setAttribute("cLat", cLat);
 		request.setAttribute("cLon", cLon);
 		request.setAttribute("dLat", dLat);
 		request.setAttribute("dLon", dLon);
+		request.setAttribute("headcount", headcount);
+		request.setAttribute("talking", talking);
+		request.setAttribute("smoking", smoking);
+		request.setAttribute("partner_gender", partner_gender);
+
 		String submitVal = request.getParameter("search");
 		if("検索".equals(submitVal)) {
 			StandByUserDao sDao = new StandByUserDao();
