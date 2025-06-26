@@ -42,9 +42,11 @@
 		</div>
 	</div>
 	
+	<a href="<c:url value='/AppointmentServlet' />" style="text-decoration: none;">
 	<div class="appointment">
-		<a href="<c:url value='/AppointmentServlet' />" id="appointment">予約確認はこちら▸</a>
+		<p id="appointment">予約確認はこちら▸</p>
 	</div>
+</a>
 
 	<!-- 検索フォーム -->
 	<div class="form_flame">
