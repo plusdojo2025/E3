@@ -207,27 +207,25 @@ public class StandByUserDao {
 			
 			// SQL文
 			if(getMyStandInfo(id).getPartner_gender() == 1) { // 自分が同性を希望している場合
-				String sql =
-						"SELECT * FROM ("
-						+ "SELECT nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
-						+ "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
-						+ "* cos(radians(current_longitude) - radians(?))"
-						+ "+ sin(radians(?)) * sin(radians(current_latitude)))) AS cur_distance,"
+				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, date"
+				        + "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
+				        + "* cos(radians(current_longitude) - radians(?))"
+				        + "+ sin(radians(?)) * sin(radians(current_latitude)))) as cur_distance,"  // ← 最後に "))" を追加
 
-						+ "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
-						+ "* cos(radians(drop_off_longitude) - radians(?))"
-						+ "+ sin(radians(?)) * sin(radians(drop_off_latitude)))) AS drop_distance,"
+				        + "(6371 * acos(cos(radians(?)) * cos(radians(drop_off_latitude))"
+				        + "* cos(radians(drop_off_longitude) - radians(?))"
+				        + "+ sin(radians(?)) * sin(radians(drop_off_latitude)))) as drop_distance,"  // ← 同様に "))" に修正
+						
+						+ "(headcount + ?) as sum_headcount from standbyuser "
 
-						+ "(headcount + ?) AS sum_headcount "
-						+ "FROM standbyuser "
-						+ "JOIN user ON standbyuser.id = user.id "
-						+ "WHERE flag = 1 AND date <= ? AND date >= ? "
-						+ "AND user.gender = ? "
-						+ "AND (? = 0 OR (? = 1 AND smoking = 1)) "		//喫煙
-						+ "AND talking = ?"			//会話
-						+ ") AS filtered "
-						+ "WHERE cur_distance < 1 AND drop_distance < 5 AND sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
-				
+						+ "join user on standbyuser.id = user.id "
+						
+						+ "where flag = 1 and date <= ? and date >= ? "
+						+ "and user.gender = ?" //性別
+						+ "and (? = 0 or (? = 1 and user.smoking = 1))" //喫煙
+						+ "and user.talking = ? " //会話
+						
+						+ "having cur_distance < 1 and drop_distance < 5 and sum_headcount <= 3;"; //出発地1km圏内、目的地5km圏内
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				pStmt.setDouble(1, myStandInfo.getCurrent_latitude());
 				pStmt.setDouble(2, myStandInfo.getCurrent_longitude());

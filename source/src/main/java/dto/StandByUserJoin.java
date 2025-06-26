@@ -10,9 +10,10 @@ public class StandByUserJoin {
 	 private double drop_off_latitude;
 	 private double drop_off_longitude;
 	 private String registration_date;
+	 private String date;
 	 
 	public StandByUserJoin(String nickname, int gender, int headcount, double current_latitude,
-			double current_longitude, double drop_off_latitude, double drop_off_longitude, String registration_date) {
+			double current_longitude, double drop_off_latitude, double drop_off_longitude, String registration_date, String date) {
 		this.nickname = nickname;
 		this.gender = gender;
 		this.headcount = headcount;
@@ -21,6 +22,7 @@ public class StandByUserJoin {
 		this.drop_off_latitude = drop_off_latitude;
 		this.drop_off_longitude = drop_off_longitude;
 		this.registration_date = registration_date;
+		this.date = date;
 	}
 	public StandByUserJoin() {
 		this.nickname = "";
@@ -31,6 +33,7 @@ public class StandByUserJoin {
 		this.drop_off_latitude = 0;
 		this.drop_off_longitude = 0;
 		this.registration_date = "";
+		this.date = "";
 	}
 	
 	public String getNickname() {
@@ -80,6 +83,12 @@ public class StandByUserJoin {
 	}
 	public void setRegistration_date(String registration_date) {
 		this.registration_date = registration_date;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

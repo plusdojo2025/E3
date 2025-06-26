@@ -51,7 +51,7 @@
 					<span class="pncLon"><c:out value="${e.current_longitude}"/></span>
 					<span class="pndLat"><c:out value="${e.drop_off_latitude}"/></span>
 					<span class="pndLon"><c:out value="${e.drop_off_longitude}"/></span>
-					<span class="date"><c:out value="${e.registration_date}"/></span>
+					<span class="date"><c:out value="${e.date}"/></span>
 				</div>
 				<div class="modal_action"> 
 					<c:out value="${e.nickname}"/><br> 
