@@ -129,7 +129,14 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select Request.id, nickname, gender, Request.headcount, request.current_latitude, request.current_longitude, request.drop_off_latitude, request.drop_off_longitude, standbyuser.current_latitude, standbyuser.current_longitude, standbyuser.drop_off_latitude, standbyuser.drop_off_longitude, Request.registration_date, standbyuser.date  from request join user on request.id = user.id join standbyuser on request.partner_id = standbyuser.id where partner_id = ? and status = 0;";
+			String sql = "select request.id, nickname, gender, Request.headcount, request.current_latitude, "
+					+"request.current_longitude, request.drop_off_latitude, request.drop_off_longitude, "
+					+"standbyuser.current_latitude, standbyuser.current_longitude, standbyuser.drop_off_latitude, "
+					+"standbyuser.drop_off_longitude, Request.registration_date, standbyuser.date  "
+					+"from request "
+					+"join user on request.id = user.id "
+					+"join standbyuser on request.partner_id = standbyuser.id "
+					+"where request.partner_id = ? and status = 0 and standbyuser.flag = 1;" ;
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 
@@ -493,7 +500,7 @@ public class RequestDao {
 					+"from request "
 					+"join user on request.id = user.id "
 					+"join standbyuser on request.partner_id = standbyuser.id "
-					+ "where request.partner_id = ? and status = 1;";
+					+ "where request.partner_id = ? and status = 1 and standbyuser.flag = 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, id);
 

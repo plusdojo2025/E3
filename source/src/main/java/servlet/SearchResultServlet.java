@@ -123,8 +123,6 @@ public class SearchResultServlet extends HttpServlet {
 				Request req = new Request(0, id, cLat, cLon, dLat, dLon, headcount, 0, prtnrId, talking, smoking, prtnrGen, rDate, sbId, date);
 				rDao.insertRequest(req);
 			}
-		
 		}
 	}
-
 }
