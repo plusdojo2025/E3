@@ -342,7 +342,7 @@ public class StandByUserDao {
 					"root", "password");
 
 			// SQL文
-			String sql = "update standbyuser set flag = 1, set talking = ?, set smoking = ?, set partner_gender = ? "
+			String sql = "update standbyuser set flag = 1, talking = ?, smoking = ?, partner_gender = ? "
 					+ "where id = ? "
 					+ "order by stand_by_id desc limit 1";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
