@@ -368,7 +368,7 @@ public class RequestDao {
 				reqj.setId(rs.getInt("id"));
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setGender(rs.getInt("gender"));
-				reqj.setGender(rs.getInt("headcount"));
+				reqj.setHeadcount(rs.getInt("headcount"));
 				reqj.setCurrent_latitude(rs.getDouble("current_latitude"));
 				reqj.setCurrent_longitude(rs.getDouble("current_longitude"));
 				reqj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
@@ -434,7 +434,7 @@ public class RequestDao {
 				reqj.setId(rs.getInt("partner_id"));
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setGender(rs.getInt("gender"));
-				reqj.setGender(rs.getInt("standbyuser.headcount"));
+				reqj.setHeadcount(rs.getInt("standbyuser.headcount"));
 				reqj.setPrtnr_current_latitude(rs.getDouble("standbyuser.current_latitude"));
 				reqj.setPrtnr_current_longitude(rs.getDouble("standbyuser.current_longitude"));
 				reqj.setPrtnr_drop_off_latitude(rs.getDouble("standbyuser.drop_off_latitude"));
@@ -505,7 +505,7 @@ public class RequestDao {
 				reqj.setId(rs.getInt("request.id"));
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setGender(rs.getInt("gender"));
-				reqj.setGender(rs.getInt("headcount"));
+				reqj.setHeadcount(rs.getInt("headcount"));
 				reqj.setPrtnr_current_latitude(rs.getDouble("request.current_latitude"));
 				reqj.setPrtnr_current_longitude(rs.getDouble("request.current_longitude"));
 				reqj.setPrtnr_drop_off_latitude(rs.getDouble("request.drop_off_latitude"));
