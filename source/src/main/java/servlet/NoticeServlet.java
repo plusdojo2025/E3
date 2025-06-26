@@ -44,7 +44,7 @@ public class NoticeServlet extends HttpServlet {
 		
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
-		int partner_id = Integer.parseInt(request.getParameter("partner_id"));
+		int partner_id = Integer.parseInt(request.getParameter("id"));
 
 		// 承認または却下を行う
 		RequestDao reqDao = new RequestDao();

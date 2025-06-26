@@ -414,7 +414,7 @@ public class RequestDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "select standbyuser.id, nickname, gender, standbyuser.headcount, request.current_latitude, "
+			String sql = "select partner_id, nickname, gender, standbyuser.headcount, request.current_latitude, "
 					+"request.current_longitude, request.drop_off_latitude, "
 					+ "request.drop_off_longitude, standbyuser.current_latitude, "
 					+"standbyuser.current_longitude, standbyuser.drop_off_latitude, "
@@ -431,7 +431,7 @@ public class RequestDao {
 			
 			while(rs.next()) {
 				RequestJoin reqj = new RequestJoin();
-				reqj.setId(rs.getInt("request.partner_id"));
+				reqj.setId(rs.getInt("partner_id"));
 				reqj.setNickname(rs.getString("nickname"));
 				reqj.setGender(rs.getInt("gender"));
 				reqj.setGender(rs.getInt("standbyuser.headcount"));
@@ -439,7 +439,6 @@ public class RequestDao {
 				reqj.setPrtnr_current_longitude(rs.getDouble("standbyuser.current_longitude"));
 				reqj.setPrtnr_drop_off_latitude(rs.getDouble("standbyuser.drop_off_latitude"));
 				reqj.setPrtnr_drop_off_longitude(rs.getDouble("standbyuser.drop_off_longitude"));
-				reqj.setRegistration_date(rs.getString("standbyuser.registration_date"));
 				reqj.setCurrent_latitude(rs.getDouble("request.current_latitude"));
 				reqj.setCurrent_longitude(rs.getDouble("request.current_longitude"));
 				reqj.setDrop_off_latitude(rs.getDouble("request.drop_off_latitude"));

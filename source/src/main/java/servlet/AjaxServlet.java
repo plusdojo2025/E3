@@ -40,11 +40,20 @@ public class AjaxServlet extends HttpServlet {
 	        //パラメータ取得
 	        int param1 = Integer.parseInt(String.valueOf(session.getAttribute("id")));
 
+
 			// 検索処理を行う
 			RequestDao reqDao = new RequestDao();
 			List<RequestJoin> reqList = reqDao.searchRequestMe(param1);
 			
 			System.out.println(reqList);
+			
+			List<RequestJoin> sendAnsList = reqDao.sendForNotice(param1);
+			
+			System.out.println(sendAnsList);
+			
+			List<RequestJoin> respAnsList = reqDao.respForNotice(param1);
+			
+			System.out.println(respAnsList);
 
 	        //出力(レスポンスをmapに格納してJSON化)
 	        //ヘッダ設定
@@ -66,6 +75,8 @@ public class AjaxServlet extends HttpServlet {
 	        ObjectMapper mapper = new ObjectMapper();
 	        Map<String, Object> mapMsg = new HashMap<>();
 	        mapMsg.put("reqList", reqList);
+	        mapMsg.put("sendAnsList", sendAnsList);
+	        mapMsg.put("respAnsList", respAnsList);
 	        //JSON形式に変換
 	        String jsonStr = mapper.writeValueAsString(mapMsg);
 

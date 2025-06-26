@@ -170,13 +170,16 @@ document.addEventListener("click", function (e) {
 	
 		const approveBtn = document.getElementById("approveBtn");
 		const rejectBtn = document.getElementById("rejectBtn");
+		const headcount = document.getElementById("modal-headcount");
 		
 		if(modalBtn.dataset.type === "req") {
 		    approveBtn.style.display = "inline-block";  // 表示
 		    rejectBtn.style.display = "inline-block";
+		    headcount.style.display = "inline-block";
 		} else {
 		    approveBtn.style.display = "none";  // 非表示
 		    rejectBtn.style.display = "none";
+		    headcount.style.display = "none";
 		}
 
         // モーダル表示
@@ -231,11 +234,13 @@ function fetchData() {
 	                row.dataset.headcount = item.headcount;
 	                row.dataset.registrationDate = item.registration_date;
 	                row.dataset.desiredDate = item.desired_date;
+        			let date = new Date(item.desired_date);
+        			
 					//html描画
 	                row.innerHTML = `
 	                	<div id="list">
 		                    <div>申請が届きました</div>
-		                    <div>時間</div>
+		                    <div>${item.desired_date}</div>
 		                    <div>${item.nickname}</div>
 	                    </div>
 	                `;
@@ -271,7 +276,7 @@ function fetchData() {
 	                row.innerHTML = `
 	                	<div id="list">
 		                    <div>承認されました</div>
-		                    <div>時間</div>
+		                    <div>${item.desired_date}</div>
 		                    <div>${item.nickname}</div>
 	                    </div>
 	                `;
@@ -307,7 +312,7 @@ function fetchData() {
 	                row.innerHTML = `
 	                	<div id="list">
 		                    <div>承認しました</div>
-		                    <div>時間</div>
+		                    <div>${item.desired_date}</div>
 		                    <div>${item.nickname}</div>
 	                    </div>
 	                `;
