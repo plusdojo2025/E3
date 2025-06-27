@@ -28,7 +28,7 @@
 		</header>
 		
 		<div class="form_flame"> <!-- 絞り込み -->
-			<form method="GET" action="SearchResultServlet">
+			<form method="GET" action="<c:url value='/SearchResultServlet' />">
 				<input type="hidden" name="same_gender" value="0">
 				<input type="checkbox" name="same_gender" value="1">同性希望
 				<input type="hidden" name="smoking" value="0">
@@ -60,7 +60,7 @@
 					<p></p>
 				</div>
 				<div class="modal" style="visibility: hidden;"> 
-					<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitReq()">
+					<form method="POST" action="<c:url value='/SearchResultServlet' />" onsubmit="return beforeSubmitReq()">
 			            <div class="modal_close"> × </div>
 						ニックネーム<c:out value="${e.nickname}"/><br> 
 						性別:<span class="vatogen"></span>　人数<c:out value="${e.headcount}"/><br> 
@@ -85,7 +85,7 @@
 			</c:forEach>
 		</div>
 		<div>
-			<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitSta()">
+			<form method="POST" action="<c:url value='/SearchResultServlet' />" onsubmit="return beforeSubmitSta()">
 				<input type="hidden" name="date" value="${date}">
 				<input type="hidden" name="current_latitude" value="${cLat}">
 				<input type="hidden" name="current_longitude" value="${cLon}">
