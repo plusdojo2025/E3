@@ -32,7 +32,7 @@
 		
 		<main>
 			<c:choose>
-				<c:when test="${roomId} != 0">
+				<c:when test="${roomId != 0}">
 					<!-- マッチング相手のニックネームと待ち合わせ時間表示　現在地の緯度経度を保持 -->
 					<div class="info" data-my-lat="${reqj.current_latitude }" data-my-lng="${reqj.current_longitude }" data-p-lat="${reqj.prtnr_current_latitude}" data-p-lng="${reqj.prtnr_current_longitude}">
 						<a name="nickname"><c:out value="${reqj.nickname}" />さん</a>
@@ -78,9 +78,6 @@
 					<p>予約はありません</p>
 				</c:otherwise>
 			</c:choose>
-			
-		
-			
 		</main>
 		
 		<footer>
