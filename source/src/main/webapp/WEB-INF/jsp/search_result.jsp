@@ -55,19 +55,19 @@
 				</div>
 				<div class="modal_action"> 
 					<c:out value="${e.nickname}"/><br> 
-					料金：<span class="fee"></span>円<br>
-					到着予定時刻：<span class="time"></span>
+					料金　<span class="fee"></span>円<br>
+					到着予定時刻　<span class="time"></span>
 					<p></p>
 				</div>
 				<div class="modal" style="visibility: hidden;"> 
 					<form method="POST" action="<c:url value='/SearchResultServlet' />" onsubmit="return beforeSubmitReq()">
 			            <div class="modal_close"> × </div>
 						ニックネーム<c:out value="${e.nickname}"/><br> 
-						性別:<span class="vatogen"></span>　人数<c:out value="${e.headcount}"/><br> 
+						性別　<span class="vatogen"></span>　人数　<c:out value="${e.headcount}"/>人<br> 
 						
-						料金：<span class="fee"></span>　到着予定時刻:<span class="time"></span><br>
+						料金　<span class="fee"></span>円　到着予定時刻　<span class="time"></span><br>
 						登録時刻<c:out value="${e.registration_date}"/><br>
-						<div id="mapid" style="height:50px"></div>
+						<div id="mapid" style="height:200px"></div>
 						<input type="hidden" value="<c:out value="${e.nickname}"/>">
 						<input type="hidden" class="gender" value="<c:out value="${e.gender}"/>">
 						<input type="hidden" name="headcount" value="<c:out value="${e.headcount}"/>">

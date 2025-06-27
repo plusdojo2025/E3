@@ -80,8 +80,8 @@ for(let i = 0; i < action.length; i++){
 		else{
 			vatogen[i].textContent = "その他";
 		}
-		let sLat = (mycLat + pncLat[i]) / 2; 
-		let sLon = (mycLon + pncLon[i]) / 2; 
+		let sLat = (parseFloat(mycLat) + parseFloat(pncLat[i].value)) / 2; 
+		let sLon = (parseFloat(mycLon) + parseFloat(pncLon[i].value)) / 2; 
 		
 		var map = L.map('mapid', {
 		center: [sLat, sLon],
