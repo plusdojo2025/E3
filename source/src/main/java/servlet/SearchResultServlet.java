@@ -122,6 +122,7 @@ public class SearchResultServlet extends HttpServlet {
 				RequestDao rDao = new RequestDao();
 				Request req = new Request(0, id, cLat, cLon, dLat, dLon, headcount, 0, prtnrId, talking, smoking, prtnrGen, rDate, sbId, date);
 				rDao.insertRequest(req);
+				response.sendRedirect(request.getContextPath() + "/SearchResultServlet");
 			}
 		}
 	}
