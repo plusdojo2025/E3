@@ -2,6 +2,8 @@ package dto;
 
 public class StandByUserJoin {
 	 
+	 private int id;
+	 private int stand_by_id;
 	 private String nickname;
 	 private int gender;
 	 private int headcount;
@@ -12,8 +14,10 @@ public class StandByUserJoin {
 	 private String registration_date;
 	 private String date;
 	 
-	public StandByUserJoin(String nickname, int gender, int headcount, double current_latitude,
+	public StandByUserJoin(int id, int stand_by_id, String nickname, int gender, int headcount, double current_latitude,
 			double current_longitude, double drop_off_latitude, double drop_off_longitude, String registration_date, String date) {
+		this.id = id;
+		this.stand_by_id = stand_by_id;
 		this.nickname = nickname;
 		this.gender = gender;
 		this.headcount = headcount;
@@ -25,6 +29,8 @@ public class StandByUserJoin {
 		this.date = date;
 	}
 	public StandByUserJoin() {
+		this.id = 0;
+		this.stand_by_id = 0;
 		this.nickname = "";
 		this.gender = 0;
 		this.headcount = 0;
@@ -36,6 +42,18 @@ public class StandByUserJoin {
 		this.date = "";
 	}
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getStand_by_id() {
+		return id;
+	}
+	public void setStand_by_id(int stand_by_id) {
+		this.stand_by_id = stand_by_id;
+	}
 	public String getNickname() {
 		return nickname;
 	}

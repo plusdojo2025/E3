@@ -117,10 +117,11 @@ public class SearchResultServlet extends HttpServlet {
 			if(request.getParameter("Request").equals("申請")) {
 				int prtnrId = Integer.parseInt(request.getParameter("partner_id"));
 				int sbId = Integer.parseInt(request.getParameter("stand_by_id")); 
+				System.out.println(sbId);
 				StandByUserDao sbud = new StandByUserDao();
 				String date = sbud.getDate(sbId);
 				RequestDao rDao = new RequestDao();
-				Request req = new Request(0, id, cLat, cLon, dLat, dLon, headcount, 0, prtnrId, talking, smoking, prtnrGen, rDate, sbId, date);
+				Request req = new Request(0, id, cLat, cLon, dLat, dLon, headcount, prtnrId, 0, talking, smoking, prtnrGen, rDate, sbId, date);
 				rDao.insertRequest(req);
 			}
 		}
