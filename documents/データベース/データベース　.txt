@@ -10,16 +10,16 @@ INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (7, 'golf444', 'grace@example.
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (8, 'hotel555', 'harry@example.jp');
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (9, 'india666', 'ivy@example.com');
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (10, 'juliet777', 'jake@example.net');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (11, 'password1', 'plasdojo1@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (12, 'password2', 'plasdojo2@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (13, 'password3', 'plasdojo3@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (14, 'password4', 'plasdojo4@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (15, 'password5', 'plasdojo5@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (16, 'password6', 'plasdojo6@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (17, 'password7', 'plasdojo7@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (18, 'password8', 'plasdojo8@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (19, 'password9', 'plasdojo9@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (20, 'password10', 'plasdojo10@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (11, 'password1', 'plusdojo1@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (12, 'password2', 'plusdojo2@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (13, 'password3', 'plusdojo3@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (14, 'password4', 'plusdojo4@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (15, 'password5', 'plusdojo5@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (16, 'password6', 'plusdojo6@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (17, 'password7', 'plusdojo7@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (18, 'password8', 'plusdojo8@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (19, 'password9', 'plusdojo9@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (20, 'password10', 'plusdojo10@sample.com');
 
 INSERT INTO `user` (`id`, `name`, `nickname`, `gender`, `address_latitude`, `address_longitude`, `talking`, `smoking`, `partner_gender`, `address`) VALUES (1, '高橋直樹', 'ナオ', 0, 35.672524, 139.795782, 0, 1, 0, '東京都江東区門前仲町2丁目');
 INSERT INTO `user` (`id`, `name`, `nickname`, `gender`, `address_latitude`, `address_longitude`, `talking`, `smoking`, `partner_gender`, `address`) VALUES (2, '佐藤 花子', 'はなちゃん', 1, 35.689487, 139.691706, 0, 0, 1, '東京都新宿区西新宿2丁目');
