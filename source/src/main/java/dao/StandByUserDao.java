@@ -258,7 +258,7 @@ public class StandByUserDao {
 				}
 			}
 			else { // 自分が同性を希望していない場合
-				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date,"
+				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, date,"
 				        + "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
 				        + "* cos(radians(current_longitude) - radians(?))"
 				        + "+ sin(radians(?)) * sin(radians(current_latitude)))) as cur_distance,"  // ← 最後に "))" を追加
@@ -304,7 +304,7 @@ public class StandByUserDao {
 				sbuj.setDrop_off_latitude(rs.getDouble("drop_off_latitude"));
 				sbuj.setDrop_off_longitude(rs.getDouble("drop_off_longitude"));
 				sbuj.setRegistration_date(rs.getString("registration_date"));
-					
+				sbuj.setDate(rs.getString("date"));
 				sbujList.add(sbuj);
 			}
 			}
