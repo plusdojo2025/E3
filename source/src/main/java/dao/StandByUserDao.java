@@ -207,7 +207,7 @@ public class StandByUserDao {
 			
 			// SQL文
 			if(getMyStandInfo(id).getPartner_gender() == 1) { // 自分が同性を希望している場合
-				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, date"
+				String sql = "select stadbyuser.id, stand_by_id, nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, date"
 				        + "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
 				        + "* cos(radians(current_longitude) - radians(?))"
 				        + "+ sin(radians(?)) * sin(radians(current_latitude)))) as cur_distance,"  // ← 最後に "))" を追加
@@ -244,6 +244,8 @@ public class StandByUserDao {
 				ResultSet rs = pStmt.executeQuery();
 				while(rs.next()) {
 					StandByUserJoin sbuj = new StandByUserJoin();
+					sbuj.setId(rs.getInt("standbyuser.id"));
+					sbuj.setStand_by_id(rs.getInt("stand_by_id"));
 					sbuj.setNickname(rs.getString("nickname"));
 					sbuj.setGender(rs.getInt("gender"));
 					sbuj.setHeadcount(rs.getInt("headcount"));
@@ -258,7 +260,7 @@ public class StandByUserDao {
 				}
 			}
 			else { // 自分が同性を希望していない場合
-				String sql = "select nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, date,"
+				String sql = "select standbyuser.id, stand_by_id, nickname, gender, headcount, current_latitude, current_longitude, drop_off_latitude, drop_off_longitude, registration_date, date,"
 				        + "(6371 * acos(cos(radians(?)) * cos(radians(current_latitude))"
 				        + "* cos(radians(current_longitude) - radians(?))"
 				        + "+ sin(radians(?)) * sin(radians(current_latitude)))) as cur_distance,"  // ← 最後に "))" を追加
@@ -296,6 +298,8 @@ public class StandByUserDao {
 			ResultSet rs = pStmt.executeQuery();
 			while(rs.next()) {
 				StandByUserJoin sbuj = new StandByUserJoin();
+				sbuj.setId(rs.getInt("standbyuser.id"));
+				sbuj.setStand_by_id(rs.getInt("stand_by_id"));
 				sbuj.setNickname(rs.getString("nickname"));
 				sbuj.setGender(rs.getInt("gender"));
 				sbuj.setHeadcount(rs.getInt("headcount"));
@@ -487,8 +491,9 @@ public class StandByUserDao {
 			pStmt.setInt(1, sbid);
 
 			ResultSet rs = pStmt.executeQuery();
+			rs.next();
+			System.out.println(rs.getString("date"));
 			date = rs.getString("date");
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

@@ -30,18 +30,18 @@ public class RequestDao {
 			String sql = "insert into request values( 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, req.getId());
-			pStmt.setDouble(2, req.getCurrent_latitude());
-			pStmt.setDouble(3, req.getCurrent_longitude());
-			pStmt.setDouble(4, req.getDrop_off_latitude());
-			pStmt.setDouble(5, req.getDrop_off_longitude());
-			pStmt.setInt(6, req.getHeadcount());
-			pStmt.setInt(7, req.getStatus());
-			pStmt.setInt(8, req.getPartner_id());
-			pStmt.setInt(9, req.getTalking());
-			pStmt.setInt(10, req.getSmoking());
-			pStmt.setInt(11, req.getPartner_gender());
-			pStmt.setString(12, req.getRegistration_date());
-			pStmt.setInt(13, req.getStand_by_id());
+			pStmt.setInt(2, req.getPartner_id());
+			pStmt.setInt(3, req.getStand_by_id());
+			pStmt.setDouble(4, req.getCurrent_latitude());
+			pStmt.setDouble(5, req.getCurrent_longitude());
+			pStmt.setDouble(6, req.getDrop_off_latitude());
+			pStmt.setDouble(7, req.getDrop_off_longitude());
+			pStmt.setInt(8, req.getHeadcount());
+			pStmt.setInt(9, req.getStatus());
+			pStmt.setInt(10, req.getTalking());
+			pStmt.setInt(11, req.getSmoking());
+			pStmt.setInt(12, req.getPartner_gender());
+			pStmt.setString(13, req.getRegistration_date());
 			pStmt.setString(14, req.getDate());
 							
 			if (pStmt.executeUpdate() == 1) {
