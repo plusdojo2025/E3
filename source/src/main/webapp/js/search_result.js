@@ -2,10 +2,10 @@
 const modal = document.getElementsByClassName('modal');
 const action = document.getElementsByClassName('modal_action');
 const close = document.getElementsByClassName('modal_close');
-const mycLat = document.getElementById('mycLat');
-const mycLon = document.getElementById('mycLon');
-const mydLat = document.getElementById('mydLat');
-const mydLon = document.getElementById('mydLon');
+const mycLat = document.getElementById('mycLat').value;
+const mycLon = document.getElementById('mycLon').value;
+const mydLat = document.getElementById('mydLat').value;
+const mydLon = document.getElementById('mydLon').value;
 let pncLat = document.getElementsByClassName('pncLat');
 let pncLon = document.getElementsByClassName('pncLon');
 let pndLat = document.getElementsByClassName('pndLat');
@@ -13,21 +13,26 @@ let pndLon = document.getElementsByClassName('pndLon');
 let date = document.getElementsByClassName('date');
 
 for(let i = 0; i < action.length; i++){
-	let sLat = (mycLat + pncLat[i]) / 2; 
-	let sLon = (mycLon + pncLon[i]) / 2; 
+console.log('oo');
+	let sLat = (parseFloat(mycLat) + parseFloat(pncLat[i].value)) / 2; 
+	let sLon = (parseFloat(mycLon) + parseFloat(pncLon[i].value)) / 2; 
+
 	//const patern1 = distance(sLat, sLon, mydLat, mydLon) + distance(mydLat, mydLon, pndLat, pndLon);
 	//const patern2 = distance(sLat, sLon, pndLat, pndLon) + distance(pndLat, pndLon, mydLat, mydLon);
-	if(distance(sLat, sLon, mydLat, mydLon) <= distance(sLat, sLon, pndLat, pndLon)){
-		document.getElementsByClassName('fee')[i * 2].textContent = culFee(1, sLat, sLon, mydLat, mydLon, pndLat, pndLon);
-		document.getElementsByClassName('fee')[i * 2 + 1].textContent = culFee(1, sLat, sLon, mydLat, mydLon, pndLat, pndLon);
-		document.getElementsByClassName('time')[i * 2].textContent = culTime(distance(sLat, sLon, mydLat, mydLon), date[i]);
-		document.getElementsByClassName('time')[i * 2 + 1].textContent = culTime(distance(sLat, sLon, mydLat, mydLon), date[i]);
+	if(distance(sLat, sLon, mydLat.value, mydLon.value) <= distance(sLat, sLon, pndLat.value, pndLon.value)){
+		console.log('1');
+		document.getElementsByClassName('fee')[i * 2].textContent = culFee(1, sLat, sLon, mydLat, mydLon, pndLat[i].value, pndLon[i].value);
+		document.getElementsByClassName('fee')[i * 2 + 1].textContent = culFee(1, sLat, sLon, mydLat, mydLon, pndLat[i].value, pndLon[i].value);
+		document.getElementsByClassName('time')[i * 2].textContent = culTime(distance(sLat, sLon, mydLat, mydLon), date[i].value);
+		document.getElementsByClassName('time')[i * 2 + 1].textContent = culTime(distance(sLat, sLon, mydLat, mydLon), date[i].value);
 	}
 	else{
-		document.getElementsByClassName('fee')[i * 2].textContent = culFee(2, sLat, sLon, mydLat, mydLon, pndLat, pndLon);
-		document.getElementsByClassName('fee')[i * 2 + 1].textContent = culFee(2, sLat, sLon, mydLat, mydLon, pndLat, pndLon);
-		document.getElementsByClassName('time')[i * 2].textContent = culTime(distance(sLat, sLon, pndLat, pndLon) + distance(pndLat, pndLon, mydLat, mydLon), date[i]);
-		document.getElementsByClassName('time')[i * 2 + 1].textContent = culTime(distance(sLat, sLon, pndLat, pndLon) + distance(pndLat, pndLon, mydLat, mydLon), date[i]);
+		console.log(sLat);
+		console.log(sLon);
+		document.getElementsByClassName('fee')[i * 2].textContent = culFee(2, sLat, sLon, mydLat, mydLon, pndLat[i].value, pndLon[i].value);
+		document.getElementsByClassName('fee')[i * 2 + 1].textContent = culFee(2, sLat, sLon, mydLat, mydLon, pndLat[i].value, pndLon[i].value);
+		document.getElementsByClassName('time')[i * 2].textContent = culTime(distance(sLat, sLon, pndLat[i].value, pndLon[i].value) + distance(pndLat[i].value, pndLon[i].value, mydLat, mydLon), date[i]);
+		document.getElementsByClassName('time')[i * 2 + 1].textContent = culTime(distance(sLat, sLon, pndLat[i].value, pndLon[i].value) + distance(pndLat[i].value, pndLon[i].value, mydLat, mydLon), date[i]);
 	}
 }
 function distance(lat1, lng1, lat2, lng2) {
@@ -48,7 +53,7 @@ function culFee(paturn, sLat, sLon, mydLat, mydLon, pndLat, pndLon){
 		fee += Math.floor((distance(sLat, sLon, pndLat, pndLon) + distance(pndLat, pndLon, mydLat, mydLon)) / 0.255) * 100;
 		fee *= distance(sLat, sLon, pndLat, pndLon) / (distance(sLat, sLon, pndLat, pndLon) + distance(pndLat, pndLon, mydLat, mydLon));
 	}
-	return fee;
+	return parseInt(fee).toLocaleString();
 }
 function culTime(dis, date){
 	let depYear = date.substr(0, 4);
