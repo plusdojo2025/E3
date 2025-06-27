@@ -57,16 +57,28 @@
 					<c:out value="${e.nickname}"/><br> 
 					料金：<span class="fee"></span>円<br>
 					到着予定時刻：<span class="time"></span>
+					<p></p>
 				</div>
 				<div class="modal" style="visibility: hidden;"> 
 					<form method="POST" action="SearchResultServlet" onsubmit="return beforeSubmitReq()">
 			            <div class="modal_close"> × </div>
 						ニックネーム<c:out value="${e.nickname}"/><br> 
-						性別<c:out value="${e.gender}"/>　人数<c:out value="${e.headcount}"/><br> 
+						性別:<span class="vatogen"></span>　人数<c:out value="${e.headcount}"/><br> 
 						
 						料金：<span class="fee"></span>　到着予定時刻:<span class="time"></span><br>
 						登録時刻<c:out value="${e.registration_date}"/><br>
 						<div id="mapid" style="height:50px"></div>
+						<input type="hidden" value="<c:out value="${e.nickname}"/>">
+						<input type="hidden" class="gender" value="<c:out value="${e.gender}"/>">
+						<input type="hidden" name="headcount" value="<c:out value="${e.headcount}"/>">
+						<input type="hidden" name="current_latitude" value="${cLat}">
+						<input type="hidden" name="current_longitude" value="${cLon}">
+						<input type="hidden" name="drop_off_latitude" value="${dLat}">
+						<input type="hidden" name="drop_off_longitude" value="${dLon}">
+						<input type="hidden" name="registration_date" value="2000-01-01 00:00">
+						<input type="hidden" name="partner_id" value="${e.id}">
+						<input type="hidden" name="stand_by_id" value="${e.stand_by_id}">
+						
 						<input type="submit" name="Request" value="申請" class="request">
 					</form>
 				</div>

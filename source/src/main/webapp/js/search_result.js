@@ -11,6 +11,9 @@ let pncLon = document.getElementsByClassName('pncLon');
 let pndLat = document.getElementsByClassName('pndLat');
 let pndLon = document.getElementsByClassName('pndLon');
 let date = document.getElementsByClassName('date');
+let gender = document.getElementsByClassName('gender');
+let vatogen = document.getElementsByClassName('vatogen');
+
 
 for(let i = 0; i < action.length; i++){
 	let sLat = (parseFloat(mycLat) + parseFloat(pncLat[i].value)) / 2; 
@@ -65,6 +68,18 @@ function culTime(dis, date){
 
 for(let i = 0; i < action.length; i++){
     action[i].onclick = function(){
+			        
+		modal[i].style.visibility = "visible";
+		
+		if(gender[i].value == 0){
+			vatogen[i].textContent = "男";
+		}
+		else if(gender[i].value == 1){
+			vatogen[i].textContent = "女";
+		}
+		else{
+			vatogen[i].textContent = "その他";
+		}
 		let sLat = (mycLat + pncLat[i]) / 2; 
 		let sLon = (mycLon + pncLon[i]) / 2; 
 		
@@ -83,9 +98,7 @@ for(let i = 0; i < action.length; i++){
 		// マーカー画像の場所を指定する
 		
 		L.marker([sLat, sLon]).addTo(map); 
-		        
-		modal[i].style.visibility = "visible";
-		
+
     }
 }
 
