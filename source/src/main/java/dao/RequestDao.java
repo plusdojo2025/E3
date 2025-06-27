@@ -201,7 +201,7 @@ public class RequestDao {
 
 			// SELECT文を準備する
 			String sql = "select request_id from request join standbyuser on request.stand_by_id = standbyuser.stand_by_id "
-					+ "where (request.id = ? OR partner_id = ?) and status = 1 order by abs(timestampdiff(second, str_to_date(date, '%Y-%m-%d %H:%i'), now())) desc limit 1;";
+					+ "where (request.id = ? OR partner_id = ?) and status = 1 order by abs(timestampdiff(second, str_to_date(request.date, '%Y-%m-%d %H:%i'), now())) desc limit 1;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, loginUserId);
 			pStmt.setInt(2, loginUserId);
