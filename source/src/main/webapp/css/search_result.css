@@ -68,7 +68,7 @@ body {
 
 /* モーダル画面 */
 .modal {
-	display: none;
+	/*display: none;*/
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -76,6 +76,17 @@ body {
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.4);
 	z-index: 1000;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #ffffff;
+	width: 80%;
+	max-width: 600px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+	border-radius: 80px;
+	box-sizing: border-box;
 }
 
 /* モーダル表示時 */
