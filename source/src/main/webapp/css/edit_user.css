@@ -18,21 +18,20 @@ body {
   position: absolute;
   left: 50%;
   top: 70%;
-  transform: translate(-50%, -50%); /* 中央寄せ */
+  transform: translate(-50%, -50%);
 }
-
+  
 #logo img {
-  max-width: 500px;
+  max-width: 500px; 
   height: auto;
 }
-
 
 /* ホームボタンはロゴの右に寄せる */
 #homeButton {
   position: absolute;
-  right: 40px;
+  right: 120px;
   top: 50%;
-  transform: translateY(-50%); /* 垂直方向中央揃え */
+  transform: translateY(-50%); 
 }
 
 #homeBtn {
@@ -40,8 +39,14 @@ body {
   color: #303496;
   text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
   cursor: pointer;
 }
+
+#modal-route{
+	border-radius: 50px;
+}
+
 
 .form_flame {
 	width: 500px;

@@ -10,15 +10,15 @@
 </head>
 <body>
 	<header>
-			<div id="header">
-				<div id=logo>
-					<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
-				</div>
-				<div id="homeButton">
-					<a href="<c:url value='HomeSearchServlet' />" class="close" id="homeBtn">&times;</a>
-				</div>
-			</div>
-		</header>
+		<div id="header">
+		  <div id="logo">
+		    <img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+		  </div>
+		  <div id="homeButton">
+		    <a href="<c:url value='HomeSearchServlet' />" class="close" id="homeBtn">&times;</a>
+		  </div>
+		</div>
+	</header>
 	<div class="form_flame">
 		<h1>ユーザー情報編集</h1>
 		<form id="user_form" action="<c:url value='/EditUserServlet' />" method="post">
