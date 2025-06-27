@@ -29,7 +29,7 @@
 						<div id="info" data-id="<c:out value="${info.stand_by_id}" />" data-c-lat="${info.current_latitude}" data-c-lng="${info.current_longitude}" data-d-lat="${info.drop_off_latitude}" data-d-lng="${info.drop_off_longitude}" data-url="<c:url value='ReverseGeocode' />">
 							<p>待機登録</p>
 							<p name="registrationDate"><c:out value="${info.registration_date}" />　登録</p>
-							<p>></p>
+							<p>&gt;</p>
 							<c:if test="${!status.last}">
 								<hr>
 							</c:if>
