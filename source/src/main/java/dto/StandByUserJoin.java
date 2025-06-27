@@ -49,7 +49,7 @@ public class StandByUserJoin {
 		this.id = id;
 	}
 	public int getStand_by_id() {
-		return id;
+		return stand_by_id;
 	}
 	public void setStand_by_id(int stand_by_id) {
 		this.stand_by_id = stand_by_id;
