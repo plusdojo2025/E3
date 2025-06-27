@@ -10,9 +10,9 @@ INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (7, 'golf444', 'grace@example.
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (8, 'hotel555', 'harry@example.jp');
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (9, 'india666', 'ivy@example.com');
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (10, 'juliet777', 'jake@example.net');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (11, '#Seplus2025Seplus', 'dojouser1@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (12, '#Seplus2025Seplus', 'dojouser2@sample.com');
-INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (13, '#Seplus2025Seplus', 'dojouser3@sample.com');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (11, '#Seplus2025Seplus', 'dojouser1@plusdojo.jp');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (12, '#Seplus2025Seplus', 'dojouser2@plusdojo.jp');
+INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (13, '#Seplus2025Seplus', 'dojouser3@plusdojo.jp');
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (14, '#Seplus2025Seplus', 'dojouser4@plusdojo.jp');
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (15, '#Seplus2025Seplus', 'dojouser5@plusdojo.jp');
 INSERT INTO `idpw` (`id`, `pass`, `email`) VALUES (16, 'password6', 'plusdojo6@sample.com');
