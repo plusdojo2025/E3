@@ -491,6 +491,7 @@ public class StandByUserDao {
 			pStmt.setInt(1, sbid);
 
 			ResultSet rs = pStmt.executeQuery();
+			rs.next();
 			System.out.println(rs.getString("date"));
 			date = rs.getString("date");
 		} catch (SQLException e) {
