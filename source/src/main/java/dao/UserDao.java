@@ -133,7 +133,7 @@ public class UserDao {
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "update user set name = ?, nickname = ?, gender = ?, address_latitude = ?, address_longitude = ?, partner_gender = ?, smoking = ?, talking = ? where id = ?;";
+			String sql = "update user set  name = ?, nickname = ?, gender = ?, address_latitude = ?, address_longitude = ?, partner_gender = ?, smoking = ?, talking = ?, address = ? where id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 		
@@ -161,8 +161,14 @@ public class UserDao {
 			pStmt.setInt(7, user.getSmoking());
 
 			pStmt.setInt(8, user.getTalking());
+			
+			if (user.getAddress() != null) {
+				pStmt.setString(9, user.getAddress());
+			} else {
+				pStmt.setString(9, "null");
+			}
 
-			pStmt.setInt(9, id);
+			pStmt.setInt(10, id);
 			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {

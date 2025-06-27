@@ -36,10 +36,12 @@ document.addEventListener("click", function (e) {
         // データ属性から値を取得
         document.getElementById("modal-id").value = modalBtn.dataset.id;
         document.getElementById("modal-nickname").textContent = "ニックネーム: " + modalBtn.dataset.nickname;
-        if(modalBtn.dataset.gender == 1){
+        if(modalBtn.dataset.gender == 2){
         	document.getElementById("modal-gender").textContent = "性別: " + "男性";
-		}else{
+		}else if(modalBtn.dataset.gender == 1){
         	document.getElementById("modal-gender").textContent = "性別: " + "女性";
+		}else{
+        	document.getElementById("modal-gender").textContent = "性別: " + "その他";
 		}
         document.getElementById("modal-headcount").textContent = "人数: " + modalBtn.dataset.headcount + "人";
         
