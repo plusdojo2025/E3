@@ -68,7 +68,42 @@ body {
 
 /* モーダル画面 */
 .modal {
-	/*display: none;*/
+	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 1000;
+	justify-content: center; /* 水平方向中央 */
+	align-items: center;     /* 垂直方向中央 */
+	
+}
+
+/* モーダル表示時 */
+.modal.show {
+	display: flex;
+	justify-content: center; /* 水平方向中央 */
+	align-items: center;     /* 垂直方向中央 */
+}
+
+/* モーダルの中身 */
+.modal-content {
+	position: relative;
+	background-color: #ffffff;
+	font-weight: bold;
+	width: 80%;
+	max-width: 600px;  /* 必要に応じて幅の上限を設定 */
+	padding: 50px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+	border-radius: 50px;
+	box-sizing: border-box;
+}
+
+
+/* モーダル画面 *
+.modal {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -88,15 +123,15 @@ body {
 	border-radius: 80px;
 	box-sizing: border-box;
 }
-
-/* モーダル表示時 */
+*/
+/* モーダル表示時 
 .modal.show {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-/* モーダルの中身 */
+/* モーダルの中身 
 .modal-content {
 	background-color: #ffffff;
 	width: 80%;
@@ -106,7 +141,7 @@ body {
 	border-radius: 80px;
 	box-sizing: border-box;
 }
-
+*/
 input[name=search] {
   background-color: #303496;
   color: #FFFFFF;

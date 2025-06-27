@@ -60,6 +60,7 @@
 					<p></p>
 				</div>
 				<div class="modal" style="visibility: hidden;"> 
+				<div class="modal-content">
 					<form method="POST" action="<c:url value='/SearchResultServlet' />" onsubmit="return beforeSubmitReq()">
 			            <div class="modal_close"> × </div>
 						ニックネーム<c:out value="${e.nickname}"/><br> 
@@ -81,6 +82,7 @@
 						
 						<input type="submit" name="Request" value="申請" class="request">
 					</form>
+				</div>
 				</div>
 			</c:forEach>
 		</div>
