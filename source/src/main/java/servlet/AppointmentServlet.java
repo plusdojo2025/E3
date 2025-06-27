@@ -34,13 +34,11 @@ public class AppointmentServlet extends HttpServlet {
 			return;
 		}
 		
-		// 前画面からリクエストidを取得
-		request.setCharacterEncoding("UTF-8");
-		int requestId = Integer.parseInt(request.getParameter("request_id"));
-
+		// ログインユーザーの直近の予約情報取得処理
+		RequestDao requestDao = new RequestDao();
+		int requestId = requestDao.getRequestId((int)session.getAttribute("id"));
 		
 		// リクエスト情報取得処理
-		RequestDao requestDao = new RequestDao();
 		RequestJoin reqj = requestDao.getRequestInfo((int)session.getAttribute("id"), requestId);
 		
 		// 近くのタクシー会社情報取得

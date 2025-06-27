@@ -185,6 +185,51 @@ public class RequestDao {
 		return reqjList;
 	}
 	
+	// ホーム画面から今日の予約情報を取得
+	public int getRequestId(int loginUserId) {
+		Connection conn = null;
+		int requestId = 0; 
+		
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/e3?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SELECT文を準備する
+			String sql = "select request_id from request join standbyuser on request.stand_by_id = standbyuser.stand_by_id "
+					+ "where (request.id = ? OR partner_id = ?) and status = 1 order by abs(timestampdiff(second, str_to_date(date, '%Y-%m-%d %H:%i'), now())) desc limit 1;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, loginUserId);
+			pStmt.setInt(2, loginUserId);
+
+			// SELECT文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				requestId = rs.getInt("request_id");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return requestId;
+	}
+	
 	// ログインユーザーが待機者か申請者かチェックして情報取得
 	public RequestJoin getRequestInfo(int loginUserId, int requestId) {
 		Connection conn = null;

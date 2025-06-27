@@ -32,7 +32,7 @@ L.Routing.control({
     waypoints: [myPoint, midPoint],		// 自分の現在地から中間地点
     router: L.Routing.osrmv1({
       serviceUrl: 'https://router.project-osrm.org/route/v1',
-      profile: 'foot'					// 徒歩に設定
+      profile: 'foot-walking'					// 徒歩に設定
     }),
     createMarker: () => null,
     addWaypoints: false,

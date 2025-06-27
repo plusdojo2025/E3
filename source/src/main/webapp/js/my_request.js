@@ -59,8 +59,8 @@ document.querySelectorAll('#info').forEach(function(detail) {
 		let url = detail.getAttribute('data-url');
 		
 		// 住所表示用pタグ
-		let departurePoint = document.getElementById('departurePoint');		// 現在地
-		let destination = document.getElementById('destination');			// 目的地
+		let departurePoint = document.getElementById('departurePoint_' + id);		// 現在地
+		let destination = document.getElementById('destination_' + id);				// 目的地
 		
 		// OpenStreetMapの機能で緯度経度から住所取得メソッド実行
 		Promise.all([

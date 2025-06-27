@@ -28,6 +28,16 @@ body {
 	height: auto;
 }
 
+#homeButton {
+  position: absolute;
+  right: 120px;
+  top: 50%;
+  transform: translateY(-50%); 
+}
+#homeButton a {
+	text-decoration: none;
+}
+
 .info {
 	margin-top: 70px;
 	padding: 30px;
