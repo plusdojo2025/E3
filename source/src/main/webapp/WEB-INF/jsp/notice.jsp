@@ -16,14 +16,14 @@
 
 <body>
     <header>
-		<div id="header">
-			<div id=logo>
-				<img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
-			</div>
-			<div id="homeButton">
-				<a href="<c:url value='/HomeSearchServlet' />">✖</a>
-			</div>
-		</div>
+	  <div id="header">
+	    <div id="logo">
+	      <img src="<c:url value='/img/logo.jpg' />" alt="シェアタク">
+	    </div>
+	    <div id="homeButton">
+	      <a href="<c:url value='HomeSearchServlet' />" class="close" id="homeBtn">&times;</a>
+	    </div>
+	  </div>
 	</header>
 	
     <!-- モーダル外に表示されるもの(クリックするとモーダルON) -->
